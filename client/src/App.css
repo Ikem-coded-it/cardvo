@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter';
+}
+
+#root {
+  max-width: 1280px;
+  min-width: 1280px;
+  min-height: 100vh;
+  max-width: fit-content;
+}
+
+:root {
+  --primary-one: #9fb8ea;
+  --primary-two: #a0b3d8;
+  --primary-three: #819acc;
+  --primary-four: #6280bf;
+  --primary-five: #4267b2;
+  --primary-six: #375694;
+  --primary-seven: #2c4577;
+  --primary-eight: #213459;
+  --primary-nine: #16223b;
+  --primary-ten: #0d1524;
+
+  --sec-one: #ecf3f1;
+  --sec-two: #DFEAE8;
+  --sec-three: #CFE0DC;
+  --sec-four: #C0D6D0;
+  --sec-five: #B0CBC5;
+  --sec-six: #A0C1B9;
+  --sec-seven: #85A19A;
+  --sec-eight: #6B817B;
+  --sec-nine: #50615D;
+  --sec-ten: #35403E;
+  --sec-eleven: #202725;
+
+  --btn-color: #9747FF;
+}

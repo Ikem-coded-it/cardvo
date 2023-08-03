@@ -4,7 +4,7 @@ export const BtnPrimary = styled.button`
   height: ${({ height }) => height || "40px"};
   width: ${({ width }) => width || "80px"};
   border: 1px solid ${({ theme }) => theme.colors.sec.nine};
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 21px;
   cursor: pointer;
 
@@ -28,6 +28,7 @@ export const BtnSecondary = styled.button`
   width: ${({ width }) => width || "80px"};
   border: 1px solid ${({ theme }) => theme.colors.sec.nine};
   border-radius: 10px;
+  border: none;
   font-size: 21px;
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.btn};

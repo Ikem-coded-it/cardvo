@@ -36,7 +36,7 @@ export default function Nav() {
     bg="#ecf3f1">
       <LogoContainer>
         <i className="fa-solid fa-c"></i>
-        <h1>Card</h1>
+        <div>Card</div>
         <span>vo</span>
       </LogoContainer>
 

@@ -4,11 +4,12 @@ import styled from "styled-components";
 export const NavContainer = styled(FlexRow)`
   justify-content: space-between;
   max-width: 1340px;
-  min-width: 1370px;
+  min-width: 100%;
   padding: 0 90px;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
 
   & .open {
     right: 0;
@@ -18,12 +19,14 @@ export const NavContainer = styled(FlexRow)`
     max-width: ${({ theme }) => theme.mobile};
     min-width: 99.8vw;
     padding: 0 20px;
+    position: static;
   }
 `
 
 export const StyledNav = styled.nav`
   display: flex;
   width: 85%;
+  z-index: 3;
 
   & ul {
     height: 100%;
@@ -78,6 +81,12 @@ export const LogoContainer = styled(FlexRow)`
   align-items: center;
   width: 15%;
 
+  & div {
+    font-size: 30px;
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.sec.nine};
+  }
+
   & i {
     font-size: 40px;
     color: ${({ theme }) => theme.colors.prim.three};
@@ -92,7 +101,7 @@ export const LogoContainer = styled(FlexRow)`
 
   @media(max-width: ${({ theme }) => theme.mobile}) {
     justify-content: flex-start;
-    & h1 {
+    & div {
       font-size: 20px;
     }
 
@@ -105,9 +114,13 @@ export const LogoContainer = styled(FlexRow)`
 export const MenuBars = styled.i`
   display: none;
   font-size: 30px;
+  z-index: 2;
 
   @media(max-width: ${({ theme }) => theme.mobile}) {
     display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
   }
 `
 

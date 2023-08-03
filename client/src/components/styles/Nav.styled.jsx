@@ -3,15 +3,20 @@ import styled from "styled-components";
 
 export const NavContainer = styled(FlexRow)`
   justify-content: space-between;
+  max-width: 1340px;
+  min-width: 1370px;
   padding: 0 90px;
   position: fixed;
   top: 0;
+  left: 0;
 
   & .open {
     right: 0;
   }
 
   @media(max-width: ${({ theme }) => theme.mobile}) {
+    max-width: ${({ theme }) => theme.mobile};
+    min-width: 99.8vw;
     padding: 0 20px;
   }
 `

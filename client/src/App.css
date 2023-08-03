@@ -4,17 +4,20 @@ body {
   box-sizing: border-box;
   font-family: 'Inter';
   max-width: 1360px;
-  min-width: 99.8vw;
+  min-width: 97.8vw;
   min-height: 100vh;
   max-height: fit-content;
+  scrollbar-gutter: stable;
+  /* border: 1px solid black; */
 }
 
 #root {
-  max-width: 1360px;
-  min-width: 99.8vw;
+  max-width: 1350px;
+  min-width: 100%;
   min-height: 100vh;
   max-height: fit-content;
   color: #35403E;
+  scrollbar-gutter: stable;
 }
 
 @media(max-width: 480px) {

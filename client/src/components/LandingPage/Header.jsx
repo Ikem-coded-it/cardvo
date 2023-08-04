@@ -12,7 +12,7 @@ import card from "../../../public/images/backgrounds/header1.png"
 import cardGrid from "../../../public/images/backgrounds/header2.png"
 
 const WriteupContainer = styled(FlexColumn)`
-  flex: 1;
+  flex: 0 1 40%;
   z-index: 1;
 
   & h1 {
@@ -30,6 +30,12 @@ const WriteupContainer = styled(FlexColumn)`
     color: ${({ theme }) => theme.colors.sec.ten};
     flex-wrap: wrap:
     overflow: break-word;
+  }
+
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    & h1 {
+      font-size: 23px;
+    }
   }
 
   @media(max-width: ${({theme}) => theme.mobile}) {
@@ -61,7 +67,7 @@ const ExploreBtn = styled(BtnSecondary)`
 
 const Background = styled(Container)`
   min-height: 400px;
-  flex: 2;
+  flex: 2 0 60%;
   background-size: contain;
   background-position: right;
   background-repeat: no-repeat;

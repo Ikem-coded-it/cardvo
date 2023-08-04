@@ -15,6 +15,10 @@ export const NavContainer = styled(FlexRow)`
     right: 0;
   }
 
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    padding: 0 30px;
+  }
+
   @media(max-width: ${({ theme }) => theme.mobile}) {
     max-width: ${({ theme }) => theme.mobile};
     min-width: 99.8vw;
@@ -32,7 +36,7 @@ export const StyledNav = styled.nav`
     height: 100%;
     display: flex;
     gap: 50px;
-    flex-direction: space-between;
+    justify-content: flex-start;
     list-style: none;
     width: 60%;
     font-weight: 700px;
@@ -43,6 +47,14 @@ export const StyledNav = styled.nav`
 
   & div {
     width: 40%;
+  }
+
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    & ul {
+      gap: 20px;
+      font-weight: 700px;
+      justify-content: flex-end;
+    }
   }
 
   @media(max-width: ${({ theme }) => theme.mobile}) {
@@ -58,12 +70,15 @@ export const StyledNav = styled.nav`
     transition: all .4s ease;
 
     & ul {
+      height: fit-content;
       justify-content: center;
       flex-direction: column;
       width: 100%;
+      gap: 40px;
     }
 
     & ul li {
+      font-weight: 600;
       width: 100%;
       display: flex;
       justify-content: center;
@@ -97,6 +112,20 @@ export const LogoContainer = styled(FlexRow)`
     font-size: 30px;
     font-weight: bold;
     color: ${({ theme }) => theme.colors.prim.four};
+  }
+
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    & div {
+      font-size: 25px;
+    }
+
+    & i {
+      font-size: 30px;
+    }
+
+    & span {
+      font-size: 25px;
+    }
   }
 
   @media(max-width: ${({ theme }) => theme.mobile}) {

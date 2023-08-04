@@ -16,6 +16,30 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.font};
+
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    font-size: 16px;
+  }
+`
+
+const BtnContainer = styled(FlexRow)`
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    gap: 10px;
+    & button {
+      height: 40px;
+      font-size: 16px;
+      width: 80px;
+    }
+  }
+
+  @media(max-width: ${({theme}) => theme.mobile}) {
+    gap: 20px;
+    & button {
+      height: 50px;
+      font-size: 18px;
+      width: 120px;
+    }
+  }
 `
 
 export default function Nav() {
@@ -58,7 +82,7 @@ export default function Nav() {
           </li>
         </ul>
 
-        <FlexRow
+        <BtnContainer
         gap="20px"
         width="fit-content"
         >
@@ -68,7 +92,7 @@ export default function Nav() {
           <Link to="/auth/signup">
             <BtnSecondary height="55px" width="130px">Sign up</BtnSecondary>
           </Link>
-        </FlexRow>
+        </BtnContainer>
 
       </StyledNav>
 

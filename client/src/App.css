@@ -21,6 +21,11 @@ body {
   overflow-x: hidden;
 }
 
+h2, h1, h3, h4, p {
+  margin: 0;
+  padding: 0;
+}
+
 @media(max-width: 480px) {
   body {
     max-width: 99.8vw;

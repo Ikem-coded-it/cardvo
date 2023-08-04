@@ -15,6 +15,11 @@ export const StyledHeader = styled.header`
   gap: ${({ gap }) => gap};
   overflow: hidden;
 
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    padding: 0 30px 100px 30px;
+    gap: 20px;
+  }
+
   @media(max-width: ${({theme}) => theme.mobile}) {
     padding: 0 20px;
     margin: 0;

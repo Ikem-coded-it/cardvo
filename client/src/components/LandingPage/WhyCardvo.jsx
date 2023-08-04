@@ -1,14 +1,14 @@
 import { Section } from "../styles/Section.styled";
 import { BtnPrimary } from "../styles/Button.styled";
-import { Image } from "../styles/Image.styled";
-import { FlexRow, FlexColumn } from "../styles/Container.styled";
+// import { Image } from "../styles/Image.styled";
+import { FlexRow, FlexColumn, Container } from "../styles/Container.styled";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import imageOne from "../../../public/images/frames/handcards.png";
-import imageTwo from "../../../public/images/cards/CARD22.png";
-import imageThree from "../../../public/images/cards/CARD14.png";
+import imageTwo from "../../../public/images/backgrounds/header1.png";
+import imageThree from "../../../public/images/backgrounds/header2.png";
 
 const data = [
   {
@@ -32,14 +32,58 @@ const WhyCarvoSection = styled(Section)`
   & h1 {
     font-size: 50px;
   }
+
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    padding: 50px 20px;
+    & h1 {
+      font-size: 40px;
+    }
+  }
+
+  @media(max-width: ${({theme}) => theme.mobile}) {
+    & h1 {
+      font-size: 30px;
+    }
+  }
 `
 
 const WhyCard = styled(FlexRow)`
+  & div {
+    gap: 25px;
+  }
+
   & h2 {
     font-size: 30px;
   }
+
   & p {
     font-size: 18px;
+  }
+
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    height: 600px;
+    gap: 20px;
+
+    & div {
+      gap: 15px;
+    }
+
+    & h2 {
+      font-size: 25px;
+    }
+  }
+`
+
+const Background = styled(Container)`
+  background-color: ${({ theme }) => theme.colors.sec.five};
+  background-image: url(${({ bg }) => bg});
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    height: 280px;
+    width: 100%;
   }
 `
 
@@ -47,7 +91,7 @@ export default function WhyCardvo() {
   return (
     <WhyCarvoSection
     gap="50px"
-    padding="0 90px"
+    padding="50px 90px"
     justify="center"
     bg={({theme}) => theme.colors.sec.one}>
       <h1>Why Cardvo product?</h1>
@@ -71,8 +115,11 @@ function Card({ heading, description, src, data }) {
   const btn = useRef()
 
   useEffect(() => {
-    if(data === 1) {
-      card.current.style.flexDirection = "row-reverse";
+    const width = window.innerWidth;
+    if (width >= 900) {
+      card.current.style.flexDirection = data === 1 ? "row-reverse" : "row";
+    } else {
+      card.current.style.flexDirection = "column";
     }
 
     if(data === 2) {
@@ -102,11 +149,11 @@ function Card({ heading, description, src, data }) {
           color={({ theme }) => theme.colors.sec.eight}></BtnPrimary>
         </Link>
       </FlexColumn>
-      <Image
+      <Background
       height="100%"
-      flex="1"
-      src={src}
-      />
+      flex="1 1 auto"
+      bg={src}
+      ></Background>
     </WhyCard>
   )
 }

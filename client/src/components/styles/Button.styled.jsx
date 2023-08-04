@@ -17,6 +17,12 @@ export const BtnPrimary = styled.button`
     background-color: ${({ theme }) => theme.colors.sec.three};
   }
 
+   @media(max-width: ${({theme}) => theme.tablet}) {
+    height: 40px;
+    font-size: 16px;
+    width: 80px;
+  }
+
   @media(max-width: ${({ theme }) => theme.mobile}) {
     width: 100px;
     height: 50px;
@@ -37,6 +43,12 @@ export const BtnSecondary = styled.button`
 
   &:active {
     background-color: ${({ theme }) => theme.colors.prim.three};
+  }
+
+   @media(max-width: ${({theme}) => theme.tablet}) {
+    height: 40px;
+    font-size: 16px;
+    width: 80px;
   }
 
   @media(max-width: ${({ theme }) => theme.mobile}) {

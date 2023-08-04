@@ -8,6 +8,16 @@ const RandomIconsContainer = styled(FlexColumn)`
     color: ${({ theme }) => theme.colors.sec.three};
   }
 
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    & i {
+      font-size: 50px;
+    }
+
+    & div {
+      gap: 50px;
+    }
+  }
+
   @media(max-width: ${({ theme }) => theme.mobile}) {
     & i {
       font-size: 40px;
@@ -19,19 +29,25 @@ const RandomIconsContainer = styled(FlexColumn)`
   }
 `
 
+const Heading = styled.h2`
+  text-align: center;
+  font-size: 30px;
+  padding: 0 30px;
+`
+
 const SliderWrapper = styled(FlexRow)`
   max-width: 100%;
   min-width: 100%;
   height: 300px;
   margin-bottom: 20px;
 
-  & ::-webkit-scrollbar {
-    height: 0;
-    width: 0;
+  &::-webkit-scrollbar {
+    display: none;
   }
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    overflow-x: scroll;
+
+  @media(max-width: ${({ theme }) => theme.mobile}), (max-width: ${({ theme }) => theme.tablet}) {
     display: block;
+    overflow-x: scroll;
   }
 `
 
@@ -39,7 +55,6 @@ const GettingStartedContainer = styled(FlexRow)`
   width: fit-content;
   height: 100%;
   padding: 0 20px;
-  overflow-x: scroll;
 `
 
 const GettingStartedCard = styled(FlexColumn)`
@@ -92,8 +107,8 @@ export default function GettingStarted() {
         </FlexRow>
       </RandomIconsContainer>
 
-      <FlexColumn>
-        <h2>Getting started with Cardvo product</h2>
+      <FlexColumn width="100%">
+        <Heading>Getting started with Cardvo product</Heading>
         <SliderWrapper>
           <GettingStartedContainer gap="50px">
 

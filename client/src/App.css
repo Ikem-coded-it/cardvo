@@ -18,7 +18,6 @@ body {
   min-height: 100vh;
   max-height: fit-content;
   color: #35403E;
-  scrollbar-gutter: stable;
   overflow-x: hidden;
 }
 

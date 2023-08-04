@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const BtnPrimary = styled.button`
   height: ${({ height }) => height || "40px"};
   width: ${({ width }) => width || "80px"};
-  border: 1px solid ${({ theme }) => theme.colors.sec.nine};
+  border: 1px solid ${({ theme }) => theme.colors.sec.seven};
   border-radius: 8px;
   font-size: 21px;
   cursor: pointer;
+  color: ${({ color }) => color};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.sec.two};

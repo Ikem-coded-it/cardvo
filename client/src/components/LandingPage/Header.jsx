@@ -96,7 +96,7 @@ export default function Header() {
           <Link to="/auth/signin">
             <SigninBtn width="100px" height="50px">Sign in</SigninBtn>
           </Link>
-          <Link>
+          <Link to="/cards">
             <ExploreBtn width="180px" height="50px">Explore Designs</ExploreBtn>
           </Link>
         </FlexRow>

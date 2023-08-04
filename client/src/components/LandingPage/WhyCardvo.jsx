@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
-import imageOne from "../../../public/images/frames/handcards.png";
+import imageOne from "../../../public/images/backgrounds/header2.png";
 import imageTwo from "../../../public/images/backgrounds/header1.png";
-import imageThree from "../../../public/images/backgrounds/header2.png";
+import imageThree from "../../../public/images/frames/subscribefor.png";
 
 const data = [
   {

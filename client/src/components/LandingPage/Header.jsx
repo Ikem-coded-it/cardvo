@@ -39,7 +39,7 @@ const WriteupContainer = styled(FlexColumn)`
   }
 
   @media(max-width: ${({theme}) => theme.mobile}) {
-    gap: 0;
+    gap: 20px;
     text-align: center;
 
     & h1 {

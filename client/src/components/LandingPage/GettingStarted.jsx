@@ -35,7 +35,7 @@ const Heading = styled.h2`
   padding: 0 30px;
 `
 
-const SliderWrapper = styled(FlexRow)`
+export const SliderWrapper = styled(FlexRow)`
   max-width: 100%;
   min-width: 100%;
   height: 300px;

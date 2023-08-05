@@ -34,7 +34,7 @@ export const BtnSecondary = styled.button`
   height: ${({ height }) => height || "40px"};
   width: ${({ width }) => width || "80px"};
   border: 1px solid ${({ theme }) => theme.colors.sec.nine};
-  border-radius: 10px;
+  border-radius: ${({ bdradius }) => bdradius || "10px"};
   border: none;
   font-size: 21px;
   cursor: pointer;

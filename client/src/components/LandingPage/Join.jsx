@@ -60,7 +60,8 @@ const TestimonialCard = styled(FlexColumn)`
 
 export default function Join() {
   return (
-    <TextimonialSection 
+    <TextimonialSection
+    id="testimonies"
     height="480px" 
     padding="0 90px" 
     justify="center"

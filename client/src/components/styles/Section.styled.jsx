@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
   max-height: fit-content;
   min-height: ${({ height }) => height};
   width: ${({ width }) => width};

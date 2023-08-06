@@ -1,7 +1,8 @@
-import { FlexColumn } from "../styles/Container.styled";
+import { FlexColumn, FlexRow } from "../styles/Container.styled";
 import { BtnPrimary, BtnSecondary } from "../styles/Button.styled";
 import { Section } from "../styles/Section.styled";
 import { Image } from "../styles/Image.styled";
+import { useRef } from "react";
 import styled from "styled-components";
 import image from "../../../public/images/backgrounds/pana.png";
 import StyledLink from "../styles/Link.styled";
@@ -50,6 +51,7 @@ const RightSideSection = styled(Section)`
     justify-content: flex-start;
     height: fit-content;
     padding: 40px 0 0 0;
+    width: 70%;
 
     & h1 {
       font-size: 35px;
@@ -61,6 +63,24 @@ const RightSideSection = styled(Section)`
       font-size: 15px;
       text-align: center;
     }
+
+    & button {
+      height: 60px;
+    }
+  }
+
+  @media(max-width: ${({theme}) => theme.mobile}) {
+    width: 100%;
+    padding: 0;
+  }
+`
+
+const OrLine = styled(FlexRow)`
+  & div {
+    height: 1px;
+    border: 1px solid ${({theme}) => theme.colors.sec.seven};
+    flex: 1;
+    width: 100%;
   }
 `
 
@@ -68,8 +88,10 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 
-  & div {
+
+  & > div {
     gap: 10px;
   }
 
@@ -80,18 +102,41 @@ const StyledForm = styled.form`
     height: 40px;
     padding: 0 10px;
     box-sizing: border-box;
-    border: 1px solid ${({ theme }) => theme.colors.sec.four};
+    border: 1px solid ${({ theme }) => theme.colors.sec.six};
     border-radius: 5px;
     font-size: 19px;
     color: ${({ theme }) => theme.colors.sec.nine};
+    letter-spacing: 2px;
   }
 
   & input:invalid {
     border: 1px solid red;
   }
+`
 
-  & input:valid {
-    border: 1px solid green;
+const PasswordInputContainer = styled(FlexRow)`
+  gap: 0;
+  border: 1px solid ${({ theme }) => theme.colors.sec.six};
+  border-radius: 6px;
+
+  & button {
+    height: 40px;
+    width: 10%;
+    border-radius: 0;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  & input[type="password"],
+    input[type="text"] {
+    border: none;
+    width: 90%;
+
+    &:invalid {
+      border: 1px solid red;
+    }
   }
 `
 
@@ -135,7 +180,7 @@ LeftSide.propTypes = {
 
 function GoogleBtn() {
   return(
-    <BtnPrimary height="50px" width="100%" font="17px">
+    <BtnPrimary height="60px" width="100%" font="17px">
       <Image
         src={googleIcon}
         alt="google button icon"
@@ -149,7 +194,7 @@ function GoogleBtn() {
 
 function FacebookBtn() {
   return (
-    <BtnPrimary height="50px" width="100%" font="17px">
+    <BtnPrimary height="60px" width="100%" font="17px">
       <Image
         src={facebookIcon}
         alt="facebook button icon"
@@ -161,16 +206,51 @@ function FacebookBtn() {
   )
 }
 
+function PasswordInput() {
+  const input = useRef()
+
+  function handleTogglePassword() {
+    if (input.current.type === "password") {
+      input.current.type = "text";
+    } else {
+      input.current.type = "password";
+    }
+  }
+
+  return (
+     <FlexColumn align="flex-start">
+      <label htmlFor="password">Password</label>
+      <PasswordInputContainer gap="0" width="100%">
+        <input 
+        type="password" 
+        name="password" 
+        id="password" 
+        minLength={8}
+        ref={input} />
+        <BtnPrimary
+        type="button"
+        border="white" 
+        width="30px" 
+        onClick={handleTogglePassword}>
+          <i className="fa-solid fa-eye"></i>
+        </BtnPrimary>
+      </PasswordInputContainer>
+    </FlexColumn>
+  )
+}
+
 
 export {
   // react components
   LeftSide,
   GoogleBtn,
   FacebookBtn,
+  PasswordInput,
 
   // styled components
   WholePageSection,
   RightSideSection,
+  OrLine,
   StyledForm,
   SignupSigninBtn,
 }

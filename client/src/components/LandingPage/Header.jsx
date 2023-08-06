@@ -6,7 +6,7 @@ import {
 } from "../styles/Container.styled";
 import { BtnPrimary, BtnSecondary } from "../styles/Button.styled";
 import { Image } from "../styles/Image.styled";
-import { Link } from "react-router-dom";
+import StyledLink from "../styles/Link.styled";
 import styled from "styled-components";
 import card from "../../../public/images/backgrounds/header1.png"
 import cardGrid from "../../../public/images/backgrounds/header2.png"
@@ -99,12 +99,12 @@ export default function Header() {
            Create a design that resonates with you.
         </p>
         <FlexRow gap="15px">
-          <Link to="/auth/signin">
+          <StyledLink to="/auth/signin">
             <SigninBtn width="100px" height="50px">Sign in</SigninBtn>
-          </Link>
-          <Link to="/cards">
+          </StyledLink>
+          <StyledLink to="/cards">
             <ExploreBtn width="180px" height="50px">Explore Designs</ExploreBtn>
-          </Link>
+          </StyledLink>
         </FlexRow>
       </WriteupContainer>
 

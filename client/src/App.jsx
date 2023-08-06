@@ -10,10 +10,13 @@ import './App.css'
 
 function App() {
   const [user, setUser] = useState("Ikem")
+  const [currentPage, setCurrentPage] = useState(null);
 
   const values = {
     user,
     setUser,
+    currentPage,
+    setCurrentPage
   }
 
   return (

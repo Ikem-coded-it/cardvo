@@ -2,7 +2,7 @@ import { Section } from "../styles/Section.styled";
 import { BtnPrimary } from "../styles/Button.styled";
 // import { Image } from "../styles/Image.styled";
 import { FlexRow, FlexColumn, Container } from "../styles/Container.styled";
-import { Link } from "react-router-dom";
+import StyledLink from "../styles/Link.styled";
 import PropTypes from "prop-types";
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
@@ -17,7 +17,7 @@ const data = [
     src: imageOne
   },
   {
-    heading: "Unluck Your Creativity",
+    heading: "Unlock Your Creativity",
     description: "From colours, to images, to text and fonts, wield the power to create any design you want, within confined templates",
     src: imageTwo
   },
@@ -65,7 +65,8 @@ const WhyCard = styled(FlexRow)`
     gap: 20px;
 
     & div {
-      gap: 15px;
+      height: 100px;
+      gap: 10px;
     }
 
     & h2 {
@@ -82,7 +83,7 @@ const Background = styled(Container)`
   background-repeat: no-repeat;
 
   @media(max-width: ${({theme}) => theme.tablet}) {
-    height: 280px;
+    height: 0;
     width: 100%;
   }
 `
@@ -118,6 +119,7 @@ function Card({ heading, description, src, data }) {
     const width = window.innerWidth;
     if (width >= 900) {
       card.current.style.flexDirection = data === 1 ? "row-reverse" : "row";
+      card.current.style.justifyContent = "flex-start";
     } else {
       card.current.style.flexDirection = "column";
     }
@@ -141,13 +143,13 @@ function Card({ heading, description, src, data }) {
       <FlexColumn height="100%" flex="1" align="flex-start">
         <h2>{heading}</h2>
         <p>{description}</p>
-        <Link to="/cards">
+        <StyledLink to="/cards">
           <BtnPrimary 
           width="130px" 
           height="60px" 
           ref={btn}
           color={({ theme }) => theme.colors.sec.eight}></BtnPrimary>
-        </Link>
+        </StyledLink>
       </FlexColumn>
       <Background
       height="100%"

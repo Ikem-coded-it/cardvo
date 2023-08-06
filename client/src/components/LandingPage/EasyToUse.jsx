@@ -3,7 +3,7 @@ import { FlexRow } from "../styles/Container.styled";
 import { Image } from "../styles/Image.styled";
 import { BtnSecondary } from "../styles/Button.styled";
 import image from "../../../public/images/frames/threecards.png";
-import { Link } from "react-router-dom";
+import StyledLink from "../styles/Link.styled";
 import { SliderWrapper } from "./GettingStarted";
 import styled from "styled-components";
 
@@ -53,9 +53,9 @@ export default function EasyToUse() {
       </SliderWrapper>
 
       <FlexRow>
-        <Link to="/cards">
+        <StyledLink to="/cards">
           <BtnSecondary height="50px" width="200px">Explore Designs</BtnSecondary>
-        </Link>
+        </StyledLink>
       </FlexRow>
     </EasyToUseSection>
   )

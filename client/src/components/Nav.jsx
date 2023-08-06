@@ -5,22 +5,12 @@ import {
   CloseMenu
 } from "./styles/Nav.styled";
 import { FlexRow } from "./styles/Container.styled"
-import { Link } from "react-router-dom";
 import { StyledNav } from "./styles/Nav.styled";
 import { BtnPrimary, BtnSecondary } from "./styles/Button.styled";
-import { useRef } from "react";
+import StyledLink from "./styles/Link.styled";
+import { useRef, useEffect, useContext } from "react";
+import { Context } from "../App";
 import styled from "styled-components";
-
-const StyledLink = styled(Link)`
-  width: fit-content;
-  text-decoration: none;
-  font-size: 20px;
-  color: ${({ theme }) => theme.colors.font};
-
-  @media(max-width: ${({theme}) => theme.tablet}) {
-    font-size: 16px;
-  }
-`
 
 const BtnContainer = styled(FlexRow)`
   @media(max-width: ${({theme}) => theme.tablet}) {
@@ -43,7 +33,25 @@ const BtnContainer = styled(FlexRow)`
 `
 
 export default function Nav() {
+  const context = useContext(Context);
   const mobileNav = useRef()
+  const signupBtn = useRef()
+  const signinBtn = useRef()
+
+  useEffect(() => {
+    if(context.currentPage === '/auth/signup') {
+      signupBtn.current.style.display = 'none';
+    } else {
+      signupBtn.current.style.display = 'block';
+    }
+
+    if(context.currentPage === '/auth/signin') {
+      signinBtn.current.style.display = 'none';
+    } else {
+      signinBtn.current.style.display = 'block';
+    }
+    
+  }, [context.currentPage])
 
   const handleOpenMenu = () => {
     mobileNav.current.classList.add('open');
@@ -86,12 +94,12 @@ export default function Nav() {
         gap="20px"
         width="fit-content"
         >
-          <Link to="/auth/signin">
+          <StyledLink to="/auth/signin" ref={signinBtn}>
             <BtnPrimary height="55px" width="130px">Sign in</BtnPrimary>
-          </Link>
-          <Link to="/auth/signup">
+          </StyledLink>
+          <StyledLink to="/auth/signup" ref={signupBtn}>
             <BtnSecondary height="55px" width="130px">Sign up</BtnSecondary>
-          </Link>
+          </StyledLink>
         </BtnContainer>
 
       </StyledNav>

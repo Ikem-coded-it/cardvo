@@ -2,6 +2,8 @@ import { FlexRow } from "./Container.styled";
 import styled from "styled-components";
 
 export const NavContainer = styled(FlexRow)`
+  background-color: #fff;
+  border-bottom: 1px solid ${({theme}) => theme.colors.prim.five};
   justify-content: space-between;
   max-width: 1340px;
   min-width: 100%;

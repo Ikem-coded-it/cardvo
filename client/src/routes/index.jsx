@@ -5,6 +5,7 @@ import ContactUsPage from '../pages/ContactUsPage';
 import SigninPage from '../pages/SigninPage';
 import SignupPage from '../pages/SignupPage';
 import ExplorePage from '../pages/ExplorePage';
+import EditCard from '../pages/EditCardPage';
 
 const router = createBrowserRouter([
   {
@@ -33,9 +34,13 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: "/cards",
+    path: "/explore",
     element: <ExplorePage />
   },
+  {
+    path: "/edit",
+    element: <EditCard />
+  }
 ])
 
 export default router;

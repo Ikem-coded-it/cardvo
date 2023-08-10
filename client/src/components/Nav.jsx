@@ -37,20 +37,32 @@ export default function Nav() {
   const mobileNav = useRef()
   const signupBtn = useRef()
   const signinBtn = useRef()
+  const navContainer = useRef()
 
   useEffect(() => {
-    if(context.currentPage === '/auth/signup') {
-      signupBtn.current.style.display = 'none';
-    } else {
-      signupBtn.current.style.display = 'block';
-    }
+    if (context.currentPage) {
+      if(context.currentPage === '/auth/signup') {
+        signupBtn.current.style.display = 'none';
+      } else {
+        signupBtn.current.style.display = 'block';
+      }
 
-    if(context.currentPage === '/auth/signin') {
-      signinBtn.current.style.display = 'none';
-    } else {
-      signinBtn.current.style.display = 'block';
+      if(context.currentPage === '/auth/signin') {
+        signinBtn.current.style.display = 'none';
+      } else {
+        signinBtn.current.style.display = 'block';
+      }
+
+      if (context.currentPage.includes('/edit')) {
+        navContainer.current.style.position = "static";
+        signupBtn.current.style.display = 'none';
+        signinBtn.current.style.display = 'none';
+      } else {
+        navContainer.current.style.position = "fixed";
+        signupBtn.current.style.display = 'block';
+        signinBtn.current.style.display = 'block';
+      }
     }
-    
   }, [context.currentPage])
 
   const handleOpenMenu = () => {
@@ -63,6 +75,7 @@ export default function Nav() {
 
   return (
     <NavContainer
+    ref={navContainer}
     width="100%"
     height="70px"
     bg="#ecf3f1">
@@ -80,7 +93,7 @@ export default function Nav() {
 
         <ul>
           <li>
-            <StyledLink to="/">Explore</StyledLink>
+            <StyledLink to="/explore">Explore</StyledLink>
           </li>
           <li>
             <StyledLink to="/about">About us</StyledLink>

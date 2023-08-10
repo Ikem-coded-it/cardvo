@@ -8,6 +8,7 @@ export const Container = styled.div`
   font-size: ${({ font }) => font || "15px"};
   background-color: ${({ bg }) => bg};
   flex: ${({ flex }) => flex};
+  border-radius: ${({ bdradius }) => bdradius};
 `
 
 export const FlexRow = styled(Container)`

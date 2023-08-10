@@ -53,7 +53,7 @@ export default function EasyToUse() {
       </SliderWrapper>
 
       <FlexRow>
-        <StyledLink to="/cards">
+        <StyledLink to="/explore">
           <BtnSecondary height="50px" width="200px">Explore Designs</BtnSecondary>
         </StyledLink>
       </FlexRow>

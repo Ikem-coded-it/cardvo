@@ -143,7 +143,7 @@ function Card({ heading, description, src, data }) {
       <FlexColumn height="100%" flex="1" align="flex-start">
         <h2>{heading}</h2>
         <p>{description}</p>
-        <StyledLink to="/cards">
+        <StyledLink to="/explore">
           <BtnPrimary 
           width="130px" 
           height="60px" 

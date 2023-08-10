@@ -1,12 +1,13 @@
+// import { PDFViewer } from '@react-pdf/renderer';
 import Nav from "../components/Nav";
-import ExploreHeader from "../components/ExplorePage/Explore.header";
+import Edit from '../components/EditCardPage/edit';
 import Footer from "../components/Footer";
 import { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { Context } from "../App";
+// import { Section } from '../components/styles/Section.styled';
 
-
-export default function ExplorePage() {
+export default function EditCard () {
   const context = useContext(Context);
   const location = useLocation();
 
@@ -15,10 +16,10 @@ export default function ExplorePage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
+  return(
     <>
     <Nav />
-    <ExploreHeader />
+    <Edit />
     <Footer />
     </>
   )

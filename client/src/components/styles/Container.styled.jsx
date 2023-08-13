@@ -9,6 +9,7 @@ export const Container = styled.div`
   background-color: ${({ bg }) => bg};
   flex: ${({ flex }) => flex};
   border-radius: ${({ bdradius }) => bdradius};
+  color: ${({ color }) => color};
 `
 
 export const FlexRow = styled(Container)`

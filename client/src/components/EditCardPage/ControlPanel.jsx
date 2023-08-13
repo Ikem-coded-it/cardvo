@@ -1,11 +1,27 @@
 import { FlexRow, FlexColumn, Container } from "../styles/Container.styled";
 import { BtnPrimary, BtnSecondary } from "../styles/Button.styled";
+import downloadDesign from "../../utils/designDownloader";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
 
 const ControlPanelContainer = styled(FlexColumn)`
   border: 1px solid ${({ theme }) => theme.colors.sec.five};
+
+  @media(max-width: ${({ theme }) => theme.tablet}) {
+    & button {
+      width: 150px;
+    }
+  }
+
+  @media(max-width: ${({ theme }) => theme.mobile}) {
+    width: 100%;
+    height: 70%;
+
+    & button {
+      width: 200px;
+    }
+  }
 `
 
 const BackBtnContainer = styled(FlexRow)`
@@ -25,6 +41,20 @@ const Controls = styled(FlexColumn)`
     box-sizing: border-box;
     padding-left: 10px;
   }
+
+  @media(max-width: ${({ theme }) => theme.tablet}) {
+    & input[type="file"] {
+      width: 150px;
+    }
+
+    & input[type="text"] {
+      width: 50px;
+    }
+
+    & input[name="name"] {
+      width: 150px;
+    }
+  }
 `
 
 const NumberInputContainer = styled(FlexRow)`
@@ -34,6 +64,12 @@ const NumberInputContainer = styled(FlexRow)`
     &::-webkit-inner-spin-button {
       display: none;
     }
+  }
+
+  @media(max-width: ${({ theme }) => theme.tablet}) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 50px);
+    grid-auto-rows: 30px;
   }
 `
 
@@ -48,7 +84,7 @@ const ColorsGrid = styled(Container)`
   }
 `
 
-export default function ControlPanel({ designDispatch }) {
+export default function ControlPanel({ designState, designDispatch }) {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
@@ -128,7 +164,34 @@ export default function ControlPanel({ designDispatch }) {
       type: "changed_date",
       newExpirationDate: expiration_date
     }
+    designDispatch(action);
+  }
 
+  const handleChangeViewToBack = () => {
+    if (designState.view === "back") return;
+    let newView = "back"
+    const action = {
+      type: "changed_cvv_focus",
+      newView,
+    }
+    designDispatch(action);
+  }
+
+  const handleChangeViewToFront = () => {
+    if (designState.view === "front") return;
+    let newView = "front"
+    const action = {
+      type: "changed_cvv_focus",
+      newView,
+    }
+    designDispatch(action);
+  }
+
+  const handleChangeCvv = (e) => {
+    const action = {
+      type: "changed_cvv",
+      newCVV: e.target.value
+    }
     designDispatch(action);
   }
 
@@ -206,40 +269,56 @@ export default function ControlPanel({ designDispatch }) {
             type="text" 
             placeholder="0000" 
             id="number-1" 
-            onChange={(e) => handleNumberChange(e)}/>
+            onChange={(e) => handleNumberChange(e)}
+            onFocus={() => handleChangeViewToFront()}
+            />
 
             <input 
             maxLength={4}
             type="text"
             placeholder="0000" 
             id="number-2" 
-            onChange={(e) => handleNumberChange(e)}/>
+            onChange={(e) => handleNumberChange(e)}
+            onFocus={() => handleChangeViewToFront()}/>
 
             <input 
             maxLength={4}
             type="text"
             placeholder="0000" 
             id="number-3" 
-            onChange={(e) => handleNumberChange(e)}/>
+            onChange={(e) => handleNumberChange(e)}
+            onFocus={() => handleChangeViewToFront()}/>
 
             <input 
             maxLength={4}
             type="text"
             placeholder="0000" 
             id="number-4" 
-            onChange={(e) => handleNumberChange(e)}/>
+            onChange={(e) => handleNumberChange(e)}
+            onFocus={() => handleChangeViewToFront()}/>
           </NumberInputContainer>
 
           <FlexRow justify="flex-start" width="100%">
-            <input 
+            <input
+            name="name"
             type="text" 
             placeholder="YOUR NAME HERE" 
             maxLength={22} 
-            onChange={(e) => handleNameChange(e)} />
+            onChange={(e) => handleNameChange(e)}
+            onFocus={() => handleChangeViewToFront()}/>
           </FlexRow>
           <FlexRow width="100%" justify="space-between">
-            <input type="text" maxLength={3}  placeholder="cvv"/>
-            <input type="date" onChange={(e) => handleChangeExpirationDate(e)} />
+            <input 
+            type="text" 
+            maxLength={3}
+            placeholder="cvv" 
+            onChange={(e) => handleChangeCvv(e)}
+            onFocus={() => handleChangeViewToBack()}
+            />
+            <input 
+            type="date" 
+            onChange={(e) => handleChangeExpirationDate(e)}
+            onFocus={() => handleChangeViewToFront()}/>
           </FlexRow>
         </FlexColumn>
 
@@ -253,7 +332,8 @@ export default function ControlPanel({ designDispatch }) {
           </BtnSecondary>
           <BtnPrimary 
           width="100%"
-          height="50px">
+          height="50px"
+          onClick={downloadDesign}>
             Download
           </BtnPrimary>
         </FlexColumn>
@@ -280,7 +360,8 @@ function Color({ hexCode, designDispatch }) {
 }
 
 ControlPanel.propTypes = {
-  designDispatch: PropTypes.func
+  designDispatch: PropTypes.func,
+  designState: PropTypes.object
 }
 
 Color.propTypes = {

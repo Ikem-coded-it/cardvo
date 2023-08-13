@@ -11,6 +11,8 @@ export default function CardReducer (designState, action) {
         expiration: designState.expiration,
         color: action.newColor,
         image: "",
+        cvv: designState.cvv,
+        view: designState.view,
       }
       return newDesignState;
     }
@@ -25,6 +27,8 @@ export default function CardReducer (designState, action) {
         expiration: designState.expiration,
         color: "",
         image: action.newImage,
+        cvv: designState.cvv,
+        view: designState.view,
       }
       return newDesignState;
     }
@@ -40,6 +44,8 @@ export default function CardReducer (designState, action) {
           expiration: designState.expiration,
           color: designState.color,
           image: designState.image,
+          cvv: designState.cvv,
+          view: designState.view,
         }
         return newDesignState;
       }
@@ -54,6 +60,8 @@ export default function CardReducer (designState, action) {
           expiration: designState.expiration,
           color: designState.color,
           image: designState.image,
+          cvv: designState.cvv,
+          view: designState.view,
         }
         return newDesignState;
       }
@@ -68,6 +76,8 @@ export default function CardReducer (designState, action) {
           expiration: designState.expiration,
           color: designState.color,
           image: designState.image,
+          cvv: designState.cvv,
+          view: designState.view,
         }
         return newDesignState;
       }
@@ -82,6 +92,8 @@ export default function CardReducer (designState, action) {
           expiration: designState.expiration,
           color: designState.color,
           image: designState.image,
+          cvv: designState.cvv,
+          view: designState.view,
         }
         return newDesignState;
       }
@@ -99,22 +111,58 @@ export default function CardReducer (designState, action) {
           expiration: designState.expiration,
           color: designState.color,
           image: designState.image,
+          cvv: designState.cvv,
+          view: designState.view,
         }
         return newDesignState;
     }
 
     case "changed_date": {
-       const newDesignState = {
-          name: designState.name,
-          cardNumberOne: designState.cardNumberOne,
-          cardNumberTwo: designState.cardNumberTwo,
-          cardNumberThree: designState.cardNumberThree,
-          cardNumberFour: designState.cardNumberFour,
-          expiration: action.newExpirationDate,
-          color: designState.color,
-          image: designState.image,
-        }
-        return newDesignState;
+      const newDesignState = {
+        name: designState.name,
+        cardNumberOne: designState.cardNumberOne,
+        cardNumberTwo: designState.cardNumberTwo,
+        cardNumberThree: designState.cardNumberThree,
+        cardNumberFour: designState.cardNumberFour,
+        expiration: action.newExpirationDate,
+        color: designState.color,
+        image: designState.image,
+        cvv: designState.cvv,
+        view: designState.view,
+      }
+      return newDesignState;
+    }
+
+    case "changed_cvv": {
+      const newDesignState = {
+        name: designState.name,
+        cardNumberOne: designState.cardNumberOne,
+        cardNumberTwo: designState.cardNumberTwo,
+        cardNumberThree: designState.cardNumberThree,
+        cardNumberFour: designState.cardNumberFour,
+        expiration: designState.expiration,
+        color: designState.color,
+        image: designState.image,
+        cvv: action.newCVV,
+        view: designState.view,
+      }
+      return newDesignState;
+    }
+
+    case "changed_cvv_focus": {
+      const newDesignState = {
+        name: designState.name,
+        cardNumberOne: designState.cardNumberOne,
+        cardNumberTwo: designState.cardNumberTwo,
+        cardNumberThree: designState.cardNumberThree,
+        cardNumberFour: designState.cardNumberFour,
+        expiration: designState.expiration,
+        color: designState.color,
+        image: designState.image,
+        cvv: designState.cvv,
+        view: action.newView
+      }
+      return newDesignState;
     }
 
     default:

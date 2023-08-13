@@ -226,7 +226,8 @@ function PasswordInput() {
         name="password" 
         id="password" 
         minLength={8}
-        ref={input} />
+        ref={input} 
+        required/>
         <BtnPrimary
         type="button"
         border="white" 

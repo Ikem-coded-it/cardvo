@@ -30,11 +30,11 @@ export default function SignupRightSide() {
       <StyledForm>
         <FlexColumn align="flex-start">
           <label htmlFor="name">Full name</label>
-          <input type="text" name="name" id="name" minLength={3} />
+          <input type="text" name="name" id="name" minLength={3} required/>
         </FlexColumn>
         <FlexColumn align="flex-start">
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" minLength={3} />
+          <input type="email" name="email" id="email" minLength={3} required/>
         </FlexColumn>
           
         <PasswordInput />
@@ -44,7 +44,7 @@ export default function SignupRightSide() {
           <label htmlFor="receive-emails">Send me emails relating to financial advice</label>
         </FlexRow>
         <FlexRow justify="flex-start">
-          <input type="checkbox" name="terms" id="terms" />
+          <input type="checkbox" name="terms" id="terms" required/>
           <label htmlFor="terms">
             I have read and agreed to <span>Cardvo Terms of Use and Privacy Policy</span>
           </label>

@@ -43,7 +43,7 @@ export default function SigninRightSide() {
       <StyledForm>
         <FlexColumn align="flex-start">
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" minLength={3} />
+          <input type="email" name="email" id="email" minLength={3} required/>
         </FlexColumn>
           
         <PasswordInput />

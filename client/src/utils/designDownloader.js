@@ -32,18 +32,24 @@ export default async function downloadDesign() {
 
   let width;
   let height;
+  let X;
+  let Y;
 
   if (cardsCanvas.width > 5000) {
     width = cardsCanvas.width / 8;
     height = cardsCanvas.height / 8;
+    X = 10;
+    Y = 10;
   } else {
     width = cardsCanvas.width / 4;
     height = cardsCanvas.height / 4;
+    X = 40;
+    Y = 40
   }
 
   const imageData = cardsCanvas.toDataURL("image/png")
   const pdf = new jsPDF('p', 'mm' ,'a4')
-  pdf.addImage(imageData, 'PNG', 40, 40, width, height, 'card', 'FAST');
+  pdf.addImage(imageData, 'PNG', X, Y, width, height, 'card', 'FAST');
   pdf.save("cardvodesign.pdf");
 }
 

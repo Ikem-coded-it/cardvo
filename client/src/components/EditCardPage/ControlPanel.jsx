@@ -1,88 +1,14 @@
 import { FlexRow, FlexColumn, Container } from "../styles/Container.styled";
 import { BtnPrimary, BtnSecondary } from "../styles/Button.styled";
+import {
+  ControlPanelContainer,
+  BackBtnContainer,
+  Controls,
+  NumberInputContainer,
+  ColorsGrid
+} from "./styles";
 import downloadDesign from "../../utils/designDownloader";
 import PropTypes from "prop-types";
-import styled from "styled-components";
-
-
-const ControlPanelContainer = styled(FlexColumn)`
-  border: 1px solid ${({ theme }) => theme.colors.sec.five};
-
-  @media(max-width: ${({ theme }) => theme.tablet}) {
-    & button {
-      width: 150px;
-    }
-  }
-
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    width: 100%;
-    height: 70%;
-
-    & button {
-      width: 200px;
-    }
-  }
-`
-
-const BackBtnContainer = styled(FlexRow)`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.sec.five};
-  & button {
-    border: none;
-  }
-`
-
-const Controls = styled(FlexColumn)`
-  & input[type="file"] {
-    height: 40px;
-  }
-
-  & input[type="text"] {
-    height: 30px;
-    box-sizing: border-box;
-    padding-left: 10px;
-  }
-
-  @media(max-width: ${({ theme }) => theme.tablet}) {
-    & input[type="file"] {
-      width: 150px;
-    }
-
-    & input[type="text"] {
-      width: 50px;
-    }
-
-    & input[name="name"] {
-      width: 150px;
-    }
-  }
-`
-
-const NumberInputContainer = styled(FlexRow)`
-  & input {
-    width: 50px;
-
-    &::-webkit-inner-spin-button {
-      display: none;
-    }
-  }
-
-  @media(max-width: ${({ theme }) => theme.tablet}) {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 50px);
-    grid-auto-rows: 30px;
-  }
-`
-
-const ColorsGrid = styled(Container)`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 30px);
-  grid-auto-rows: 30px;
-  gap: 10px;
-
-  & div {
-    cursor: pointer;
-  }
-`
 
 export default function ControlPanel({ designState, designDispatch }) {
 

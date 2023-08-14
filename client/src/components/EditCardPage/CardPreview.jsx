@@ -1,168 +1,19 @@
-import { FlexRow, FlexColumn, Container } from "../styles/Container.styled";
 import { useEffect, useRef } from "react";
 import { Image } from "../styles/Image.styled";
 import masterCardLogo from "../../../public/svg/Mastercard-logo.svg";
 import chipLogo from "../../../public/images/chip.png"
-import styled from "styled-components";
+import {
+  CardFront,
+  CardBack,
+  CardPreviewContainer,
+  PreviewNavContainer,
+  PreviewContainerWrapper,
+  PreviewContainer
+} from "./styles.jsx";
+import { FlexRow, FlexColumn, Container } from "../styles/Container.styled";
 import PropTypes from "prop-types";
 
-const CardFront = styled(FlexColumn)`
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 10px;
-  padding: 30px;
-  color: #fff;
-  height: 300px;
-  min-width: 520px;
-  max-width: 520px;
-  transition: all .2s ease;
-
-  & h3 {
-    font-size: 35px;
-    font-family: 'Courier New', Courier, monospace;
-  }
-
-  & p {
-    font-size: 19px;
-  }
-
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    padding: 10px;
-    height: 200px;
-    min-width: 300px;
-    max-width: 300px;
-
-    & p {
-      font-size: 15px;
-    }
-
-    & img {
-      height: 40px;
-      width: 40px;
-    }
-
-    & > div:nth-child(2) {
-      gap: 15px;
-      width: 100%;
-      justify-content: center;
-      & h3 {
-        font-size: 25px;
-      }
-    }
-  }
-`
-
-const CardBack = styled(FlexColumn)`
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 10px;
-  color: #fff;
-  height: 300px;
-  min-width: 520px;
-  max-width: 520px;
-  transition: all .2s ease;
-
-  & p {
-    font-size: 13px;
-  }
-
-  & > div:nth-child(3) {
-    & p {
-      font-size: 15px;
-    }
-  }
-
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    height: 200px;
-    min-width: 300px;
-    max-width: 300px;
-
-    & div {
-      font-size: 10px;
-    }
-
-    & > div:nth-child(2) {
-      height: 30px;
-    }
-
-    & > div:nth-child(3) {
-      padding: 0 10px;
-      & div {
-        font-size: 12px;
-        height: 25px;
-      }
-
-      & p {
-        font-size: 10px;
-      }
-    }
-
-    & img {
-      height: 40px;
-      width: 40px;
-    }
-  }
-`
-
-const CardPreviewContainer = styled(FlexColumn)`
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    width: 100%;
-  }
-`
-
-const PreviewNavContainer = styled(FlexRow)`
-  & > div {
-    background-color: #d1d5db;
-    position: relative;
-    padding: 0 10px;
-    cursor: pointer;
-
-    & > div {
-      position: absolute;
-      left: 0;
-      transition: all .2s ease;
-    }
-  }
-
-  & p {
-    z-index: 1;
-    color: #fff;
-  }
-`
-
-const PreviewContainerWrapper = styled(FlexRow)`
-  border: 1px solid ${({ theme }) => theme.colors.sec.five};
-  padding: 10px;
-  height: 85%;
-  margin-left: 20px;
-  position: relative;
-  overflow-x: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    margin: 0;
-    border: none;
-  }
-`
-
-const PreviewContainer = styled(FlexRow)`
-  height: 100%;
-  position: absolute;
-  left: 0;
-  transition: all .2s ease;
-
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    margin-left: 12px;
-    width: 650px;
-  }
-`
-
 export default function CardPreview({ designState, designDispatch }) {
-  // const [view, setView] = useState("front")
   const viewChanger = useRef()
   const slider = useRef()
 

@@ -34,7 +34,7 @@ export default async function downloadDesign() {
   let height;
   let X;
   let Y;
-
+  
   if (cardsCanvas.width > 5000) {
     width = cardsCanvas.width / 8;
     height = cardsCanvas.height / 8;

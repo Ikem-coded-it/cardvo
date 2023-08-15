@@ -92,13 +92,13 @@ export default function Nav() {
         </CloseMenu>
 
         <ul>
-          <li>
+          <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/explore">Explore</StyledLink>
           </li>
-          <li>
+          <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/about">About us</StyledLink>
           </li>
-          <li>
+          <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/contact">Contact us</StyledLink>
           </li>
         </ul>
@@ -108,10 +108,10 @@ export default function Nav() {
         width="fit-content"
         >
           <StyledLink to="/auth/signin" ref={signinBtn}>
-            <BtnPrimary height="55px" width="130px">Sign in</BtnPrimary>
+            <BtnPrimary onClick={window.scrollTo(0, 0)} height="55px" width="130px">Sign in</BtnPrimary>
           </StyledLink>
           <StyledLink to="/auth/signup" ref={signupBtn}>
-            <BtnSecondary height="55px" width="130px">Sign up</BtnSecondary>
+            <BtnSecondary onClick={window.scrollTo(0, 0)} height="55px" width="130px">Sign up</BtnSecondary>
           </StyledLink>
         </BtnContainer>
 

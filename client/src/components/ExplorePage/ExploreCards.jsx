@@ -38,7 +38,7 @@ export default function ExploreCards() {
               key={index}>
                 <FlexRow width="100%" justify="space-between" padding="0 10px">
                   <BtnPrimary>
-                    <FaEdit color="#2563eb" />
+                    <FaEdit />
                   </BtnPrimary>
 
                   <FlexRow>
@@ -189,7 +189,6 @@ function Card ({
     }
 
     if(image !== "") {
-      console.log("here")
       background.current.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url(${image})`;
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

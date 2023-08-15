@@ -52,6 +52,7 @@ const RightSideSection = styled(Section)`
     height: fit-content;
     padding: 40px 0 0 0;
     width: 70%;
+    margin-top: 50px;
 
     & h1 {
       font-size: 35px;

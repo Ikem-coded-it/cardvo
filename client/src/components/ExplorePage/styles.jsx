@@ -196,6 +196,10 @@ export const ExploreCardsSection = styled(Section)`
     font-size: 30px;
     letter-spacing: -1px;
   }
+
+  @media(max-width: ${({ theme }) => theme.tablet}) {
+    gap: 80px;
+  }
 `
 
 export const CardsGrid = styled(Container)`
@@ -207,6 +211,12 @@ export const CardsGrid = styled(Container)`
   @media(max-width: ${({ theme }) => theme.tablet}) {
     grid-template-columns: repeat(auto-fill, 320px);
     grid-auto-rows: 250px;
+    row-gap: 150px;
+    margin-bottom: 100px;
+  }
+
+  @media(max-width: ${({ theme }) => theme.mobile}) {
+    gap: 190px;
   }
 `
 
@@ -222,36 +232,20 @@ export const CardDisplay = styled(FlexColumn)`
     border-radius: 0;
   }
 
-  & button:hover {
-    background-color: transparent;
-  }
-
   & button:active {
     background-color: rgba(0, );
   }
 
   & > div:nth-child(1) {
-    transform: translateY(-100%);
+    transform: translateY(-130%);
     transition: all .2s ease;
     z-index: 1;
-  }
-
-  &:hover > div:nth-child(1) {
-    transform: translateY(0);
-  }
-
-  &:hover > div:nth-child(2) {
-    transform: rotate(10deg) scale(1.1);
   }
 
   & > div:nth-child(3) {
-    transform: translateY(100%);
+    transform: translateY(130%);
     transition: all .2s ease;
     z-index: 1;
-  }
-
-   &:hover > div:nth-child(3) {
-    transform: translateY(0);
   }
 
 
@@ -264,9 +258,72 @@ export const CardDisplay = styled(FlexColumn)`
     z-index: 0;
   }
 
-  &:hover > div:nth-child(4) {
-    bottom: 0;
+  @media(hover: hover) {
+    & button:hover {
+      background-color: transparent;
+    }
+
+     &:hover > div:nth-child(1) {
+      transform: translateY(0);
+    }
+
+    &:hover > div:nth-child(2) {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+     &:hover > div:nth-child(3) {
+      transform: translateY(0);
+    }
+
+     &:hover > div:nth-child(4) {
+      bottom: 0;
+    }
   }
+
+  @media(max-width: ${({ theme }) => theme.tablet}) {
+    overflow-y: visible;
+    border-radius: 5px;
+    & button {
+      border: 1px solid ${({ theme }) => theme.colors.sec.nine}; 
+      color: ${({ theme }) => theme.colors.sec.nine};
+      border-radius: 5px;
+    }
+
+    & > div:nth-child(1) {
+      transform: translateY(-115%);
+      padding: 0;
+    }
+
+    & > div:nth-child(3) {
+      transform: translateY(115%);
+      padding: 0;
+    }
+
+    & > div:nth-child(4) {
+      display: none;
+    }
+    
+     @media(hover: none) {
+      & button:hover {
+        background-color: transparent;
+      }
+
+      &:hover > div:nth-child(1) {
+        transform: translateY(0);
+      }
+
+      &:hover > div:nth-child(2) {
+        transform: rotate(10deg) scale(1.1);
+      }
+
+      &:hover > div:nth-child(3) {
+        transform: translateY(0);
+      }
+
+      &:hover > div:nth-child(4) {
+        bottom: 0;
+      }
+    }
   }
 `
 

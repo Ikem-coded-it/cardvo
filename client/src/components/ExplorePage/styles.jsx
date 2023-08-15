@@ -313,7 +313,7 @@ export const CardDisplay = styled(FlexColumn)`
       }
 
       &:hover > div:nth-child(2) {
-        transform: rotate(10deg) scale(1.1);
+        transform: rotate(10deg) scale(1.2);
       }
 
       &:hover > div:nth-child(3) {

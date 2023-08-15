@@ -309,7 +309,7 @@ export const CardDisplay = styled(FlexColumn)`
       }
 
       &:hover > div:nth-child(1) {
-        transform: translateY(0);
+        transform: translateY(-115%);
       }
 
       &:hover > div:nth-child(2) {
@@ -317,7 +317,7 @@ export const CardDisplay = styled(FlexColumn)`
       }
 
       &:hover > div:nth-child(3) {
-        transform: translateY(0);
+        transform: translateY(115%);
       }
 
       &:hover > div:nth-child(4) {

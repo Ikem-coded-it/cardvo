@@ -1,5 +1,7 @@
 import Nav from "../components/Nav";
 import ExploreHeader from "../components/ExplorePage/Explore.header";
+import ExploreHundreds from "../components/ExplorePage/ExploreHundreds";
+import ExploreCards from "../components/ExplorePage/ExploreCards";
 import Footer from "../components/Footer";
 import { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
@@ -19,6 +21,8 @@ export default function ExplorePage() {
     <>
     <Nav />
     <ExploreHeader />
+    <ExploreHundreds />
+    <ExploreCards />
     <Footer />
     </>
   )

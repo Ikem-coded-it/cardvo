@@ -1,4 +1,4 @@
-import ExploreHeaderSection from "./styles";
+import { ExploreHeaderSection } from "./styles";
 import { FlexColumn, FlexRow } from "../styles/Container.styled";
 import { BtnSecondary } from "../styles/Button.styled";
 import { FaCaretDown } from "react-icons/fa";

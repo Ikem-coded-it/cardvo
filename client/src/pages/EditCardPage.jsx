@@ -1,11 +1,9 @@
-// import { PDFViewer } from '@react-pdf/renderer';
-import Nav from "../components/Nav";
+ import Nav from "../components/Nav";
 import Edit from '../components/EditCardPage/edit';
 import Footer from "../components/Footer";
 import { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { Context } from "../App";
-// import { Section } from '../components/styles/Section.styled';
 
 export default function EditCard () {
   const context = useContext(Context);

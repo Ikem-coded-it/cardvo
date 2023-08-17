@@ -23,7 +23,7 @@ export default function AboutParagraph() {
       <h1>About us</h1>
 
       <p>
-        Cardvo founded in 2022, by Zuri was developed by team 128. Our purpose is to serve you
+        Cardvo founded in 2022, by Zuri, designed by team 128 design team and developed by Ikemefuna, Fullstack software developer. Our purpose is to serve you
         an array of fancy credit card designs that you can view, edit, download and share with friends
         on social media platforms. There is an opportunity for you to create your own design based on 
         your preference for there are no limits to your creativity on Cardvo.

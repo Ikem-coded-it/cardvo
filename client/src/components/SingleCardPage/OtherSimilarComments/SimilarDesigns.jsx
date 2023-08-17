@@ -1,50 +1,38 @@
-import { ExploreCardsSection, CardDisplay } from "./styles";
-import { CardsGrid } from "./styles";
-import { FlexRow, Container } from "../styles/Container.styled"; 
-import { BtnPrimary } from "../styles/Button.styled";
-import { FaRegHeart } from "react-icons/fa"; 
-import { BsShare, BsBookmarks } from "react-icons/bs";
-import { AiOutlineEdit } from "react-icons/ai";
-import { FiDownload } from "react-icons/fi"; 
-import { BiCommentDetail } from "react-icons/bi"; 
-import { CardFrontView } from "../Card"; 
+import { SimilarDesignsContainer } from "../styles"
+import { FlexColumn } from "../../styles/Container.styled"
+import { CardFrontView } from "../../Card";
+import { StyledCardDisplay } from "../../Card/styles";
 
-export default function ExploreCards() {
-  return (
-    <ExploreCardsSection>
-      <h2>All free card designs</h2>
+export default function SimilarDesigns() {
+  return(
+    <SimilarDesignsContainer justify="flex-start">
+      <h3>View similar designs</h3>
 
-      <CardsGrid width="100%">
+      <FlexColumn>
         {
-          cardsInfo.map(({ 
-            cardNumberOne, 
-            cardNumberTwo, 
-            cardNumberThree, 
+          cardInfo.slice(0, 4).map(({
+            cardNumberOne,
+            cardNumberTwo,
+            cardNumberThree,
             cardNumberFour,
-            // name = "CAPTAIN AMERICA",
             expiration,
             color,
             image
           }, index) => {
             return(
-              <CardDisplay
+              <StyledCardDisplay
+              $m_width="160px"
               key={index}>
-                <FlexRow width="100%" justify="space-between" padding="0 10px">
-                  <BtnPrimary>
-                    <AiOutlineEdit />
-                  </BtnPrimary>
-
-                  <FlexRow>
-                    <BtnPrimary>
-                      <BsBookmarks />
-                    </BtnPrimary>
-                    <BtnPrimary>
-                      <FiDownload />
-                    </BtnPrimary>
-                  </FlexRow>
-                </FlexRow>
-
                 <CardFrontView
+                $height="70%"
+                $width="80%"
+                $h3size="15px"
+                $psize="12px"
+                $imgsize="20px"
+                $m_imgsize="15px"
+                $m_width="90%"
+                $m_h3size="12px"
+                $m_psize="8px"
                 cardNumberOne={cardNumberOne}
                 cardNumberTwo={cardNumberTwo}
                 cardNumberThree={cardNumberThree}
@@ -53,34 +41,16 @@ export default function ExploreCards() {
                 color={color}
                 image={image}
                 />
-
-                <FlexRow width="100%" justify="space-between" padding="0 10px">
-                  <FlexRow>
-                    <BtnPrimary>
-                      <FaRegHeart />
-                    </BtnPrimary>
-
-                    <BtnPrimary>
-                      <BiCommentDetail />
-                    </BtnPrimary>
-                  </FlexRow>
-
-                  <BtnPrimary>
-                    <BsShare />
-                  </BtnPrimary>
-                </FlexRow>
-
-                <Container height="100%" width="100%" />
-              </CardDisplay>
+              </StyledCardDisplay>
             )
           })
         }
-      </CardsGrid>
-    </ExploreCardsSection>
+      </FlexColumn>
+    </SimilarDesignsContainer>
   )
 }
 
-const cardsInfo = [
+const cardInfo = [
   {
     name: "captain america",
     cardNumberOne: "5896",
@@ -152,14 +122,5 @@ const cardsInfo = [
     cardNumberFour: "7391",
     expiration: "08/27",
     color: "#854d0e",
-  },{
-    name: "captain america",
-    cardNumberOne: "5896",
-    cardNumberTwo: "8712",
-    cardNumberThree: "5698",
-    cardNumberFour: "7391",
-    expiration: "08/27",
-    color: "#171717",
-    image: "https://t4.ftcdn.net/jpg/05/62/02/41/360_F_562024161_tGM4lFlnO0OczLYHFFuNNdMUTG9ekHxb.jpg"
-  },
+  }
 ]

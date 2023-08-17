@@ -6,6 +6,7 @@ import SigninPage from '../pages/SigninPage';
 import SignupPage from '../pages/SignupPage';
 import ExplorePage from '../pages/ExplorePage';
 import EditCard from '../pages/EditCardPage';
+import SingleCardPage from '../pages/SingleCardPage';
 
 const router = createBrowserRouter([
   {
@@ -35,12 +36,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/explore",
-    element: <ExplorePage />
+    children: [
+      {
+        index: true,
+        element: <ExplorePage />,
+      },
+      {
+        path: "card/:id",
+        element: <SingleCardPage />
+      },
+      {
+        path: "card/:id/edit",
+        element: <EditCard />
+      }
+    ]
   },
-  {
-    path: "/edit",
-    element: <EditCard />
-  }
 ])
 
 export default router;

@@ -12,6 +12,7 @@ export const Section = styled.section`
   gap: ${({ gap }) => gap};
   background-color: ${({ bg }) => bg};
   width: ${({ width }) => width};
+  flex: ${({ flex }) => flex};
 
   @media(max-width: ${({ theme }) => theme.tablet}) {
     padding: 40px 20px;

@@ -56,7 +56,7 @@ export const StyledViewOptionsSection = styled(Section)`
           font-size: 17px;
         }
         & button:nth-child(1) {
-          width: 150px;
+          width: 140px;
         }
       }
     }
@@ -120,8 +120,12 @@ export const CommentsContainer = styled(FlexColumn)`
     text-decoration: underline;
   }
 
+  & > .show {
+    overflow-y: visible;
+  }
+
   & > div:nth-child(2) {
-    margin-bottom: 60px;
+    overflow-y: hidden;
   }
 
   & textarea {
@@ -138,7 +142,7 @@ export const CommentsContainer = styled(FlexColumn)`
   @media(max-width: ${({ theme }) => theme.tablet}) {
     grid-row: 3 / 4;
     grid-column: 1 / 2;
-    margin-bottom: 40px;
+    // margin-bottom: 40px;
   }
 `
 

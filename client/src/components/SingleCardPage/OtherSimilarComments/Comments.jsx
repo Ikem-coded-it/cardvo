@@ -5,6 +5,8 @@ import picOne from "../../../../public/images/founders/ceo1.png";
 import picTwo from "../../../../public/images/founders/ceo2.png";
 import picThree from "../../../../public/images/founders/ceo3.png";
 import { Image } from "../../styles/Image.styled";
+import { BtnPrimary } from "../../styles/Button.styled";
+import { useRef } from "react";
 
 const comments = [
   {
@@ -38,6 +40,12 @@ const comments = [
 ]
 
 export default function Comments() {
+  const commentsContainer = useRef()
+
+  const handleToggleShowAllComments = () => {
+    commentsContainer.current.classList.toggle("show");
+  }
+
   return(
     <CommentsContainer width="100%" align="flex-start">
       <h3>Comments</h3>
@@ -47,7 +55,12 @@ export default function Comments() {
         <textarea placeholder="Add comment ..."></textarea>
       </FlexRow>
 
-      <FlexColumn align="flex-start" width="100%" gap="50px">
+      <FlexColumn
+      ref={commentsContainer}
+      align="flex-start" 
+      width="100%" 
+      height="500px" 
+      gap="50px">
         {
           comments.map(comment => {
             return (
@@ -62,6 +75,14 @@ export default function Comments() {
           })
         }
       </FlexColumn>
+
+      <BtnPrimary
+      onClick={handleToggleShowAllComments}
+      width="100%" 
+      bdradius="0" 
+      bg={({ theme }) => theme.colors.sec.two}>
+        + 5 more
+      </BtnPrimary>
     </CommentsContainer>
   )
 }

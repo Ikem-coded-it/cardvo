@@ -4,11 +4,11 @@ export const BtnPrimary = styled.button`
   height: ${({ height }) => height || "40px"};
   width: ${({ width }) => width || "80px"};
   border: 1px solid ${({ theme, border }) => border || theme.colors.sec.seven};
-  border-radius: 8px;
+  border-radius: ${({ bdradius }) => bdradius || "8px"};
   font-size: ${({ font }) => font || "21px"};
   cursor: pointer;
   color: ${({ color }) => color};
-  background-color: transparent;
+  background-color: ${({ bg }) => bg || "transparent"};
   display: flex;
   justify-content: center;
   align-items: center;

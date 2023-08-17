@@ -14,6 +14,7 @@ export const StyledHeader = styled.header`
   align-items: ${({ align }) => align};
   gap: ${({ gap }) => gap};
   overflow: hidden;
+  background-color: ${({ bg }) => bg};
 
   @media(max-width: ${({theme}) => theme.tablet}) {
     padding: 0 30px 100px 30px;

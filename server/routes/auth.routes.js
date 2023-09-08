@@ -31,7 +31,7 @@ router.get('/login/google', passport.authenticate('google', { scope : ['profile'
  
 router.get('/google/callback', passport.authenticate('google', {
     successRedirect: process.env.CLIENT_URL,
-    failureRedirect: "/login/failed"
+    failureRedirect: "/api/v1/auth/login/failed"
   })
 );
 
@@ -40,7 +40,7 @@ router.get('/login/facebook', passport.authenticate('facebook'));
 
 router.get('/facebook/callback', passport.authenticate('facebook', {
   successRedirect: process.env.CLIENT_URL,
-  failureRedirect: "/login/failed"
+  failureRedirect: "/api/v1/auth/login/failed"
 }));
 
 

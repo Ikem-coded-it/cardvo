@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const StyledLink = styled(Link)`
   width: ${({ width }) => width || 'fit-content'};
+  width: ${({ height }) => height || 'fit-content'};
   text-decoration: none;
   font-size: 20px;
   color: ${({ theme, color }) => color || theme.colors.font};

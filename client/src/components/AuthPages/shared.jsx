@@ -109,10 +109,6 @@ const StyledForm = styled.form`
     color: ${({ theme }) => theme.colors.sec.nine};
     letter-spacing: 2px;
   }
-
-  & input:invalid {
-    border: 1px solid red;
-  }
 `
 
 const PasswordInputContainer = styled(FlexRow)`
@@ -134,10 +130,6 @@ const PasswordInputContainer = styled(FlexRow)`
     input[type="text"] {
     border: none;
     width: 90%;
-
-    &:invalid {
-      border: 1px solid red;
-    }
   }
 `
 
@@ -179,9 +171,13 @@ LeftSide.propTypes = {
   paragragh: PropTypes.string
 }
 
-function GoogleBtn() {
+function GoogleBtn({ onClick }) {
   return(
-    <BtnPrimary height="60px" width="100%" font="17px">
+    <BtnPrimary
+    onClick={onClick}
+    height="60px"
+    width="100%"
+    font="17px">
       <Image
         src={googleIcon}
         alt="google button icon"
@@ -193,9 +189,17 @@ function GoogleBtn() {
   )
 }
 
-function FacebookBtn() {
+GoogleBtn.propTypes = {
+  onClick: PropTypes.func
+}
+
+function FacebookBtn({ onClick }) {
   return (
-    <BtnPrimary height="60px" width="100%" font="17px">
+    <BtnPrimary
+    onClick={onClick}
+    height="60px"
+    width="100%"
+    font="17px">
       <Image
         src={facebookIcon}
         alt="facebook button icon"
@@ -205,6 +209,10 @@ function FacebookBtn() {
       Sign in with facebook
     </BtnPrimary>
   )
+}
+
+FacebookBtn.propTypes = {
+  onClick: PropTypes.func
 }
 
 function PasswordInput() {

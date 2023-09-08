@@ -2,30 +2,49 @@ import { RouterProvider } from 'react-router-dom';
 import router from './routes/index'
 import { ThemeProvider } from 'styled-components';
 import theme from './theme/index.js';
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
-export const Context = createContext(null)
+export const AppContext = createContext(null)
 
 import './App.css'
 
 function App() {
-  const [user, setUser] = useState("Ikem")
+  const serverURL = "http://localhost:3000/api/v1"
+  const [user, setUser] = useState(null)
   const [currentPage, setCurrentPage] = useState(null);
+
+  const getUser = async() => {
+    try {
+      const response = await axios.get(
+        `${serverURL}/auth/login/success`,
+        {withCredentials: true}
+      )
+      setUser(response.data.user)
+    } catch (error) {
+      setUser(null)
+    }
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
 
   const values = {
     user,
     setUser,
     currentPage,
-    setCurrentPage
+    setCurrentPage,
+    serverURL,
   }
 
   return (
     <>
-    <Context.Provider value={values}>
+    <AppContext.Provider value={values}>
       <ThemeProvider theme={theme}>
         <RouterProvider router={router} />
       </ThemeProvider>
-    </Context.Provider>
+    </AppContext.Provider>
     </>
   )
 }

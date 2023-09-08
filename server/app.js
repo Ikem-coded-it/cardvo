@@ -3,6 +3,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const cors = require("cors");
 const logger = require('morgan');
 const session = require("express-session");
 const passport = require("passport");
@@ -10,7 +11,14 @@ const passport = require("passport");
 const indexRouter = require('./routes/index');
 const authRouter = require("./routes/auth.routes");
 
+const corsOptions = {
+  origin: "http://localhost:5173",
+  optionsSuccessStatus: 200,
+  credentials: true
+}
+
 const app = express();
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

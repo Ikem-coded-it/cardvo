@@ -5,11 +5,11 @@ import ExploreCards from "../components/ExplorePage/ExploreCards";
 import Footer from "../components/Footer";
 import { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
-import { Context } from "../App";
+import { AppContext } from "../App";
 
 
 export default function ExplorePage() {
-  const context = useContext(Context);
+  const context = useContext(AppContext);
   const location = useLocation();
 
   useEffect(() => {

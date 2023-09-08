@@ -9,10 +9,66 @@ import {
 } from "./shared";
 import { FlexColumn, FlexRow } from "../styles/Container.styled";
 import StyledLink from "../styles/Link.styled";
+import { AppContext } from "../../App";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import LoaderSpinner from "../Loader";
+import MessageDisplay from "../MessageDisplay";
 
 export default function SignupRightSide() {
+  const context = useContext(AppContext);
+  const navigate = useNavigate();
+  const [registering, setRegistering] = useState(false);
+  const [displayMessage, setDisplayMessage] = useState(null);
+
+  // sign up with email and password
+  const handleLocalSignup = async(e) => {
+    e.preventDefault()
+    setRegistering(true);
+    const serverURL = `${context.serverURL}/auth/register`;
+
+    const newUser = {
+      fullName: e.target.name.value,
+      email: e.target.email.value,
+      password: e.target.password.value
+    }
+
+    try {
+      const response = await axios.post(serverURL, newUser);
+      if (response.data.success === true) {
+        setRegistering(false);
+        navigate("/auth/signin")
+      }
+    } catch(error) {
+      setRegistering(false);
+      setDisplayMessage(error.response.data.message);
+    }
+  }
+
+  // sign up with google
+  const handleGoogleAuth = () => {
+    window.open(`${context.serverURL}/auth/google/callback`, "_self");
+  }
+
+  // sign up with facebook
+  const handleFacebookAuth = () => {
+    window.open(`${context.serverURL}/auth/login/facebook`, "_self");
+  }
+
+  function closeMessage() {
+    setDisplayMessage(null)
+  }
+
   return (
     <RightSideSection>
+      {
+        displayMessage !== null ? (
+          <MessageDisplay message={displayMessage} closeMessage={closeMessage} />
+        ) : (
+          null
+        )
+      }
       <h1>Create your account</h1>
 
       <p>
@@ -21,13 +77,13 @@ export default function SignupRightSide() {
         <span>Free</span> for all to use.
       </p>
 
-      <GoogleBtn />
+      <GoogleBtn onClick={handleGoogleAuth} />
 
-      <FacebookBtn />
+      <FacebookBtn onClick={handleFacebookAuth} />
 
       <OrLine width="100%"><div />  OR <div /></OrLine>
 
-      <StyledForm>
+      <StyledForm onSubmit={(e) => handleLocalSignup(e)}>
         <FlexColumn align="flex-start">
           <label htmlFor="name">Full name</label>
           <input type="text" name="name" id="name" minLength={3} required/>
@@ -50,7 +106,13 @@ export default function SignupRightSide() {
           </label>
         </FlexRow>
 
-        <SignupSigninBtn>Create account</SignupSigninBtn>
+        <SignupSigninBtn type="submit">
+          { registering ? (
+            <LoaderSpinner type="spin" height={40} width={40} />
+          ) : (
+            "Create account"
+          ) }
+        </SignupSigninBtn>
       </StyledForm>
 
       <p>

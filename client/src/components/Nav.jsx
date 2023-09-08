@@ -9,7 +9,7 @@ import { StyledNav } from "./styles/Nav.styled";
 import { BtnPrimary, BtnSecondary } from "./styles/Button.styled";
 import StyledLink from "./styles/Link.styled";
 import { useRef, useEffect, useContext } from "react";
-import { Context } from "../App";
+import { AppContext } from "../App";
 import styled from "styled-components";
 
 const BtnContainer = styled(FlexRow)`
@@ -33,7 +33,7 @@ const BtnContainer = styled(FlexRow)`
 `
 
 export default function Nav() {
-  const context = useContext(Context);
+  const context = useContext(AppContext);
   const mobileNav = useRef()
   const signupBtn = useRef()
   const signinBtn = useRef()

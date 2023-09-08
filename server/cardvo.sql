@@ -12,7 +12,7 @@ CREATE TABLE federated_credentials (
   provider VARCHAR NOT NULL,
   subject VARCHAR NOT NULL,
   CONSTRAINT unique_user_id UNIQUE(user_id)
-)
+);
 
 CREATE TABLE card_designs (
   id BIGSERIAL NOT NULL PRIMARY KEY,

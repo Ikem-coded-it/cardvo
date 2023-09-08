@@ -10,7 +10,7 @@ export const AppContext = createContext(null)
 import './App.css'
 
 function App() {
-  const serverURL = "http://localhost:3000/api/v1"
+  const serverURL = import.meta.env.VITE_SERVER_URL;
   const [user, setUser] = useState(null)
   const [currentPage, setCurrentPage] = useState(null);
 

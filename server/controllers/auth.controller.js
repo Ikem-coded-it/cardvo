@@ -1,4 +1,4 @@
-const { pool, poolAsyncQuery } =  require("../config/db");
+const { db, dbAsyncQuery } =  require("../config/db");
 const queries = require("../queries/auth.queries");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require('bcrypt');
@@ -9,7 +9,7 @@ const FacebookStrategy = require('passport-facebook');
 const { validateSignUp  } = require("../utils/validator");
 
 const getAllUsers = asyncHandler((req, res) => {
-  pool.query(queries.getAllUsers, (err, result) => {
+  db.query(queries.getAllUsers, (err, result) => {
     return res.status(200).json({
       success: true,
       data: result.rows
@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async(req, res) => {
     })
   }
 
-  const existingUser = await poolAsyncQuery(queries.getUserByEmail, [value.email]);
+  const existingUser = await dbAsyncQuery(queries.getUserByEmail, [value.email]);
 
   if (existingUser.rows.length) {
     return res.status(400).json({
@@ -42,7 +42,7 @@ const registerUser = asyncHandler(async(req, res) => {
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(value.password, saltRounds);
 
-  const result = await poolAsyncQuery(
+  const result = await dbAsyncQuery(
     queries.registerUser,
     [value.fullName, value.email, hashedPassword, new Date().toISOString()]
   )
@@ -66,7 +66,7 @@ const initializeLocalStrategy = () => {
   passport.use(new LocalStrategy(
     {usernameField:'email'},
     function verify(email, password, done) {
-    pool.query(queries.getUserByEmail, [email], (err, result) => {
+    db.query(queries.getUserByEmail, [email], (err, result) => {
       if (err) return done(err);
       const user = result.rows[0];
       if (!user) return done(null, false);
@@ -87,7 +87,7 @@ const initializeLocalStrategy = () => {
 
   passport.deserializeUser(function(user, done) {
     process.nextTick(function() {
-      pool.query(queries.getUserByEmail, [user.username], (err, result) => {
+      db.query(queries.getUserByEmail, [user.username], (err, result) => {
         if (err) throw err
         const deserializedUser = result.rows[0];
         return done(null, deserializedUser);
@@ -105,7 +105,7 @@ const initializeGoogleStrategy = () => {
     scope: [ 'profile' ]
   }, function verify(issuer, profile, done) {
     // search for user credentials in socials db
-    pool.query(queries.getFederatedCredentials, [ 
+    db.query(queries.getFederatedCredentials, [ 
       issuer,
       profile.id
     ], function(err, result) {
@@ -116,7 +116,7 @@ const initializeGoogleStrategy = () => {
       // if user not in socials db, create user in local db
       if (!googleUser) {
         
-        pool.query(queries.registerUser, [
+        db.query(queries.registerUser, [
           profile.displayName,
           profile.emails[0].value,
           "none",
@@ -126,7 +126,7 @@ const initializeGoogleStrategy = () => {
 
           // store locally created user in socials db with same id
           const id = result.rows[0].id;
-          pool.query(queries.createFederatedCredential, [
+          db.query(queries.createFederatedCredential, [
             id,
             issuer,
             profile.id
@@ -140,7 +140,7 @@ const initializeGoogleStrategy = () => {
 
         // we found user in socials db, use id and search for him in local db
       } else {
-        pool.query(queries.getUserById, [ googleUser.user_id ], function(err, result) {
+        db.query(queries.getUserById, [ googleUser.user_id ], function(err, result) {
           if (err) return done(err);
 
           const user = result.rows[0]
@@ -172,7 +172,7 @@ const initializeFacebookStrategy = () => {
     state: true
   }, function verify(accessToken, refreshToken, profile, done) {
     // search for user credentials in socials db
-    pool.query(queries.getFederatedCredentials, [
+    db.query(queries.getFederatedCredentials, [
       'https://www.facebook.com',
       profile.id
     ], function(err, result) {
@@ -181,7 +181,7 @@ const initializeFacebookStrategy = () => {
       const facebookUser = result.rows[0];
       
       if (!facebookUser) {
-        pool.query(queries.registerUser, [
+        db.query(queries.registerUser, [
           profile.displayName,
           // facebook does not provide email so store displayname prefixed with 'facebook' instead
           `${profile.provider}-${profile.displayName}`,
@@ -192,7 +192,7 @@ const initializeFacebookStrategy = () => {
 
           // store locally created user in socials db with same id
           const id = result.rows[0].id;
-           pool.query(queries.createFederatedCredential, [
+           db.query(queries.createFederatedCredential, [
             id,
             'https://www.facebook.com',
             profile.id
@@ -205,7 +205,7 @@ const initializeFacebookStrategy = () => {
 
         // we found user in socials db, use id and search for him in local db
       } else {
-        pool.query(queries.getUserById, [ facebookUser.user_id ], function(err, result) {
+        db.query(queries.getUserById, [ facebookUser.user_id ], function(err, result) {
           if (err) return done(err);
 
           const user = result.rows[0]

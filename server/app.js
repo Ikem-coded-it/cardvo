@@ -13,7 +13,6 @@ const authRouter = require("./routes/auth.routes");
 
 const corsOptions = {
   origin: process.env.ALLOWED_CORS_ORIGIN,
-  methods: "GET,POST,PUT,DELETE",
   optionsSuccessStatus: 200,
   credentials: true
 }

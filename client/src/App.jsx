@@ -14,20 +14,27 @@ function App() {
   const [user, setUser] = useState(null)
   const [currentPage, setCurrentPage] = useState(null);
 
+  // keeps track of when data fetch is complete to render app
+  const [fetching, setFetching] = useState(false);
+
   const getUser = async() => {
     try {
+      setFetching(true)
       const response = await axios.get(
         `${serverURL}/auth/login/success`,
         {withCredentials: true}
       )
       setUser(response.data.user)
+      setFetching(false)
     } catch (error) {
       setUser(null)
+      setFetching(false)
     }
   }
 
   useEffect(() => {
     getUser()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const values = {
@@ -42,7 +49,9 @@ function App() {
     <>
     <AppContext.Provider value={values}>
       <ThemeProvider theme={theme}>
-        <RouterProvider router={router} />
+        {
+          fetching === false && <RouterProvider router={router} /> 
+        }
       </ThemeProvider>
     </AppContext.Provider>
     </>

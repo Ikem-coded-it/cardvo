@@ -41,7 +41,7 @@ export default function Nav() {
 
   useEffect(() => {
     if (context.currentPage) {
-      if(context.currentPage === '/auth/signup') {
+      if(context.currentPage === '/auth/signup' || context.user) {
         signupBtn.current.style.display = 'none';
       } else {
         signupBtn.current.style.display = 'block';
@@ -63,7 +63,7 @@ export default function Nav() {
         signinBtn.current.style.display = 'block';
       }
     }
-  }, [context.currentPage])
+  }, [context.currentPage, context.user])
 
   const handleOpenMenu = () => {
     mobileNav.current.classList.add('open');

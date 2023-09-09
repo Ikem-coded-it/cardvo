@@ -5,14 +5,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const logger = require('morgan');
-const session = require("express-session");
+const session = require('express-session');
 const passport = require("passport");
 
 const indexRouter = require('./routes/index');
 const authRouter = require("./routes/auth.routes");
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: process.env.ALLOWED_CORS_ORIGIN,
+  methods: "GET,POST,PUT,DELETE",
   optionsSuccessStatus: 200,
   credentials: true
 }
@@ -27,7 +28,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // passport
 app.use(passport.initialize());
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
+app.use(session({
+  name: "session",
+  keys: [process.env.SESSION_SECRET],
+  maxAge: 24 * 60 * 60 * 100,
+  secret: process.env.SESSION_SECRET,
+  resave: false, 
+  saveUninitialized: true 
+}));
 app.use(passport.authenticate("session"));
 
 app.use('/api/v1', indexRouter);

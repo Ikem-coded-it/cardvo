@@ -1,13 +1,16 @@
 require('dotenv').config();
 const redis = require('redis');
 const session = require("express-session");
-
 const RedisStore = require("connect-redis").default;
+
 //Configure redis client
 const redisClient = redis.createClient({
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-})
+  password: process.env['REDIS_PASSWORD'],
+  socket: {
+    host: process.env['REDIS_HOST'],
+    port: process.env['REDIS_PORT']
+  }
+});
 
 redisClient.connect().catch(console.error);
 

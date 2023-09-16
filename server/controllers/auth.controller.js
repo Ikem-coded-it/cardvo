@@ -115,10 +115,9 @@ const initializeGoogleStrategy = () => {
 
       // if user not in socials db, create user in local db
       if (!googleUser) {
-        
         db.query(queries.registerUser, [
-          profile.displayName,
-          profile.emails[0].value,
+          profile.name.givenName + ' ' + profile.name.familyName,
+          issuer,
           "none",
           new Date().toISOString()
         ], function(err, result) {

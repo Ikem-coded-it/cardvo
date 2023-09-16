@@ -42,7 +42,8 @@ export default function Nav() {
   useEffect(() => {
     if (context.currentPage) {
       if(context.currentPage === '/auth/signup' || context.user) {
-        signupBtn.current.style.display = 'none';
+        signupBtn.current.style.display = 'none !important';
+        // signupBtn.current.style.opacity = 0;
       } else {
         signupBtn.current.style.display = 'block';
       }

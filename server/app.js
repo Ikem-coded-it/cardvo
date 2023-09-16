@@ -7,6 +7,7 @@ const cors = require("cors");
 const logger = require('morgan');
 const session = require('express-session');
 const passport = require("passport");
+const sessionStore = require("./config/redis");
 
 const indexRouter = require('./routes/index');
 const authRouter = require("./routes/auth.routes");
@@ -28,13 +29,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // passport
 app.use(passport.initialize());
 app.use(session({
-  name: "session",
-  keys: [process.env.SESSION_SECRET],
-  maxAge: 24 * 60 * 60 * 100,
+  name: process.env.SESSION_NAME,
+  store: sessionStore,
   secret: process.env.SESSION_SECRET,
   resave: false, 
-  saveUninitialized: true 
+  saveUninitialized: true,
+  cookie: {
+    secure: false, // if true only transmit cookie over https
+    httpOnly: false, // if true prevent client side JS from reading the cookie 
+    maxAge: 1000 * 60 * 10 // session max age in miliseconds
+  }
 }));
+
 app.use(passport.authenticate("session"));
 
 app.use('/api/v1', indexRouter);

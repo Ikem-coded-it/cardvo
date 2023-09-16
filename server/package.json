@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "connect-redis": "^7.1.0",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
@@ -26,7 +27,8 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",
-    "pg-pool": "^3.6.1"
+    "pg-pool": "^3.6.1",
+    "redis": "^4.6.8"
   },
   "devDependencies": {
     "jest": "^29.6.4",

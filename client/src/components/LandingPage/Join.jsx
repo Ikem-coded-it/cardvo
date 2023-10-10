@@ -62,12 +62,12 @@ export default function Join() {
   return (
     <TextimonialSection
     id="testimonies"
-    height="480px" 
-    padding="0 90px" 
-    justify="center"
-    gap="40px">
+    $height="480px" 
+    $padding="0 90px" 
+    $justify="center"
+    $gap="40px">
       <h2>Join over 50,000 people worldwide</h2>
-      <TestimonialContainer gap="50px">
+      <TestimonialContainer $gap="50px">
         {
           data.map(function(datum, index) {
             return <Card 
@@ -86,24 +86,24 @@ export default function Join() {
 
 function Card({ testimony, src, name, bank }) {
   return (
-    <TestimonialCard flex="1" height="300px" padding="20px">
-      <FlexRow width="100%" justify="flex-start">
+    <TestimonialCard $flex="1" $height="300px" $padding="20px">
+      <FlexRow $width="100%" $justify="flex-start">
         <i className="fa-solid fa-quote-left"></i>
       </FlexRow>
 
       <p>{testimony}</p>
 
-      <FlexRow width="100%" justify="flex-end">
-        <FlexColumn height="100%" justify="center" gap="0" align="flex-end">
+      <FlexRow $width="100%" $justify="flex-end">
+        <FlexColumn $height="100%" $justify="center" $gap="0" $align="flex-end">
           <h4>{name}</h4>
           <p>{bank}</p>
         </FlexColumn>
         <Image
-        height="70px"
-        width="70px"
+        $height="70px"
+        $width="70px"
         src={src}
         alt="person headshot"
-        bdradius="50%"
+        $bdradius="50%"
         />
       </FlexRow>
     </TestimonialCard>

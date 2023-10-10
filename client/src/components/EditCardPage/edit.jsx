@@ -35,8 +35,8 @@ export default function Edit() {
 
   return (
     <EditSection 
-    padding="0 30px" 
-    align="flex-start">
+    $padding="0 30px" 
+    $align="flex-start">
       <ControlPanel designDispatch={designDispatch} designState={designState} />
       <CardPreview designState={designState} designDispatch={designDispatch} />
     </EditSection>

@@ -51,34 +51,34 @@ export function CardFrontView ({
     $m_imgsize={$m_imgsize}
     $m_psize={$m_psize}
     $m_h3size={$m_h3size}
-    justify="space-between" 
+    $justify="space-between" 
     ref={background}>
-      <FlexRow justify="space-between" width="100%">
+      <FlexRow $justify="space-between" $width="100%">
         <Image
         src={chipLogo}
         alt="chip logo"
-        height="50px"
-        width="50px"
+        $height="50px"
+        $width="50px"
         loading="lazy"
         />
 
         <Image
         src={masterCardLogo}
         alt="master card logo"
-        height="50px"
-        width="70px"
+        $height="50px"
+        $width="70px"
         loading="lazy"
         />
       </FlexRow>
 
-       <FlexRow justify="space-between" gap="40px">
+       <FlexRow $justify="space-between" $gap="40px">
         <h3>{cardNumberOne}</h3>
         <h3>{cardNumberTwo}</h3>
         <h3>{cardNumberThree}</h3>
         <h3>{cardNumberFour}</h3>
       </FlexRow>
 
-      <FlexRow justify="space-between" width="100%">
+      <FlexRow $justify="space-between" $width="100%">
         <p>{name}</p>
 
         <p>{expiration}</p>
@@ -143,33 +143,33 @@ export function CardBackView({
     $m_blackheight={$m_blackheight}
     $m_cvvheight={$m_cvvheight}
     id="card-back"
-    gap="0" 
+    $gap="0" 
     ref={cardBackground}>
 
-      <FlexRow justify="flex-end" width="100%" padding="0 20px">ELECTRONIC USE ONLY</FlexRow>
-      <FlexRow width="100%" height="20px" bg="black" />
+      <FlexRow $justify="flex-end" $width="100%" $padding="0 20px">ELECTRONIC USE ONLY</FlexRow>
+      <FlexRow $width="100%" $height="20px" $bg="black" />
 
-      <FlexColumn gap="1px" padding="0 10px">
-        <FlexRow  justify="flex-start" width="100%">AUTHORIZED SIGNATURE</FlexRow>
+      <FlexColumn $gap="1px" $padding="0 10px">
+        <FlexRow  $justify="flex-start" $width="100%">AUTHORIZED SIGNATURE</FlexRow>
         <FlexRow 
-        height="17px" 
-        bg="white" 
-        width="100%" 
-        bdradius="5px" 
-        color="black"
-        justify="flex-end"
-        padding="0 10px">{cvv}</FlexRow>
+        $height="17px" 
+        $bg="white" 
+        $width="100%" 
+        $bdradius="5px" 
+        $color="black"
+        $justify="flex-end"
+        $padding="0 10px">{cvv}</FlexRow>
         <p>
           The card should be used in accordance with the bank terms and conditions
           <br />
           24 Hours Contact Bank Centre {'(234)'} 0900001 or send an email to customer.
         </p>
-        <FlexRow justify="flex-start" width="100%">
+        <FlexRow $justify="flex-start" $width="100%">
           <Image
           src={masterCardLogo}
           alt="master card logo"
-          height="50px"
-          width="70px"
+          $height="50px"
+          $width="70px"
           />
         </FlexRow>
       </FlexColumn>

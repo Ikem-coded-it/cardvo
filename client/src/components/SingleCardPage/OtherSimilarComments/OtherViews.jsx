@@ -6,17 +6,17 @@ import { StyledCardDisplay } from "../../Card/styles";
 export default function OtherViews() {
   return (
     <OtherViewsContainer 
-    align="flex-start" 
-    width="100%"
-    height="250px">
+    $align="flex-start" 
+    $width="100%"
+    $height="250px">
       <h3>Other views</h3>
 
-      <FlexRow width="100%" height="100%">
+      <FlexRow $width="100%" $height="100%">
         <StyledCardDisplay 
-        flex="1" 
+        $flex="1" 
         $height="100%"
         $m_width="100px"
-        bdradius="5px"
+        $bdradius="5px"
         $bg="transparent">
           <CardFrontView
           $m_width="90%"
@@ -27,10 +27,10 @@ export default function OtherViews() {
         </StyledCardDisplay>
 
         <StyledCardDisplay 
-        flex="1" 
+        $flex="1" 
         $height="100%"
         $m_width="100px"
-        bdradius="5px"
+        $bdradius="5px"
         $bg="transparent">
           <CardBackView
           $m_width="90%"

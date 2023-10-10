@@ -19,7 +19,7 @@ const AboutParagraphSection = styled(Section)`
 
 export default function AboutParagraph() {
   return (
-    <AboutParagraphSection gap="30px" padding="50px 180px 100px 180px">
+    <AboutParagraphSection $gap="30px" $padding="50px 180px 100px 180px">
       <h1>About us</h1>
 
       <p>

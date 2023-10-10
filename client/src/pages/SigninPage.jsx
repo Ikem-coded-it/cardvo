@@ -19,7 +19,7 @@ export default function SigninPage() {
   return (
     <>
     <Nav />
-    <WholePageSection padding="40px 40px">
+    <WholePageSection $padding="40px 40px">
       <LeftSide />
       <SigninRightSide />
     </WholePageSection>

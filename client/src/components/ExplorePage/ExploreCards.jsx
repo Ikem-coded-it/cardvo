@@ -14,7 +14,7 @@ export default function ExploreCards() {
     <ExploreCardsSection>
       <h2>All free card designs</h2>
 
-      <CardsGrid width="100%">
+      <CardsGrid $width="100%">
         {
           cardsInfo.map(({ 
             cardNumberOne, 
@@ -29,7 +29,7 @@ export default function ExploreCards() {
             return(
               <CardDisplay
               key={index}>
-                <FlexRow width="100%" justify="space-between" padding="0 10px">
+                <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
                   <BtnPrimary>
                     <AiOutlineEdit />
                   </BtnPrimary>
@@ -54,7 +54,7 @@ export default function ExploreCards() {
                 image={image}
                 />
 
-                <FlexRow width="100%" justify="space-between" padding="0 10px">
+                <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
                   <FlexRow>
                     <BtnPrimary>
                       <FaRegHeart />
@@ -70,7 +70,7 @@ export default function ExploreCards() {
                   </BtnPrimary>
                 </FlexRow>
 
-                <Container height="100%" width="100%" />
+                <Container $height="100%" $width="100%" />
               </CardDisplay>
             )
           })

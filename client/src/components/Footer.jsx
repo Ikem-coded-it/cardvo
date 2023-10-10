@@ -25,7 +25,7 @@ const StyledLink = styled(Link)`
 export default function Footer() {
   return (
     <StyledFooter>
-      <FlexRow width="100%" align="flex-start" justify="space-between">
+      <FlexRow $width="100%" $align="flex-start" $justify="space-between">
         <StyledList>
           <li>
             <h3>Our Company</h3>
@@ -78,17 +78,17 @@ export default function Footer() {
         </StyledList>
       </FlexRow>
 
-      <FlexRow width="100%" align="flex-start" justify="space-between">
-        <FlexColumn align="flex-start" gap="30px">
+      <FlexRow $width="100%" $align="flex-start" $justify="space-between">
+        <FlexColumn $align="flex-start" $gap="30px">
           <h3>Visit us on social media</h3>
-          <FlexRow gap="50px">
+          <FlexRow $gap="50px">
             {
               icons.map((icon, index) => {
                 return <Image
                   key={index}
                   src={icon.src}
-                  height="30px"
-                  width="auto"
+                  $height="30px"
+                  $width="auto"
                   alt={icon.name}
                 />
               })
@@ -97,11 +97,11 @@ export default function Footer() {
           <p>Copyright @ 2022 Yenspace. All rights reserved</p>
         </FlexColumn>
 
-        <FlexColumn align="flex-end">
+        <FlexColumn $align="flex-end">
           <h3>Subscribe to Mailing List</h3>
-          <FlexRow gap="0" height="35px">
+          <FlexRow $gap="0" $height="35px">
             <input type="text" placeholder="Save money with our financial advice" />
-            <BtnSecondary width="120px" height="100%">Subscribe</BtnSecondary>
+            <BtnSecondary $width="120px" $height="100%">Subscribe</BtnSecondary>
           </FlexRow>
         </FlexColumn>
       </FlexRow>

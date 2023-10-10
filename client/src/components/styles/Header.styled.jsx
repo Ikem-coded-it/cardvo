@@ -8,13 +8,13 @@ export const StyledHeader = styled.header`
   box-sizing: border-box;
   display: flex;
   position: relative;
-  margin: ${({ margin }) => margin};
-  padding: ${({ padding }) => padding};
-  justify-content: ${({ justify }) => justify};
-  align-items: ${({ align }) => align};
-  gap: ${({ gap }) => gap};
+  margin: ${({ $margin }) => $margin};
+  padding: ${({ $padding }) => $padding};
+  justify-content: ${({ $justify }) => $justify};
+  align-items: ${({ $align }) => $align};
+  gap: ${({ $gap }) => $gap};
   overflow: hidden;
-  background-color: ${({ bg }) => bg};
+  background-color: ${({ $bg }) => $bg};
 
   @media(max-width: ${({theme}) => theme.tablet}) {
     padding: 0 30px 100px 30px;

@@ -94,11 +94,11 @@ const CompassIconContainer = styled(Container)`
 export default function GettingStarted() {
   return (
     <Section 
-    justify="space-around"
-    height="650px">
+    $justify="space-around"
+    $height="650px">
       <RandomIconsContainer>
         <h3>Trusted by 20+ financial services</h3>
-        <FlexRow gap="100px">
+        <FlexRow $gap="100px">
           <i className="fa-brands fa-cc-mastercard"></i>
           <i className="fa-solid fa-money-check-dollar"></i>
           <i className="fa-solid fa-sack-dollar"></i>
@@ -107,18 +107,18 @@ export default function GettingStarted() {
         </FlexRow>
       </RandomIconsContainer>
 
-      <FlexColumn width="100%">
+      <FlexColumn $width="100%">
         <Heading>Getting started with Cardvo product</Heading>
         <SliderWrapper>
-          <GettingStartedContainer gap="50px">
+          <GettingStartedContainer $gap="50px">
 
-            <GettingStartedCard height="250px" width="320px">
-              <FlexRow justify="flex-start" height="50%" width="100%">
-                <CompassIconContainer height="70px" width="70px">
+            <GettingStartedCard $height="250px" $width="320px">
+              <FlexRow $justify="flex-start" $height="50%" $width="100%">
+                <CompassIconContainer $height="70px" $width="70px">
                   <i className="fa-solid fa-compass"></i>
                 </CompassIconContainer>
               </FlexRow>
-              <FlexColumn justify="space-between" gap="0" height="50%">
+              <FlexColumn $justify="space-between" $gap="0" $height="50%">
                 <h2>Explore</h2>
                 <p>
                   Sort through designs from creatives and wield the choice
@@ -127,13 +127,13 @@ export default function GettingStarted() {
               </FlexColumn>
             </GettingStartedCard>
 
-            <GettingStartedCard height="250px" width="320px">
-              <FlexRow justify="flex-start" height="50%" width="100%">
-                <CompassIconContainer height="70px" width="70px">
+            <GettingStartedCard $height="250px" $width="320px">
+              <FlexRow $justify="flex-start" $height="50%" $width="100%">
+                <CompassIconContainer $height="70px" $width="70px">
                   <i className="fa-solid fa-compass"></i>
                 </CompassIconContainer>
               </FlexRow>
-              <FlexColumn justify="space-between" gap="0" height="50%">
+              <FlexColumn $justify="space-between" $gap="0" $height="50%">
                 <h2>Create</h2>
                 <p>
                   Freedom to play and customize from our growing collection
@@ -142,13 +142,13 @@ export default function GettingStarted() {
               </FlexColumn>
             </GettingStartedCard>
 
-            <GettingStartedCard height="250px" width="320px">
-              <FlexRow justify="flex-start" height="50%" width="100%">
-                <CompassIconContainer height="70px" width="70px">
+            <GettingStartedCard $height="250px" $width="320px">
+              <FlexRow $justify="flex-start" $height="50%" $width="100%">
+                <CompassIconContainer $height="70px" $width="70px">
                   <i className="fa-solid fa-compass"></i>
                 </CompassIconContainer>
               </FlexRow>
-              <FlexColumn justify="space-between" gap="0" height="50%">
+              <FlexColumn $justify="space-between" $gap="0" $height="50%">
                 <h2>Use</h2>
                 <p>
                   Save, download, share and wield the power to make this a reality.

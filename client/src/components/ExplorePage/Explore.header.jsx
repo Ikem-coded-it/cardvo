@@ -12,13 +12,13 @@ export default function ExploreHeader() {
   }
 
   return (
-    <ExploreHeaderSection padding="100px 90px" gap="43px">
+    <ExploreHeaderSection $padding="100px 90px" $gap="43px">
       <h1>Find Your Unique Design</h1>
 
       <p>Create your custom credit card.</p>
 
-      <FlexRow gap="0" height="40px">
-        <FlexColumn padding="0 30px">
+      <FlexRow $gap="0" $height="40px">
+        <FlexColumn $padding="0 30px">
           <FlexRow onClick={handleOpenCategories}>
             All Cards 
             <FaCaretDown 
@@ -38,7 +38,7 @@ export default function ExploreHeader() {
         type="search"
         placeholder="Any design style on your mind?"/>
 
-        <BtnSecondary width="120px" bdradius="0">
+        <BtnSecondary $width="120px" $bdradius="0">
           <i className="fa-solid fa-search"></i>
           Search
         </BtnSecondary>

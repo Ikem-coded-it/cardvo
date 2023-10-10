@@ -77,7 +77,7 @@ const WhyCard = styled(FlexRow)`
 
 const Background = styled(Container)`
   background-color: ${({ theme }) => theme.colors.sec.five};
-  background-image: url(${({ bg }) => bg});
+  background-image: url(${({ $bg }) => $bg});
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -91,10 +91,10 @@ const Background = styled(Container)`
 export default function WhyCardvo() {
   return (
     <WhyCarvoSection
-    gap="50px"
-    padding="50px 90px"
-    justify="center"
-    bg={({theme}) => theme.colors.sec.one}>
+    $gap="50px"
+    $padding="50px 90px"
+    $justify="center"
+    $bg={({theme}) => theme.colors.sec.one}>
       <h1>Why Cardvo product?</h1>
       {
         data.map(function (datum, index) {
@@ -135,26 +135,26 @@ function Card({ heading, description, src, data }) {
 
   return (
     <WhyCard 
-    gap="100px" 
-    height="300px" 
-    width="100%" 
+    $gap="100px" 
+    $height="300px" 
+    $width="100%" 
     ref={card}
     >
-      <FlexColumn height="100%" flex="1" align="flex-start">
+      <FlexColumn $height="100%" $flex="1" $align="flex-start">
         <h2>{heading}</h2>
         <p>{description}</p>
         <StyledLink to="/explore">
           <BtnPrimary 
-          width="130px" 
-          height="60px" 
+          $width="130px" 
+          $height="60px" 
           ref={btn}
-          color={({ theme }) => theme.colors.sec.eight}></BtnPrimary>
+          $color={({ theme }) => theme.colors.sec.eight}></BtnPrimary>
         </StyledLink>
       </FlexColumn>
       <Background
-      height="100%"
-      flex="1 1 auto"
-      bg={src}
+      $height="100%"
+      $flex="1 1 auto"
+      $bg={src}
       ></Background>
     </WhyCard>
   )

@@ -147,19 +147,19 @@ const BackBtn = styled(BtnPrimary)`
 
 function LeftSide({ paragragh }) {
   return (
-    <LeftSideSection flex="1" height="200vh">
+    <LeftSideSection $flex="1" $height="200vh">
       <StyledLink to="/">
          <BackBtn>
           <i className="fa-solid fa-arrow-left"></i> Back
         </BackBtn>
       </StyledLink>
 
-      <FlexColumn height="150vh">
+      <FlexColumn $height="150vh">
         <Image
           alt="girl holding card"
           src={image}
-          width="100%"
-          height="auto"
+          $width="100%"
+          $height="auto"
         />
         <p>{paragragh}</p>
       </FlexColumn>
@@ -175,14 +175,14 @@ function GoogleBtn({ onClick }) {
   return(
     <BtnPrimary
     onClick={onClick}
-    height="60px"
-    width="100%"
-    font="17px">
+    $height="60px"
+    $width="100%"
+    $font="17px">
       <Image
         src={googleIcon}
         alt="google button icon"
-        width="40px"
-        height="auto"
+        $width="40px"
+        $height="auto"
       />
       Sign in with google
     </BtnPrimary>
@@ -197,14 +197,14 @@ function FacebookBtn({ onClick }) {
   return (
     <BtnPrimary
     onClick={onClick}
-    height="60px"
-    width="100%"
-    font="17px">
+    $height="60px"
+    $width="100%"
+    $font="17px">
       <Image
         src={facebookIcon}
         alt="facebook button icon"
-        width="40px"
-        height="auto"
+        $width="40px"
+        $height="auto"
       />
       Sign in with facebook
     </BtnPrimary>
@@ -227,9 +227,9 @@ function PasswordInput() {
   }
 
   return (
-     <FlexColumn align="flex-start">
+     <FlexColumn $align="flex-start">
       <label htmlFor="password">Password</label>
-      <PasswordInputContainer gap="0" width="100%">
+      <PasswordInputContainer $gap="0" $width="100%">
         <input 
         type="password" 
         name="password" 
@@ -239,8 +239,8 @@ function PasswordInput() {
         required/>
         <BtnPrimary
         type="button"
-        border="white" 
-        width="30px" 
+        $border="white" 
+        $width="30px" 
         onClick={handleTogglePassword}>
           <i className="fa-solid fa-eye"></i>
         </BtnPrimary>

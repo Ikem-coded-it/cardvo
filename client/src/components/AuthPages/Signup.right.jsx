@@ -81,25 +81,25 @@ export default function SignupRightSide() {
 
       <FacebookBtn onClick={handleFacebookAuth} />
 
-      <OrLine width="100%"><div />  OR <div /></OrLine>
+      <OrLine $width="100%"><div />  OR <div /></OrLine>
 
       <StyledForm onSubmit={(e) => handleLocalSignup(e)}>
-        <FlexColumn align="flex-start">
+        <FlexColumn $align="flex-start">
           <label htmlFor="name">Full name</label>
           <input type="text" name="name" id="name" minLength={3} required/>
         </FlexColumn>
-        <FlexColumn align="flex-start">
+        <FlexColumn $align="flex-start">
           <label htmlFor="email">Email</label>
           <input type="email" name="email" id="email" minLength={3} required/>
         </FlexColumn>
           
         <PasswordInput />
 
-        <FlexRow justify="flex-start">
+        <FlexRow $justify="flex-start">
           <input type="checkbox" name="receive-emails" id="receive-emails" />
           <label htmlFor="receive-emails">Send me emails relating to financial advice</label>
         </FlexRow>
-        <FlexRow justify="flex-start">
+        <FlexRow $justify="flex-start">
           <input type="checkbox" name="terms" id="terms" required/>
           <label htmlFor="terms">
             I have read and agreed to <span>Cardvo Terms of Use and Privacy Policy</span>

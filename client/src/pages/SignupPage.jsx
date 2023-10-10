@@ -18,7 +18,7 @@ export default function SignupPage() {
   return (
     <>
     <Nav />
-    <WholePageSection padding="40px 40px">
+    <WholePageSection $padding="40px 40px">
       <LeftSide />
       <SignupRightSide />
     </WholePageSection>

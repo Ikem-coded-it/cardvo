@@ -41,8 +41,9 @@ export default function Nav() {
 
   useEffect(() => {
     if (context.currentPage) {
-      if(context.currentPage === '/auth/signup' || context.user) {
-        signupBtn.current.style.display = 'none !important';
+      console.log(context.user)
+      if(context.currentPage === '/auth/signup' || context.user !== null) {
+        signupBtn.current.style.display = 'none';
         // signupBtn.current.style.opacity = 0;
       } else {
         signupBtn.current.style.display = 'block';
@@ -77,9 +78,9 @@ export default function Nav() {
   return (
     <NavContainer
     ref={navContainer}
-    width="100%"
-    height="70px"
-    bg="#ecf3f1">
+    $width="100%"
+    $height="70px"
+    $bg="#ecf3f1">
       <LogoContainer>
         <i className="fa-solid fa-c"></i>
         <div>Card</div>
@@ -105,14 +106,14 @@ export default function Nav() {
         </ul>
 
         <BtnContainer
-        gap="20px"
-        width="fit-content"
+        $gap="20px"
+        $width="fit-content"
         >
           <StyledLink to="/auth/signin" ref={signinBtn}>
-            <BtnPrimary onClick={window.scrollTo(0, 0)} height="55px" width="130px">Sign in</BtnPrimary>
+            <BtnPrimary onClick={window.scrollTo(0, 0)} $height="55px" $width="130px">Sign in</BtnPrimary>
           </StyledLink>
           <StyledLink to="/auth/signup" ref={signupBtn}>
-            <BtnSecondary onClick={window.scrollTo(0, 0)} height="55px" width="130px">Sign up</BtnSecondary>
+            <BtnSecondary onClick={window.scrollTo(0, 0)} $height="55px" $width="130px">Sign up</BtnSecondary>
           </StyledLink>
         </BtnContainer>
 

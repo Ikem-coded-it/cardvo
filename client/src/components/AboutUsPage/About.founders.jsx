@@ -51,10 +51,10 @@ const FoundersSection = styled(Section)`
 
 export default function AboutFounders() {
   return (
-    <FoundersSection gap="20px" padding="0 90px 70px 90px">
+    <FoundersSection $gap="20px" $padding="0 90px 70px 90px">
       <h1>Meet the founders</h1>
 
-      <FlexRow width="100%">
+      <FlexRow $width="100%">
         {
           data.map(function(datum, index) {
             return <Card 
@@ -72,16 +72,16 @@ export default function AboutFounders() {
 
 function Card({ src, name, position }) {
   return (
-    <FlexColumn flex="1" height="fit-content">
+    <FlexColumn $flex="1" $height="fit-content">
       <Image
       alt="fouder headshot"
       src={src}
-      width="100%"
-      height="330px"
-      bdradius="6px"
+      $width="100%"
+      $height="330px"
+      $bdradius="6px"
       />
 
-      <FlexColumn align="flex-start" width="100%">
+      <FlexColumn $align="flex-start" $width="100%">
         <strong>{name}</strong>
         <p>{position}</p>
       </FlexColumn>

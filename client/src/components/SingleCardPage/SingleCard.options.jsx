@@ -11,31 +11,31 @@ import StyledLink from "../styles/Link.styled";
 export default function ViewOptions() {
   return(
     <StyledViewOptionsSection>
-      <FlexRow height="430px" width="100%">
-        <FlexRow height="100%" flex="2">
+      <FlexRow $height="430px" $width="100%">
+        <FlexRow $height="100%" $flex="2">
           <CardFrontView />
         </FlexRow>
 
-        <FlexColumn height="100%" flex="1" gap="20px">
-          <BtnSecondary width="100%" height="50px">
+        <FlexColumn $height="100%" $flex="1" $gap="20px">
+          <BtnSecondary $width="100%" $height="50px">
             <FiDownload/> Download
           </BtnSecondary>
 
-          <StyledLink width="100%" >
-            <BtnPrimary width="100%" height="50px">
+          <StyledLink $width="100%" >
+            <BtnPrimary $width="100%" $height="50px">
               <AiOutlineEdit/> Edit
             </BtnPrimary>
           </StyledLink>
 
-          <BtnPrimary width="35%" height="50px">
+          <BtnPrimary $width="35%" $height="50px">
             <BsBookmarks/> Save
           </BtnPrimary>
 
-          <BtnPrimary width="35%" height="50px">
+          <BtnPrimary $width="35%" $height="50px">
             <FaRegHeart/> Like
           </BtnPrimary>
 
-          <BtnPrimary width="35%" height="50px">
+          <BtnPrimary $width="35%" $height="50px">
             <BsShare/> Share
           </BtnPrimary>
         </FlexColumn>

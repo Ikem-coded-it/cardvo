@@ -47,20 +47,20 @@ export default function Comments() {
   }
 
   return(
-    <CommentsContainer width="100%" align="flex-start">
+    <CommentsContainer $width="100%" $align="flex-start">
       <h3>Comments</h3>
 
-      <FlexRow width="100%" justify="flex-start">
-        <FlexRow width="15%"></FlexRow>
+      <FlexRow $width="100%" $justify="flex-start">
+        <FlexRow $width="15%"></FlexRow>
         <textarea placeholder="Add comment ..."></textarea>
       </FlexRow>
 
       <FlexColumn
       ref={commentsContainer}
-      align="flex-start" 
-      width="100%" 
-      height="500px" 
-      gap="50px">
+      $align="flex-start" 
+      $width="100%" 
+      $height="500px" 
+      $gap="50px">
         {
           comments.map(comment => {
             return (
@@ -78,9 +78,9 @@ export default function Comments() {
 
       <BtnPrimary
       onClick={handleToggleShowAllComments}
-      width="100%" 
-      bdradius="0" 
-      bg={({ theme }) => theme.colors.sec.two}>
+      $width="100%" 
+      $bdradius="0" 
+      $bg={({ theme }) => theme.colors.sec.two}>
         + 5 more
       </BtnPrimary>
     </CommentsContainer>
@@ -89,18 +89,18 @@ export default function Comments() {
 
 function SingleComment({ name, comment, time, image }) {
   return(
-    <SingleCommentContainer justify="flex-start" gap="20px">
+    <SingleCommentContainer $justify="flex-start" $gap="20px">
       <FlexRow>
         <Image
         alt="user"
-        height="70px"
-        width="70px"
-        bdradius="50%"
+        $height="70px"
+        $width="70px"
+        $bdradius="50%"
         src={image}
         />
       </FlexRow>
 
-      <FlexColumn align="flex-start">
+      <FlexColumn $align="flex-start">
         <FlexRow>
           <span>{name}</span>
           <p>{time}</p>

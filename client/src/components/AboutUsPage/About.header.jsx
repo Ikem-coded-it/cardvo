@@ -6,8 +6,8 @@ export default function AboutHeader() {
     <header>
       <Image
         alt="black card"
-        width="99.8vw"
-        height="auto"
+        $width="99.8vw"
+        $height="auto"
         src={blackCardImage}
        />
     </header>

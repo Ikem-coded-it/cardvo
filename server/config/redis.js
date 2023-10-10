@@ -4,13 +4,26 @@ const session = require("express-session");
 const RedisStore = require("connect-redis").default;
 
 //Configure redis client
-const redisClient = redis.createClient({
-  password: process.env['REDIS_PASSWORD'],
-  socket: {
-    host: process.env['REDIS_HOST'],
-    port: process.env['REDIS_PORT']
-  }
-});
+let redisClient
+
+if (process.env['NODE_ENV'] === "development") {
+  // no need for password in development
+  redisClient = redis.createClient({
+    socket: {
+      host: process.env['REDIS_HOST'],
+      port: process.env['REDIS_PORT']
+    }
+  });
+} else {
+  redisClient = redis.createClient({
+    // needs password to connect to cloud redis in production
+    password: process.env['REDIS_PASSWORD'],
+    socket: {
+      host: process.env['REDIS_HOST'],
+      port: process.env['REDIS_PORT']
+    }
+  });
+}
 
 redisClient.connect().catch(console.error);
 

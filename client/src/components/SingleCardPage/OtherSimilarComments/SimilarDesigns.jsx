@@ -5,7 +5,7 @@ import { StyledCardDisplay } from "../../Card/styles";
 
 export default function SimilarDesigns() {
   return(
-    <SimilarDesignsContainer justify="flex-start">
+    <SimilarDesignsContainer $justify="flex-start">
       <h3>View similar designs</h3>
 
       <FlexColumn>

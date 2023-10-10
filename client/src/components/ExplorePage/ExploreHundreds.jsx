@@ -9,49 +9,49 @@ import handCardsImage from "../../../public/images/frames/handcards.png";
 
 export default function ExploreHundreds () {
   return (
-    <ExploreHundredsSection gap="30px">
+    <ExploreHundredsSection $gap="30px">
       <h2>
         Explore hundreds of free credit card designs
       </h2>
 
       <SliderWrapper>
         <Slider 
-        height="100%" 
-        justify="space-between" 
-        width="100%"
-        gap="20px">
-          <FlexRow bg={({theme}) => theme.colors.sec.two} height="100%" width="400px">
+        $height="100%" 
+        $justify="space-between" 
+        $width="100%"
+        $gap="20px">
+          <FlexRow $bg={({theme}) => theme.colors.sec.two} $height="100%" $width="400px">
             <Image
             alt="three cards"
             src={imageOne}
-            height="30%"
-            width="100%"
+            $height="30%"
+            $width="100%"
             />
           </FlexRow>
 
-          <Container bg={({theme}) => theme.colors.sec.two} height="100%" width="400px">
+          <Container $bg={({theme}) => theme.colors.sec.two} $height="100%" $width="400px">
             <Image
             alt="card"
             src={cardOneImage}
-            height="50%"
-            width="50%"
+            $height="50%"
+            $width="50%"
             />
             <Image
             alt="card"
             src={cardTwoImage}
-            height="50%"
-            width="50%"
+            $height="50%"
+            $width="50%"
             />
           </Container>
 
           <Container
-          height="100%"
-          width="400px">
+          $height="100%"
+          $width="400px">
             <Image
             src={handCardsImage}
             alt="hand holding cards"
-            height="100%"
-            width="100%"
+            $height="100%"
+            $width="100%"
             />
           </Container>
         </Slider>

@@ -85,12 +85,12 @@ const Background = styled(Container)`
 export default function Header() {
   return (
     <StyledHeader 
-    margin="130px 0 0 0"
-    padding="0 90px 100px 90px"
-    gap="50px">
+    $margin="130px 0 0 0"
+    $padding="0 90px 100px 90px"
+    $gap="50px">
       <CircleBackground />
       <WriteupContainer
-      align="flex-start">
+      $align="flex-start">
         <Container>
           <h1><span>Customize</span> your credit cards</h1>
         </Container>
@@ -98,20 +98,20 @@ export default function Header() {
           Choose the looks, style and design of your card.
            Create a design that resonates with you.
         </p>
-        <FlexRow gap="15px">
+        <FlexRow $gap="15px">
           <StyledLink to="/auth/signin">
-            <SigninBtn width="100px" height="50px">Sign in</SigninBtn>
+            <SigninBtn $width="100px" $height="50px">Sign in</SigninBtn>
           </StyledLink>
           <StyledLink to="/explore">
-            <ExploreBtn width="180px" height="50px">Explore Designs</ExploreBtn>
+            <ExploreBtn $width="180px" $height="50px">Explore Designs</ExploreBtn>
           </StyledLink>
         </FlexRow>
       </WriteupContainer>
 
       <Background>
         <Image 
-        height="100%" 
-        width="100%" 
+        $height="100%" 
+        $width="100%" 
         src={card} 
         loading="lazy" 
         />

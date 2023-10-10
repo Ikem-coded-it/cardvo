@@ -5,10 +5,10 @@ import { BtnSecondary } from "../styles/Button.styled";
 
 export default function ContactUsAnytime() {
   return (
-    <StyledContactUsAnytimeSection padding="0 0 50px 0">
+    <StyledContactUsAnytimeSection $padding="0 0 50px 0">
       <h1>Contact us anytime</h1>
 
-      <FlexColumn gap="20px" width="100%">
+      <FlexColumn $gap="20px" $width="100%">
         <p>
           Have a question about our product and services?
           <StyledLink onClick={window.scrollTo(0, 0)} to="/auth/signin"> Log in</StyledLink> to view
@@ -20,9 +20,9 @@ export default function ContactUsAnytime() {
         </p>
 
         <BtnSecondary 
-        width="400px"
-        bdradius="5px"
-        height="55px">
+        $width="400px"
+        $bdradius="5px"
+        $height="55px">
           Email us
         </BtnSecondary>
       </FlexColumn>

@@ -30,18 +30,18 @@ export default function MessageDisplay({ message, closeMessage }) {
   return (
     <StyledMessageDisplay
     ref={messageDisplay}
-    bg={({ theme }) => theme.colors.prim.four}
-    height="50px"
-    width="fit-content"
-    padding="0 40px"
-    color="#fff"
-    bdradius="10px">
+    $bg={({ theme }) => theme.colors.prim.four}
+    $height="50px"
+    $width="fit-content"
+    $padding="0 40px"
+    $color="#fff"
+    $bdradius="10px">
       {message}
 
       <BtnPrimary 
       onClick={closeMessage}
-      width="30px"
-      height="30px">
+      $width="30px"
+      $height="30px">
         <AiOutlineClose/>
       </BtnPrimary>
     </StyledMessageDisplay>

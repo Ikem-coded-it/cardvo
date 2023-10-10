@@ -123,30 +123,30 @@ export default function ControlPanel({ designState, designDispatch }) {
 
   return (
     <ControlPanelContainer 
-    width="25%"
-    height="100%"
-    justify="flex-start"
-    padding="0 20px"
+    $width="25%"
+    $height="100%"
+    $justify="flex-start"
+    $padding="0 20px"
     >
-      <BackBtnContainer height="10%" width="100%">
-        <BtnPrimary width="100%" >
+      <BackBtnContainer $height="10%" $width="100%">
+        <BtnPrimary $width="100%" >
           <i className="fa-solid fa-arrow-left"></i>
           Edit Properties
         </BtnPrimary>
       </BackBtnContainer>
 
-      <Controls width="100%" gap="30px">
+      <Controls $width="100%" $gap="30px">
 
         {/* Color control */}
-        <FlexColumn width="100%">
-          <FlexRow width="100%" justify="space-between">
-            <FlexRow  gap="20px">
+        <FlexColumn $width="100%">
+          <FlexRow $width="100%" $justify="space-between">
+            <FlexRow  $gap="20px">
               <i className="fa-solid fa-palette"></i>
               Colors
             </FlexRow>
             <i className="fa-solid fa-caret-down"></i>
           </FlexRow>
-          <ColorsGrid width="100%">
+          <ColorsGrid $width="100%">
             {
               colorPalette.map((color, index) => {
                 return <Color
@@ -160,9 +160,9 @@ export default function ControlPanel({ designState, designDispatch }) {
         </FlexColumn>
 
         {/* Image control */}
-        <FlexColumn width="100%">
-          <FlexRow width="100%" justify="space-between">
-            <FlexRow gap="20px">
+        <FlexColumn $width="100%">
+          <FlexRow $width="100%" $justify="space-between">
+            <FlexRow $gap="20px">
               <i className="fa-solid fa-file-image"></i>
               Image
             </FlexRow>
@@ -180,16 +180,16 @@ export default function ControlPanel({ designState, designDispatch }) {
         </FlexColumn>
 
         {/* Text control */}
-        <FlexColumn width="100%">
-          <FlexRow width="100%" justify="space-between">
-            <FlexRow gap="20px">
+        <FlexColumn $width="100%">
+          <FlexRow $width="100%" $justify="space-between">
+            <FlexRow $gap="20px">
               <i className="fa-solid fa-edit"></i>
               Text
             </FlexRow>
             <i className="fa-solid fa-caret-down"></i>
           </FlexRow>
            
-          <NumberInputContainer width="100%" justify="flex-start">
+          <NumberInputContainer $width="100%" $justify="flex-start">
             <input
             maxLength={4}
             type="text" 
@@ -224,7 +224,7 @@ export default function ControlPanel({ designState, designDispatch }) {
             onFocus={() => handleChangeViewToFront()}/>
           </NumberInputContainer>
 
-          <FlexRow justify="flex-start" width="100%">
+          <FlexRow $justify="flex-start" $width="100%">
             <input
             name="name"
             type="text" 
@@ -233,7 +233,7 @@ export default function ControlPanel({ designState, designDispatch }) {
             onChange={(e) => handleNameChange(e)}
             onFocus={() => handleChangeViewToFront()}/>
           </FlexRow>
-          <FlexRow width="100%" justify="space-between">
+          <FlexRow $width="100%" $justify="space-between">
             <input 
             type="text" 
             maxLength={3}
@@ -249,16 +249,16 @@ export default function ControlPanel({ designState, designDispatch }) {
         </FlexColumn>
 
         {/* Side control */}
-        <FlexColumn width="100%">
+        <FlexColumn $width="100%">
           <BtnSecondary 
-          width="100%" 
-          bdradius="5px"
-          height="50px">
+          $width="100%" 
+          $bdradius="5px"
+          $height="50px">
             Add to my collection
           </BtnSecondary>
           <BtnPrimary 
-          width="100%"
-          height="50px"
+          $width="100%"
+          $height="50px"
           onClick={downloadDesign}>
             Download
           </BtnPrimary>
@@ -279,8 +279,8 @@ function Color({ hexCode, designDispatch }) {
   }
 
   return <Container 
-  bg={hexCode} 
-  bdradius="50%"
+  $bg={hexCode} 
+  $bdradius="50%"
   onClick={handleChangeColor}
   />
 }

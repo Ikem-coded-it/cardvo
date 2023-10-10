@@ -45,10 +45,10 @@ const FactsSection = styled(Section)`
 
 export default function Facts() {
   return (
-    <FactsSection gap="20px" padding="0 90px 100px 90px">
+    <FactsSection $gap="20px" $padding="0 90px 100px 90px">
       <h1>Facts</h1>
 
-      <FlexRow gap="10px" width="100%" height="300px">
+      <FlexRow $gap="10px" $width="100%" $height="300px">
         {
           data.map((datum, index) => {
             return <Card 
@@ -66,10 +66,10 @@ export default function Facts() {
 function Card({ up, down }) {
   return (
     <FlexColumn 
-    bg={({ theme }) => theme.colors.sec.eight} 
-    color="white"
-    flex="1"
-    height="100%">
+    $bg={({ theme }) => theme.colors.sec.eight} 
+    $color="white"
+    $flex="1"
+    $height="100%">
       <strong>{up}</strong>
       <p>{down}</p>
     </FlexColumn>

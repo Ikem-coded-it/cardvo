@@ -34,7 +34,7 @@ const EasyToUseSection = styled(Section)`
 
 export default function EasyToUse() {
   return (
-    <EasyToUseSection height="500px" gap="30px">
+    <EasyToUseSection $height="500px" $gap="30px">
       <h1>
         Easy-to-use templates to unlock your creativity
       </h1>
@@ -45,8 +45,8 @@ export default function EasyToUse() {
 
       <SliderWrapper>
         <Image
-        height="250px"
-        width="auto"
+        $height="250px"
+        $width="auto"
         alt="designed cards"
         src={image}
         />
@@ -54,7 +54,7 @@ export default function EasyToUse() {
 
       <FlexRow>
         <StyledLink to="/explore">
-          <BtnSecondary height="50px" width="200px">Explore Designs</BtnSecondary>
+          <BtnSecondary $height="50px" $width="200px">Explore Designs</BtnSecondary>
         </StyledLink>
       </FlexRow>
     </EasyToUseSection>

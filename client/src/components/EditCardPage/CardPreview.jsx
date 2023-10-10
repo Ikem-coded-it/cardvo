@@ -44,35 +44,35 @@ export default function CardPreview({ designState, designDispatch }) {
 
   return (
     <CardPreviewContainer 
-    width="75%"
-    justify="flex-start"
-    height="100%"
-    gap="0">
-      <PreviewNavContainer height="10%" width="100%" >
+    $width="75%"
+    $justify="flex-start"
+    $height="100%"
+    $gap="0">
+      <PreviewNavContainer $height="10%" $width="100%" >
         <FlexRow 
-        width="200px" 
-        height="25px" 
-        bdradius="10px" 
-        padding="3px" 
-        justify="space-between"
+        $width="200px" 
+        $height="25px" 
+        $bdradius="10px" 
+        $padding="3px" 
+        $justify="space-between"
         onClick={(e) => handleViewSwitch(e)}>
           <p>Front</p>
           <p>Back</p>
           <Container
           ref={viewChanger}
-          width="50%" 
-          height="100%" 
-          bdradius="10px"
-          bg={({ theme }) => theme.colors.prim.four} />
+          $width="50%" 
+          $height="100%" 
+          $bdradius="10px"
+          $bg={({ theme }) => theme.colors.prim.four} />
         </FlexRow>
       </PreviewNavContainer>
 
-      <PreviewContainerWrapper width="100%">
+      <PreviewContainerWrapper $width="100%">
         <PreviewContainer
         ref={slider}
-        height="100%"
-        width="190%"
-        justify="space-around">
+        $height="100%"
+        $width="190%"
+        $justify="space-around">
           <FrontViewCard designState={designState}/> 
           <BackViewCard designState={designState} /> 
         </PreviewContainer>
@@ -103,32 +103,32 @@ function FrontViewCard({designState}) {
     <CardFront
     id="card-front"
     ref={cardBackground}
-    justify="space-between"
+    $justify="space-between"
     >
-      <FlexRow justify="space-between" width="100%">
+      <FlexRow $justify="space-between" $width="100%">
         <Image
         src={chipLogo}
         alt="chip logo"
-        height="50px"
-        width="50px"
+        $height="50px"
+        $width="50px"
         />
 
         <Image
         src={masterCardLogo}
         alt="master card logo"
-        height="50px"
-        width="70px"
+        $height="50px"
+        $width="70px"
         />
       </FlexRow>
 
-      <FlexRow justify="space-between" gap="40px">
+      <FlexRow $justify="space-between" $gap="40px">
         <h3 ref={numberOne}>{designState.cardNumberOne}</h3>
         <h3 ref={numberTwo}>{designState.cardNumberTwo}</h3>
         <h3 ref={numberThree}>{designState.cardNumberThree}</h3>
         <h3 ref={numberFour}>{designState.cardNumberFour}</h3>
       </FlexRow>
 
-      <FlexRow justify="space-between" width="100%">
+      <FlexRow $justify="space-between" $width="100%">
         <p ref={name}>{designState.name}</p>
 
         <p ref={expiration}>{designState.expiration}</p>
@@ -152,33 +152,33 @@ function BackViewCard({ designState }) {
   return (
     <CardBack
     id="card-back"
-    gap="0" 
+    $gap="0" 
     ref={cardBackground}>
 
-      <FlexRow justify="flex-end" width="100%" padding="0 20px">ELECTRONIC USE ONLY</FlexRow>
-      <FlexRow width="100%" height="80px" bg="black" />
+      <FlexRow $justify="flex-end" $width="100%" $padding="0 20px">ELECTRONIC USE ONLY</FlexRow>
+      <FlexRow $width="100%" $height="80px" $bg="black" />
 
-      <FlexColumn gap="5px" padding="0 20px">
-        <FlexRow  justify="flex-start" width="100%">AUTHORIZED SIGNATURE</FlexRow>
+      <FlexColumn $gap="5px" $padding="0 20px">
+        <FlexRow  $justify="flex-start" $width="100%">AUTHORIZED SIGNATURE</FlexRow>
         <FlexRow 
-        height="40px" 
-        bg="white" 
-        width="100%" 
-        bdradius="5px" 
-        color="black"
-        justify="flex-end"
-        padding="0 20px">{designState.cvv}</FlexRow>
+        $height="40px" 
+        $bg="white" 
+        $width="100%" 
+        $bdradius="5px" 
+        $color="black"
+        $justify="flex-end"
+        $padding="0 20px">{designState.cvv}</FlexRow>
         <p>
           The card should be used in accordance with the bank terms and conditions
           <br />
           24 Hours Contact Bank Centre {'(234)'} 0900001 or send an email to customer.
         </p>
-        <FlexRow justify="flex-start" width="100%">
+        <FlexRow $justify="flex-start" $width="100%">
           <Image
           src={masterCardLogo}
           alt="master card logo"
-          height="50px"
-          width="70px"
+          $height="50px"
+          $width="70px"
           />
         </FlexRow>
       </FlexColumn>

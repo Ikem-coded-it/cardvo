@@ -49,19 +49,19 @@ const SubscribeSection = styled(Section)`
 
 export default function AboutSubscribe(){
   return (
-    <SubscribeSection gap="20px" bg={({ theme }) => theme.colors.sec.two}>
+    <SubscribeSection $gap="20px" $bg={({ theme }) => theme.colors.sec.two}>
       <h1>Subscribe for financial advice</h1>
 
       <p>
         We help users make better financial choices towards receiving cash rewards and saving money.
       </p>
 
-      <FlexRow width="100%">
+      <FlexRow $width="100%">
         <Image
         alt="two women talking"
         src={twoWomenImage}
-        flex="1"
-        width="50%"
+        $flex="1"
+        $width="50%"
         />
 
         <ul>
@@ -82,9 +82,9 @@ export default function AboutSubscribe(){
             Need to know cash limits that fit your spending habits?
           </li>
           <li>
-            <FlexRow width="fit-content" height="40px" gap="0">
+            <FlexRow $width="fit-content" $height="40px" $gap="0">
               <input type="text" placeholder="Enter email to access our advice" />
-              <BtnSecondary width="120px" height="100%" bdradius="0">Subscribe</BtnSecondary>
+              <BtnSecondary $width="120px" $height="100%" $bdradius="0">Subscribe</BtnSecondary>
             </FlexRow>
           </li>
         </ul>

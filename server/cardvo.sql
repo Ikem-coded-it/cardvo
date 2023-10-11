@@ -25,6 +25,7 @@ CREATE TABLE card_designs (
   color VARCHAR(9),
   background_image VARCHAR,
   cvv VARCHAR(3)  NOT NULL,
+  category VARCHAR(10) NOT NULL,
   CONSTRAINT unique_numbers UNIQUE (card_number_one, card_number_two, card_number_three, card_number_four)
 );
 

@@ -207,6 +207,7 @@ export const CardsGrid = styled(Container)`
   grid-template-columns: repeat(auto-fill, 360px);
   grid-auto-rows: 300px;
   gap: 30px;
+  position: relative; // for spinner
 
   @media(max-width: ${({ theme }) => theme.tablet}) {
     grid-template-columns: repeat(auto-fill, 320px);

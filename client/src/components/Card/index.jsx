@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { Image } from "../styles/Image.styled";
 import masterCardLogo from "../../../public/svg/Mastercard-logo.svg";
 import chipLogo from "../../../public/images/chip.png"
+import useDateFormater from "../../hooks/useDateFormater";
 import PropTypes from "prop-types";
 
 export function CardFrontView ({
@@ -21,12 +22,13 @@ export function CardFrontView ({
   cardNumberTwo, 
   cardNumberThree, 
   cardNumberFour,
-  name = "CAPTAIN AMERICA",
+  name,
   expiration,
   color,
   image = ""
 }) {
   const background = useRef()
+  const date = useDateFormater(expiration);
 
   useEffect(() => {
     if (color !== "") {
@@ -81,7 +83,7 @@ export function CardFrontView ({
       <FlexRow $justify="space-between" $width="100%">
         <p>{name}</p>
 
-        <p>{expiration}</p>
+        <p>{date}</p>
       </FlexRow>
 
     </StyledCardFrontView>

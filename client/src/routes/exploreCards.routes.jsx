@@ -7,7 +7,7 @@ const cardRoutes = {
   children: [
     {
       index: true,
-      element: <ExplorePage />,
+      element: <ExplorePage />
     },
     {
       path: "card/:id",

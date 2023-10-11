@@ -34,7 +34,83 @@ const validateSignIn = (email, password) => {
   return schema.validate(email, password);
 }
 
+const validateCardDetails = ({
+  card_number_one,
+  card_number_two,
+  card_number_three,
+  card_number_four,
+  name,
+  background_image,
+  cvv,
+  expiration,
+  color,
+  category
+}) => {
+  const schema = Joi.object({
+    card_number_one: Joi.number()
+      .min(1000)
+      .max(9999)
+      .required(),
+
+    card_number_two: Joi.number()
+      .min(1000)
+      .max(9999)
+      .required(),
+
+    card_number_three: Joi.number()
+      .min(1000)
+      .max(9999)
+      .required(),
+
+    card_number_four: Joi.number()
+      .min(1000)
+      .max(9999)
+      .required(),
+
+    name: Joi.string()
+      .min(3)
+      .max(60)
+      .required(),
+
+    background_image: Joi.string()
+      .uri()
+      .required(),
+
+    cvv: Joi.number()
+      .min(100)
+      .max(999)
+      .required(),
+
+    color: Joi.string()
+      .min(3)
+      .max(7)
+      .required(),
+
+    expiration: Joi.date()
+      .required(),
+
+    category: Joi.string()
+      .min(5)
+      .max(10)
+      .required()
+  })
+
+  return schema.validate({
+    card_number_one,
+    card_number_two,
+    card_number_three,
+    card_number_four,
+    name,
+    background_image,
+    cvv,
+    expiration,
+    color,
+    category
+  });
+}
+
 module.exports = {
   validateSignUp,
-  validateSignIn
+  validateSignIn,
+  validateCardDetails
 }

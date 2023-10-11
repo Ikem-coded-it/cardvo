@@ -133,3 +133,4 @@ dist
 cardvo-backend/node_modules
 client/node_modules
 server/.rest
+server/testImage

@@ -9,6 +9,7 @@ import { StyledNav } from "./styles/Nav.styled";
 import { BtnPrimary, BtnSecondary } from "./styles/Button.styled";
 import StyledLink from "./styles/Link.styled";
 import { useRef, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 import styled from "styled-components";
 
@@ -38,18 +39,18 @@ export default function Nav() {
   const signupBtn = useRef()
   const signinBtn = useRef()
   const navContainer = useRef()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (context.currentPage) {
-      console.log(context.user)
-      if(context.currentPage === '/auth/signup' || context.user !== null) {
+      console.log(context.currentPage)
+      if(context.currentPage.includes('signup') || !context.user) {
         signupBtn.current.style.display = 'none';
-        // signupBtn.current.style.opacity = 0;
       } else {
         signupBtn.current.style.display = 'block';
       }
 
-      if(context.currentPage === '/auth/signin') {
+      if(context.currentPage.includes('signin')) {
         signinBtn.current.style.display = 'none';
       } else {
         signinBtn.current.style.display = 'block';
@@ -75,6 +76,12 @@ export default function Nav() {
     mobileNav.current.classList.remove('open');
   }
 
+  const checkAuthAndNavigate = () => {
+    const { user } = context;
+    if (user) return navigate("/explore")
+    return navigate("/auth/signin")
+  }
+
   return (
     <NavContainer
     ref={navContainer}
@@ -94,8 +101,11 @@ export default function Nav() {
         </CloseMenu>
 
         <ul>
+           <li onClick={window.scrollTo(0, 0)}>
+            <StyledLink to="/">Home</StyledLink>
+          </li>
           <li onClick={window.scrollTo(0, 0)}>
-            <StyledLink to="/explore">Explore</StyledLink>
+            <StyledLink onClick={checkAuthAndNavigate}>Explore</StyledLink>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/about">About us</StyledLink>

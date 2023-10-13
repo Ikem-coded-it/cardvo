@@ -4,43 +4,23 @@ import { FlexRow, Container } from "../styles/Container.styled";
 import { BtnPrimary } from "../styles/Button.styled";
 import { FaRegHeart } from "react-icons/fa"; 
 import { BsShare, BsBookmarks } from "react-icons/bs";
-import { AiOutlineEdit } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi"; 
 import { BiCommentDetail } from "react-icons/bi"; 
 import { CardFrontView } from "../Card";
-import axios from "axios";
-import { useEffect, useContext, useState } from "react";
+import { useContext } from "react";
 import LoaderSpinner from "../Loader";
 import MessageDisplay from "../MessageDisplay";
-import { AppContext } from "../../App";
+import StyledLink from "../styles/Link.styled";
+import { ExploreCardsContext } from "../../pages/ExplorePage";
 
 export default function ExploreCards() {
-  const [cardsInfo, setCardsInfo] = useState([]);
-  const [fetching, setFetching] = useState(false);
-  const [displayMessage, setDisplayMessage] = useState(null);
-  const { serverURL } = useContext(AppContext);
+  const {
+    cardsInfo,
+    fetching,
+    displayMessage,
+    setDisplayMessage
+  } = useContext(ExploreCardsContext);
 
-  useEffect(() => {
-    async function fetchCardDesigns() {
-      setFetching(true)
-      const url = `${serverURL}/card-design`;
-      try {
-        const response = await axios.get(url);
-        if (response.data.success === false) {
-          setDisplayMessage(response.data.message)
-        }
-
-        setCardsInfo(response.data.data);
-        setFetching(false);
-      } catch (error) {
-        setDisplayMessage(error.message);
-        setFetching(false)
-      }
-    }
-
-    fetchCardDesigns()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   return (
     <>
     {
@@ -64,15 +44,17 @@ export default function ExploreCards() {
             card_holder_name,
             expiration,
             color,
-            background_image
+            background_image,
+            id
           }, index) => {
             return(
-              <CardDisplay
-              key={index}>
+              <CardDisplay key={index}>
                 <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
-                  <BtnPrimary>
-                    <AiOutlineEdit />
-                  </BtnPrimary>
+                  <StyledLink to={`/explore/card/${id}`}>
+                    <BtnPrimary $font="17px">
+                      View
+                    </BtnPrimary>
+                  </StyledLink>
 
                   <FlexRow>
                     <BtnPrimary>

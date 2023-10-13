@@ -3,6 +3,7 @@ const queries = require("../queries/cardDesign.queries");
 const asyncHandler = require("express-async-handler");
 const { validateCardDetails } = require("../utils/validator");
 const { cloudinaryDelete } = require("../utils/cloudinary");
+const formatDate = require("../utils/dateFormater");
 
 const getAllCardDesigns = asyncHandler(async(req, res) => {
   const cardDesigns = await dbAsyncQuery(queries.getAllCardDesigns);
@@ -13,9 +14,17 @@ const getAllCardDesigns = asyncHandler(async(req, res) => {
     })
   }
 
+  const formatedRows = []
+  cardDesigns.rows.forEach(row => {
+    const { expiration } = row;
+    const formatedDate = formatDate(expiration);
+    row['expiration'] = formatedDate
+    formatedRows.push(row)
+  })
+
   return res.status(200).json({
     success: true,
-    data: cardDesigns.rows
+    data: formatedRows
   })
 })
 
@@ -78,17 +87,45 @@ const createCardDesign = asyncHandler(async(req, res) => {
 
 const getCardDesignById = asyncHandler(async(req, res) => {
   const { id } = req.params;
-  const cardDesign = await dbAsyncQuery(queries.getCardDesignById, [id]);
-  if (!cardDesign.rows) {
+  const { rows } = await dbAsyncQuery(queries.getCardDesignById, [id]);
+  if (!rows.length) {
     return res.status(404).json({
       success: false,
       message: "Card design not found"
     })
   }
 
+  const unformatedDate = rows[0]['expiration']
+  const formatedDate = formatDate(unformatedDate);
+  rows[0]['expiration'] = formatedDate;
+
   return res.status(200).json({
     success: true,
-    data: cardDesign.rows
+    data: rows[0]
+  })
+})
+
+const getCardDesignByCategory = asyncHandler(async(req, res) => {
+  const { category } = req.params;
+  const { rows } = await dbAsyncQuery(queries.getCardDesignByCategory, [category]);
+  if (!rows.length) {
+    return res.status(404).json({
+      success: false,
+      message: `Could not find any ${category} card designs`
+    })
+  }
+
+  const formatedRows = []
+  rows.forEach(row => {
+    const { expiration } = row;
+    const formatedDate = formatDate(expiration);
+    row['expiration'] = formatedDate
+    formatedRows.push(row)
+  })
+
+  return res.status(200).json({
+    success: true,
+    data: formatedRows
   })
 })
 
@@ -158,9 +195,41 @@ const updateCardDesignById = asyncHandler(async(req, res) => {
   })
 })
 
+const deleteCardDesignById = asyncHandler(async(req, res) => {
+  const { id } = req.params;
+
+  const { rows } = await dbAsyncQuery(queries.getCardDesignById, [id]);
+  if (!rows.length) {
+    return res.status(404).json({
+      success: false,
+      message: "Card design does not exist"
+    })
+  }
+
+  const { background_image } = rows[0]
+  if (background_image.includes('cloudinary')) {
+    await cloudinaryDelete(background_image)
+  }
+
+  const deletedCard = dbAsyncQuery(queries.deleteCardDesignById, [id]);
+  if (!deletedCard || deletedCard instanceof Error) {
+    return res.status(400).json({
+      success: false,
+      message: "A problem occured while trying to delete the card design"
+    })
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "Card design deleted successfully"
+  })
+})
+
 module.exports = {
   getAllCardDesigns,
   createCardDesign,
   getCardDesignById,
-  updateCardDesignById
+  updateCardDesignById,
+  deleteCardDesignById,
+  getCardDesignByCategory 
 }

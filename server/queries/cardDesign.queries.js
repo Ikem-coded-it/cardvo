@@ -6,12 +6,18 @@ const createDesign = 'INSERT INTO card_designs (card_holder_name, card_number_on
 
 const getCardDesignById = 'SELECT * FROM card_designs WHERE id = $1';
 
+const getCardDesignByCategory = 'SELECT * FROM card_designs WHERE category = $1';
+
 const updateCardDesignById = 'UPDATE card_designs SET card_holder_name = $1, card_number_one = $2, card_number_two = $3, card_number_three = $4, card_number_four = $5, expiration = $6, color = $7, background_image = $8, cvv = $9, category = $10 WHERE id = $11 RETURNING id, card_holder_name, card_number_one, card_number_two, card_number_three, card_number_four, expiration, color, background_image, cvv, category';
+
+const deleteCardDesignById = 'DELETE FROM card_designs WHERE id = $1';
 
 module.exports = {
   getAllCardDesigns,
   getCardDesignByNumber,
   createDesign,
   getCardDesignById,
-  updateCardDesignById
+  updateCardDesignById,
+  deleteCardDesignById,
+  getCardDesignByCategory
 }

@@ -14,7 +14,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [currentPage, setCurrentPage] = useState(null);
 
-  // keeps track of when data fetch is complete to render app
+  // eslint-disable-next-line no-unused-vars
   const [fetching, setFetching] = useState(false);
 
   const getUser = async() => {
@@ -49,9 +49,7 @@ function App() {
     <>
     <AppContext.Provider value={values}>
       <ThemeProvider theme={theme}>
-        {
-          fetching === false && <RouterProvider router={router} /> 
-        }
+        <RouterProvider router={router} /> 
       </ThemeProvider>
     </AppContext.Provider>
     </>

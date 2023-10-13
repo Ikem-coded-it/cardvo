@@ -10,6 +10,7 @@ const StyledMessageDisplay = styled(FlexRow)`
   position: fixed;
   top: 100px;
   left: 500px;
+  z-index: 3;
 
   & button {
     width: 30px;

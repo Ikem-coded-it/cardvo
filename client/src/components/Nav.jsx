@@ -43,7 +43,6 @@ export default function Nav() {
 
   useEffect(() => {
     if (context.currentPage) {
-      console.log(context.currentPage)
       if(context.currentPage.includes('signup') || !context.user) {
         signupBtn.current.style.display = 'none';
       } else {

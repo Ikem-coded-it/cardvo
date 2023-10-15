@@ -86,6 +86,7 @@ export const StyledCardBackView = styled(FlexColumn)`
   }
 
   & > div:nth-child(1) { // electronic use
+    color: #fff;
     font-size: ${({ $electronicsize }) => $electronicsize || "7px"};
   }
 
@@ -96,6 +97,7 @@ export const StyledCardBackView = styled(FlexColumn)`
 
   & > div:nth-child(3) {
     & > div { // Authorize
+      color: #fff;
       font-size: ${({ $authorizesize }) => $authorizesize || "10px"};
     }
 
@@ -104,7 +106,7 @@ export const StyledCardBackView = styled(FlexColumn)`
     }
 
     & p {
-      color: black;
+      color: #fff;
       font-size: ${({ $psize }) => $psize || "7px"};
     }
   }
@@ -156,6 +158,7 @@ export const StyledCardDisplay = styled(FlexRow)`
   background-color: ${({theme, $bg}) => $bg || theme.colors.sec.two};
   height: ${({ $height }) => $height || "200px"};
   width: ${({ $width }) => $width || "270px"};
+  cursor: pointer;
 
   @media(max-width: ${({ theme }) => theme.mobile}) {
     height: ${({ $m_height }) => $m_height || "170px"};

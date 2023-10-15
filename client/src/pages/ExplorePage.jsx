@@ -48,6 +48,7 @@ export default function ExplorePage() {
     cardsInfo,
     setCardsInfo,
     fetching,
+    setFetching,
     displayMessage,
     setDisplayMessage
   }

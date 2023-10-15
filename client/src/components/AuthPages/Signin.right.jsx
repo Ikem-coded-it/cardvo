@@ -53,10 +53,14 @@ export default function SigninRightSide() {
       if (response.data.success === true) {
         setLoggingIn(false);
         navigate("/explore")
+      } else {
+        setDisplayMessage(response.data.message);
       }
     } catch(error) {
-      setLoggingIn(false);
-      setDisplayMessage(error.response.data.message);
+      if(error.response.data === "Unauthorized") {
+        setDisplayMessage("Invalid username or password");
+        setLoggingIn(false);
+      }
     }
   }
 

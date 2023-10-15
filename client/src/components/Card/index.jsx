@@ -37,7 +37,7 @@ export function CardFrontView ({
       background.current.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url(${image})`;
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [image])
 
   return(
     <StyledCardFrontView

@@ -10,7 +10,7 @@ import axios from "axios";
 
 export default function ExploreHeader() {
   const categoriesMenu = useRef();
-  const { setCardsInfo } = useContext(ExploreCardsContext);
+  const { setCardsInfo, setFetching } = useContext(ExploreCardsContext);
   const { serverURL } = useContext(AppContext);
   const [showingCardsText, setShowingCardsText] = useState("All Cards")
   const [ message, setMessage ] = useState(null);
@@ -20,17 +20,28 @@ export default function ExploreHeader() {
   }
 
   async function getCategoryCardDesigns(e) {
+    setFetching(true)
     const category = e.target.textContent.toLowerCase();
     setShowingCardsText(category)
     try {
-      const response = await axios.get(`${serverURL}/card-design/category/${category}`)
+      let url
+      if (category === "all cards") 
+        url = `${serverURL}/card-design`
+      else
+        url = `${serverURL}/card-design/category/${category}`
+
+      
+      const response = await axios.get(url)
       if(response.data.success === true) {
         setCardsInfo(response.data.data)
+        setFetching(false)
       } else {
         setMessage(response.data.message);
+        setFetching(false)
       }
     } catch (error) {
       setMessage(error.message);
+      setFetching(false)
     }
   }
 
@@ -51,7 +62,7 @@ export default function ExploreHeader() {
             />
           </FlexRow>
           <ul ref={categoriesMenu}>
-            <li>All cards</li>
+            <li onClick={(e) => getCategoryCardDesigns(e)}>All cards</li>
             <li onClick={(e) => getCategoryCardDesigns(e)}>Anime</li>
             <li onClick={(e) => getCategoryCardDesigns(e)}>Nature</li>
             <li onClick={(e) => getCategoryCardDesigns(e)}>Cartoon</li>
@@ -61,7 +72,7 @@ export default function ExploreHeader() {
 
         <input 
         type="search"
-        placeholder="Any design style on your mind?"/>
+        placeholder="Search for anime, nature, cartoon or people"/>
 
         <BtnSecondary $width="120px" $bdradius="0">
           <i className="fa-solid fa-search"></i>

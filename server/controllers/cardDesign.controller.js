@@ -107,6 +107,7 @@ const getCardDesignById = asyncHandler(async(req, res) => {
 
 const getCardDesignByCategory = asyncHandler(async(req, res) => {
   const { category } = req.params;
+  console.log(category)
   const { rows } = await dbAsyncQuery(queries.getCardDesignByCategory, [category]);
   if (!rows.length) {
     return res.status(404).json({

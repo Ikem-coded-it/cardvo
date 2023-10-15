@@ -6,6 +6,7 @@ import { useEffect, useContext, createContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../App";
 import { useParams } from "react-router-dom";
+import MessageDisplay from "../components/MessageDisplay";
 import axios from "axios";
 
 export const CardViewContext = createContext();
@@ -14,8 +15,10 @@ export default function SingleCardPage() {
   const { id } = useParams();
   const context = useContext(AppContext);
   const location = useLocation();
-  const [cardDetails, setCardDetails] = useState(null)
+  const [cardDetails, setCardDetails] = useState(null);
+  const [category, setCategory] = useState(null);
   const [view, setView] = useState("front")
+  const [ message, setMessage ] = useState(null);
 
   useEffect(() => {
     context.setCurrentPage(location.pathname)
@@ -28,10 +31,13 @@ export default function SingleCardPage() {
         const url = `${context.serverURL}/card-design/${id}`;
         const response = await axios.get(url)
         if (response.data.success === true) {
+          setCategory(response.data.data.category)
           setCardDetails(response.data.data);
+        }else {
+          setMessage(response.data.message)
         }
       } catch (error) {
-        console.log(error)
+        setMessage(error.message)
       }
     }
 
@@ -39,19 +45,28 @@ export default function SingleCardPage() {
   }, [id, context.serverURL])
 
   const cardViewContextValues = {
+    currentCardId: id,
     view,
     setView,
-    cardDetails
+    cardDetails,
+    category
   }
   
   return(
     <>
+    {message && <MessageDisplay message={message} closeMessage={() => setMessage(null)}/>}
     <Nav />
-    <CardViewContext.Provider value={cardViewContextValues}>
-    <ViewOptions />
-    <OtherSimilarComments />
-    </CardViewContext.Provider>
-    <Footer />
+    {
+      category && (
+        <>
+          <CardViewContext.Provider value={cardViewContextValues}>
+          <ViewOptions />
+          <OtherSimilarComments />
+          </CardViewContext.Provider>
+          <Footer />     
+        </>
+      )
+    }
     </>
   )
 }

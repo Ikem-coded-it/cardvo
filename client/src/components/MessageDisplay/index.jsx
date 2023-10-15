@@ -6,20 +6,32 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BtnPrimary } from "../styles/Button.styled";
 
 const StyledMessageDisplay = styled(FlexRow)`
+  max-width: 300px;
+  min-width: fit-content;
   opacity: o;
   position: fixed;
   top: 100px;
-  left: 500px;
+  left: 40%;
   z-index: 3;
 
   & button {
     width: 30px;
     height: 30px;
+    cursor: pointer;
+    border: 1px solid #fff;
     & svg { // close message button
-      cursor: pointer;
       height: 22px;
       width: 22px;
+      fill: #fff;
     }
+
+    &:hover > svg {
+      fill: black
+    }
+  }
+
+  @media(max-width: ${({ theme }) => theme.mobile}) {
+    left: 5%;
   }
 
 `
@@ -33,11 +45,12 @@ export default function MessageDisplay({ message, closeMessage }) {
     ref={messageDisplay}
     $bg={({ theme }) => theme.colors.prim.four}
     $height="50px"
-    $width="fit-content"
     $padding="0 40px"
     $color="#fff"
     $bdradius="10px">
-      {message}
+      <p>
+        {message}
+      </p>
 
       <BtnPrimary 
       onClick={closeMessage}

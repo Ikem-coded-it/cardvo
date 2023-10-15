@@ -109,8 +109,19 @@ const validateCardDetails = ({
   });
 }
 
+const validateComment = (comment, userId, cardDesignId) => {
+  const schema = Joi.object({
+    userId: Joi.string(),
+    comment: Joi.string().min(7),
+    cardDesignId: Joi.string()
+  })
+
+  return schema.validate(comment, userId, cardDesignId);
+}
+
 module.exports = {
   validateSignUp,
   validateSignIn,
-  validateCardDetails
+  validateCardDetails,
+  validateComment,
 }

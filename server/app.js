@@ -12,6 +12,7 @@ const sessionStore = require("./config/redis");
 const indexRouter = require('./routes/index');
 const authRouter = require("./routes/auth.routes");
 const cardDesignRouter = require("./routes/cardDesign.routes");
+const commentRouter = require("./routes/comment.routes");
 
 const corsOptions = {
   origin: process.env.ALLOWED_CORS_ORIGIN,
@@ -47,6 +48,7 @@ app.use(passport.authenticate("session"));
 app.use('/api/v1', indexRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/card-design', cardDesignRouter);
+app.use('/api/v1/comment', commentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

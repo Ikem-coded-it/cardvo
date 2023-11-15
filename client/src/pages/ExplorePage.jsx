@@ -1,4 +1,4 @@
-import Nav from "../components/Nav";
+import { LoggedOutNav, LoggedInNav } from "../components/Nav";
 import ExploreHeader from "../components/ExplorePage/Explore.header";
 import ExploreHundreds from "../components/ExplorePage/ExploreHundreds";
 import ExploreCards from "../components/ExplorePage/ExploreCards";
@@ -13,7 +13,7 @@ export const ExploreCardsContext = createContext();
 export default function ExplorePage() {
   const context = useContext(AppContext);
   const [displayMessage, setDisplayMessage] = useState(null);
-  const [cardsInfo, setCardsInfo] = useState([]);
+  const [cardsInfo, setCardsInfo] = useState(null);
   const [fetching, setFetching] = useState(false);
   const location = useLocation();
 
@@ -55,11 +55,15 @@ export default function ExplorePage() {
 
   return (
     <>
-    <Nav />
+    {
+      context.user ? (<LoggedInNav/>) : (<LoggedOutNav/>)
+    }
     <ExploreCardsContext.Provider value={exploreCardsValues}>
       <ExploreHeader />
       <ExploreHundreds />
-      <ExploreCards />
+      {
+        cardsInfo && (<ExploreCards />)
+      }
     </ExploreCardsContext.Provider>
     <Footer />
     </>

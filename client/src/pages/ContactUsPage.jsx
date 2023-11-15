@@ -1,4 +1,4 @@
-import Nav from "../components/Nav";
+import { LoggedOutNav, LoggedInNav } from "../components/Nav";
 import ContactUsHeader from "../components/ContactUsPage/ContactUs.header";
 import ContactUsAnytime from "../components/ContactUsPage/ContactUs.anytime";
 import ContactUsMessage from "../components/ContactUsPage/ContactUs.message";
@@ -19,7 +19,9 @@ export default function ContactUsPage() {
   
   return (
     <>
-    <Nav />
+    {
+      context.user ? (<LoggedInNav/>) : (<LoggedOutNav/>)
+    }
     <ContactUsHeader />
     <ContactUsAnytime />
     <ContactUsMessage />

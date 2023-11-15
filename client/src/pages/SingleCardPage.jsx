@@ -1,4 +1,4 @@
-import Nav from "../components/Nav";
+import { LoggedOutNav, LoggedInNav } from "../components/Nav";
 import ViewOptions from "../components/SingleCardPage/SingleCard.options";
 import OtherSimilarComments from "../components/SingleCardPage/OtherSimilarComments";
 import Footer from "../components/Footer";
@@ -55,7 +55,9 @@ export default function SingleCardPage() {
   return(
     <>
     {message && <MessageDisplay message={message} closeMessage={() => setMessage(null)}/>}
-    <Nav />
+    {
+      context.user ? (<LoggedInNav/>) : (<LoggedOutNav/>)
+    }
     {
       category && (
         <>

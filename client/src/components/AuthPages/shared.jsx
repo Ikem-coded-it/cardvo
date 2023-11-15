@@ -5,7 +5,7 @@ import { Image } from "../styles/Image.styled";
 import { useRef } from "react";
 import styled from "styled-components";
 import image from "../../../public/images/backgrounds/pana.png";
-import StyledLink from "../styles/Link.styled";
+// import StyledLink from "../styles/Link.styled";
 import PropTypes from "prop-types";
 
 const googleIcon = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg";
@@ -148,11 +148,9 @@ const BackBtn = styled(BtnPrimary)`
 function LeftSide({ paragragh }) {
   return (
     <LeftSideSection $flex="1" $height="200vh">
-      <StyledLink to="/">
-         <BackBtn>
-          <i className="fa-solid fa-arrow-left"></i> Back
-        </BackBtn>
-      </StyledLink>
+      <BackBtn onClick={() => history.back()}>
+        <i className="fa-solid fa-arrow-left"></i> Back
+      </BackBtn>
 
       <FlexColumn $height="150vh">
         <Image

@@ -1,4 +1,4 @@
-import Nav from "../components/Nav";
+import { LoggedOutNav, LoggedInNav } from "../components/Nav";
 import AboutHeader from "../components/AboutUsPage/About.header";
 import AboutParagraph from "../components/AboutUsPage/About.paragraph";
 import Facts from "../components/AboutUsPage/About.facts";
@@ -20,7 +20,9 @@ export default function AboutUsPage() {
   
   return (
     <>
-    <Nav />
+    {
+      context.user ? (<LoggedInNav/>) : (<LoggedOutNav/>)
+    }
     <AboutHeader />
     <AboutParagraph />
     <Facts />

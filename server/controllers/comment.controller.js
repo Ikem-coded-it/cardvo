@@ -38,6 +38,11 @@ const postComment = asyncHandler(async(req, res) => {
   })
 })
 
+const getCardComments = asyncHandler(async(req, res) => {
+
+})
+
 module.exports = {
-  postComment
+  postComment,
+  getCardComments
 }

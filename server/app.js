@@ -50,6 +50,11 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/card-design', cardDesignRouter);
 app.use('/api/v1/comment', commentRouter);
 
+// to start server ahead of time on entering landing page in live site
+app.get('/api/v1/start', (req, res) => {
+  res.send("Server started")
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

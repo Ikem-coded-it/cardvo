@@ -1,4 +1,4 @@
- import Nav from "../components/Nav";
+import { LoggedOutNav, LoggedInNav } from "../components/Nav";
 import Edit from '../components/EditCardPage/edit';
 import Footer from "../components/Footer";
 import { useEffect, useContext } from "react";
@@ -16,7 +16,9 @@ export default function EditCard () {
 
   return(
     <>
-    <Nav />
+    {
+      context.user ? (<LoggedInNav/>) : (<LoggedOutNav/>)
+    }
     <Edit />
     <Footer />
     </>

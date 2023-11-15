@@ -10,8 +10,10 @@ import { CardFrontView } from "../Card";
 import { useContext } from "react";
 import LoaderSpinner from "../Loader";
 import MessageDisplay from "../MessageDisplay";
-import StyledLink from "../styles/Link.styled";
+// import StyledLink from "../styles/Link.styled";
 import { ExploreCardsContext } from "../../pages/ExplorePage";
+import { AppContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 export default function ExploreCards() {
   const {
@@ -20,6 +22,14 @@ export default function ExploreCards() {
     displayMessage,
     setDisplayMessage
   } = useContext(ExploreCardsContext);
+  const { user } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const checkIfLoggedInAndNavigate = (cardId) => {
+    if(!user) return navigate("/auth/signin")
+    else
+      return navigate(`/explore/card/${cardId}`)
+  }
 
   return (
     <>
@@ -50,11 +60,11 @@ export default function ExploreCards() {
             return(
               <CardDisplay key={index}>
                 <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
-                  <StyledLink to={`/explore/card/${id}`}>
-                    <BtnPrimary $font="17px">
-                      View
-                    </BtnPrimary>
-                  </StyledLink>
+                  <BtnPrimary
+                  $font="17px"
+                  onClick={() => checkIfLoggedInAndNavigate(id)}>
+                    View
+                  </BtnPrimary>
 
                   <FlexRow>
                     <BtnPrimary>

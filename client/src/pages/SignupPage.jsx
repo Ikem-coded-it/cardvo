@@ -1,4 +1,4 @@
-import Nav from "../components/Nav";
+import { LoggedOutNav, LoggedInNav } from "../components/Nav";
 import { WholePageSection } from "../components/AuthPages/shared";
 import { LeftSide } from "../components/AuthPages/shared";
 import SignupRightSide from "../components/AuthPages/Signup.right";
@@ -17,7 +17,9 @@ export default function SignupPage() {
   }, [])
   return (
     <>
-    <Nav />
+    {
+      context.user ? (<LoggedInNav/>) : (<LoggedOutNav/>)
+    }
     <WholePageSection $padding="40px 40px">
       <LeftSide />
       <SignupRightSide />

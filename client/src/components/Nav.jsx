@@ -11,6 +11,7 @@ import StyledLink from "./styles/Link.styled";
 import { useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
+import axios from "axios";
 import styled from "styled-components";
 
 const BtnContainer = styled(FlexRow)`
@@ -33,7 +34,7 @@ const BtnContainer = styled(FlexRow)`
   }
 `
 
-export default function Nav() {
+export function LoggedOutNav() {
   const context = useContext(AppContext);
   const mobileNav = useRef()
   const signupBtn = useRef()
@@ -43,26 +44,10 @@ export default function Nav() {
 
   useEffect(() => {
     if (context.currentPage) {
-      if(context.currentPage.includes('signup') || !context.user) {
-        signupBtn.current.style.display = 'none';
-      } else {
-        signupBtn.current.style.display = 'block';
-      }
-
-      if(context.currentPage.includes('signin')) {
-        signinBtn.current.style.display = 'none';
-      } else {
-        signinBtn.current.style.display = 'block';
-      }
-
       if (context.currentPage.includes('/edit')) {
         navContainer.current.style.position = "static";
-        signupBtn.current.style.display = 'none';
-        signinBtn.current.style.display = 'none';
       } else {
         navContainer.current.style.position = "fixed";
-        signupBtn.current.style.display = 'block';
-        signinBtn.current.style.display = 'block';
       }
     }
   }, [context.currentPage, context.user])
@@ -118,9 +103,13 @@ export default function Nav() {
         $gap="20px"
         $width="fit-content"
         >
-          <StyledLink to="/auth/signin" ref={signinBtn}>
-            <BtnPrimary onClick={window.scrollTo(0, 0)} $height="55px" $width="130px">Sign in</BtnPrimary>
-          </StyledLink>
+          {
+            !context.user && (
+              <StyledLink to="/auth/signin" ref={signinBtn}>
+                <BtnPrimary onClick={window.scrollTo(0, 0)} $height="55px" $width="130px">Sign in</BtnPrimary>
+              </StyledLink>
+            )
+          }
           <StyledLink to="/auth/signup" ref={signupBtn}>
             <BtnSecondary onClick={window.scrollTo(0, 0)} $height="55px" $width="130px">Sign up</BtnSecondary>
           </StyledLink>
@@ -128,7 +117,95 @@ export default function Nav() {
 
       </StyledNav>
 
+     {
+      window.innerWidth <= 900 &&
       <MenuBars className="fa-solid fa-bars" onClick={handleOpenMenu}></MenuBars>
+    }
+
+    </NavContainer>
+  )
+}
+
+export function LoggedInNav() {
+  const context = useContext(AppContext);
+  const mobileNav = useRef()
+  const navContainer = useRef()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (context.currentPage) {
+      if (context.currentPage.includes('/edit')) {
+        navContainer.current.style.position = "static";
+      } else {
+        navContainer.current.style.position = "fixed";
+      }
+    }
+  }, [context.currentPage, context.user])
+
+  const handleOpenMenu = () => {
+    mobileNav.current.classList.add('open');
+  }
+
+  const handleCloseMenu = () => {
+    mobileNav.current.classList.remove('open');
+  }
+
+  const logout = async() => {
+    const loggedOut = await axios.post(`${context.serverURL}/auth/logout`);
+    if (loggedOut.data.success === true) {
+      localStorage.removeItem('cardvo-user')
+      context.setUser(null);
+      return navigate("/")
+    }
+  }
+
+  return (
+    <NavContainer
+    ref={navContainer}
+    $width="100%"
+    $height="70px"
+    $bg="#ecf3f1">
+      <LogoContainer>
+        <i className="fa-solid fa-c"></i>
+        <div>Card</div>
+        <span>vo</span>
+      </LogoContainer>
+
+      <StyledNav ref={mobileNav}>
+        <CloseMenu 
+        className="fa-solid fa-x" 
+        onClick={handleCloseMenu}>
+        </CloseMenu>
+
+        <ul>
+           <li onClick={window.scrollTo(0, 0)}>
+            <StyledLink to="/">Home</StyledLink>
+          </li>
+          <li onClick={window.scrollTo(0, 0)}>
+            <StyledLink to="/explore">Explore</StyledLink>
+          </li>
+          <li onClick={window.scrollTo(0, 0)}>
+            <StyledLink to="/about">About us</StyledLink>
+          </li>
+          <li onClick={window.scrollTo(0, 0)}>
+            <StyledLink to="/contact">Contact us</StyledLink>
+          </li>
+        </ul>
+      </StyledNav>
+
+      <BtnContainer>
+        <BtnPrimary
+        $height="55px"
+        $width="130px"
+        onClick={logout}>
+          Logout
+        </BtnPrimary>
+      </BtnContainer>
+
+      {
+        window.innerWidth <= 900 &&
+        <MenuBars className="fa-solid fa-bars" onClick={handleOpenMenu}></MenuBars>
+      }
 
     </NavContainer>
   )

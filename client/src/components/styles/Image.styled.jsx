@@ -5,4 +5,5 @@ export const Image = styled.img`
   width: ${({ $width }) => $width};
   flex: ${({ $flex }) => $flex};
   border-radius: ${({ $bdradius }) => $bdradius};
+  object-fit: center;
 `

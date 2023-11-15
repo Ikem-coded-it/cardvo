@@ -66,18 +66,20 @@ const initializeLocalStrategy = () => {
   passport.use(new LocalStrategy(
     {usernameField:'email'},
     function verify(email, password, done) {
-    db.query(queries.getUserByEmail, [email], (err, result) => {
-      if (err) return done(err);
-      const user = result.rows[0];
-      if (!user) return done(null, false);
-
-      bcrypt.compare(password, user.pass_word, function(err, result) {
+      // query db for user
+      db.query(queries.getUserByEmail, [email], (err, result) => {
         if (err) return done(err);
-        if (!result) return done(null, false); // Passwords don't match
-        return done(null, user); // Successful authentication
+        const user = result.rows[0];
+        if (!user) return done(null, false);
+
+        // confirm password
+        bcrypt.compare(password, user.pass_word, function(err, result) {
+          if (err) return done(err);
+          if (!result) return done(null, false); // Passwords don't match
+          return done(null, user); // Successful authentication
+        })
       })
-    })
-  }));
+    }));
 
   passport.serializeUser(function(user, done) {
     process.nextTick(function() {
@@ -101,7 +103,7 @@ const initializeGoogleStrategy = () => {
   passport.use(new GoogleStrategy({
     clientID: process.env['GOOGLE_CLIENT_ID'],
     clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-    callbackURL: '/api/v1/auth/google/callback',
+    callbackURL: process.env['GOOGLE_CALLBACK_URL'],
     scope: [ 'profile' ]
   }, function verify(issuer, profile, done) {
     // search for user credentials in socials db
@@ -117,8 +119,8 @@ const initializeGoogleStrategy = () => {
       if (!googleUser) {
         db.query(queries.registerUser, [
           profile.name.givenName + ' ' + profile.name.familyName,
-          issuer,
-          "none",
+          issuer, // used as email field
+          "none", // all google signees have "none" as password
           new Date().toISOString()
         ], function(err, result) {
           if (err) return done(err);

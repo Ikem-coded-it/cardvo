@@ -5,7 +5,7 @@ export const NavContainer = styled(FlexRow)`
   background-color: #fff;
   border-bottom: 1px solid ${({theme}) => theme.colors.prim.five};
   justify-content: space-between;
-  max-width: 1340px;
+  max-width: 1500px;
   min-width: 100%;
   padding: 0 90px;
   position: fixed;

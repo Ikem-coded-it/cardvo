@@ -44,12 +44,11 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
 }));
 
 
-// check if logged in
+// called with useEffect in frontend after red
 router.get('/login/success', (req, res) => {
   if (req.user) {
     res.status(200).json({
       success: true,
-      message: "Login successful",
       user: req.user
     })
   } else {

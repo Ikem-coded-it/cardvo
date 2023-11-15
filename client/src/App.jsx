@@ -17,25 +17,33 @@ function App() {
   // eslint-disable-next-line no-unused-vars
   const [fetching, setFetching] = useState(false);
 
-  const getUser = async() => {
-    try {
-      setFetching(true)
-      const response = await axios.get(
-        `${serverURL}/auth/login/success`,
-        {withCredentials: true}
-      )
-      setUser(response.data.user)
-      setFetching(false)
-    } catch (error) {
-      setUser(null)
-      setFetching(false)
-    }
-  }
-
   useEffect(() => {
-    getUser()
+    const startServer = async() => {
+      await axios.get(`${serverURL}/start`);
+    }
+
+    startServer()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    async function getUserData() {
+      // check if user info is stored in local storage
+      const user = JSON.parse(localStorage.getItem('cardvo-user'));
+      if (!user) {
+        const response = await axios.get(`${serverURL}/auth/login/success`, {
+          withCredentials: true
+        });
+        if (response.data.user)
+          return setUser(response.data.user);
+      }
+
+      return setUser(user);
+    }
+
+    getUserData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serverURL])
 
   const values = {
     user,

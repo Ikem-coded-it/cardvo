@@ -45,12 +45,19 @@ export default function SigninRightSide() {
 
     const userLoginDetails = {
       email: e.target.email.value,
-      password: e.target.password.value
+      password: e.target.password.value,
+      rememberMe: e.target.remember_me.checked
     }
 
     try {
       const response = await axios.post(serverURL, userLoginDetails);
       if (response.data.success === true) {
+        context.setUser(response.data.user);
+        
+        if(userLoginDetails.rememberMe === true) {
+          localStorage.setItem('cardvo-user', JSON.stringify(response.data.user))
+        }
+
         setLoggingIn(false);
         navigate("/explore")
       } else {
@@ -66,7 +73,7 @@ export default function SigninRightSide() {
 
   // signin with google
   const handleGoogleAuth = () => {
-    window.open(`${context.serverURL}/auth/google/callback`, "_self");
+    window.location = `${context.serverURL}/auth/login/google`, "_self";
   }
 
   // signin with facebook
@@ -104,8 +111,8 @@ export default function SigninRightSide() {
         <PasswordInput />
 
         <FlexRow $justify="flex-start">
-          <input type="checkbox" name="remember-me" id="remember-me" />
-          <label htmlFor="remember-me">
+          <input type="checkbox" name="remember_me" id="remember_me" />
+          <label htmlFor="remember_me">
             Remember me
           </label>
         </FlexRow>

@@ -73,7 +73,7 @@ export default function SigninRightSide() {
 
   // signin with google
   const handleGoogleAuth = () => {
-    window.location = `${context.serverURL}/auth/login/google`, "_self";
+    window.open(`${context.serverURL}/auth/login/google`, "_self");
   }
 
   // signin with facebook

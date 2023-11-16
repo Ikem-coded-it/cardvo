@@ -59,10 +59,12 @@ export default function ExplorePage() {
       context.user ? (<LoggedInNav/>) : (<LoggedOutNav/>)
     }
     <ExploreCardsContext.Provider value={exploreCardsValues}>
-      <ExploreHeader />
+      {
+        setCardsInfo && <ExploreHeader />
+      }
       <ExploreHundreds />
       {
-        cardsInfo && (<ExploreCards />)
+        cardsInfo && <ExploreCards />
       }
     </ExploreCardsContext.Provider>
     <Footer />

@@ -3,6 +3,7 @@ CREATE TABLE users (
   full_name VARCHAR(100) NOT NULL,
   pass_word VARCHAR(100) NOT NULL,
   email VARCHAR(50) NOT NULL,
+  photo_url VARCHAR(100) NOT NULL,
   created_at TIMESTAMP NOT NULL,
   UNIQUE (email)
 );

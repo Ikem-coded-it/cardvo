@@ -1,4 +1,4 @@
-const { createComment } = require("../queries/comment.queries");
+const { createComment, getCommentsById } = require("../queries/comment.queries");
 const { dbAsyncQuery } = require("../config/db");
 const { validateComment } = require("../utils/validator");
 const asyncHandler = require("express-async-handler");
@@ -39,7 +39,20 @@ const postComment = asyncHandler(async(req, res) => {
 })
 
 const getCardComments = asyncHandler(async(req, res) => {
+  const {id} = req.params;
+  const cardComments = await dbAsyncQuery(getCommentsById, [id])
 
+  if (!cardComments || cardComments instanceof Error) {
+    return res.status(400).json({
+      success: false,
+      message: "No comments available"
+    })
+  }
+
+  return res.status(200).json({
+    success: true,
+    data: cardComments.rows
+  })
 })
 
 module.exports = {

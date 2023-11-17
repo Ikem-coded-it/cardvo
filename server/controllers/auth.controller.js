@@ -44,7 +44,11 @@ const registerUser = asyncHandler(async(req, res) => {
 
   const result = await dbAsyncQuery(
     queries.registerUser,
-    [value.fullName, value.email, hashedPassword, new Date().toISOString()]
+    [
+      value.fullName, value.email,
+      hashedPassword, new Date().toISOString(),
+      "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg"
+    ]
   )
 
   if (!result || result instanceof Error) {
@@ -121,7 +125,8 @@ const initializeGoogleStrategy = () => {
           profile.name.givenName + ' ' + profile.name.familyName,
           issuer, // used as email field
           "none", // all google signees have "none" as password
-          new Date().toISOString()
+          new Date().toISOString(),
+          "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg"
         ], function(err, result) {
           if (err) return done(err);
 
@@ -187,7 +192,8 @@ const initializeFacebookStrategy = () => {
           // facebook does not provide email so store displayname prefixed with 'facebook' instead
           `${profile.provider}-${profile.displayName}`,
           "none",
-          new Date().toISOString()
+          new Date().toISOString(),
+          "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg"
         ], function(err, result) {
           if (err) return done(err);
 

@@ -19,6 +19,7 @@ router.post("/register", registerUser);
 
 // login with email and password
 router.post('/login', passport.authenticate('local'), function(req, res) {
+  req.session.isAuth = true
   res.status(200).json({
     success: true,
     message: "Login successful",
@@ -27,7 +28,14 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 });
 
 // Google login and redirect routes
-router.get('/login/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+router.get(
+  '/login/google',
+  passport.authenticate('google', { scope : ['profile', 'email'] }),
+  (req, res, next) => {
+    req.session.isAuth = true
+    next()
+  }
+);
  
 router.get('/google/callback', passport.authenticate('google', {
     successRedirect: process.env.CLIENT_URL,

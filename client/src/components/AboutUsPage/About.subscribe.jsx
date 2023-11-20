@@ -4,6 +4,8 @@ import { Image } from "../styles/Image.styled";
 import twoWomenImage from "../../../public/images/frames/twowomen.png";
 import { BtnSecondary } from "../styles/Button.styled";
 import styled from "styled-components";
+import MessageDisplay from "../MessageDisplay";
+import { useState } from "react";
 
 const SubscribeSection = styled(Section)`
   & ul {
@@ -48,8 +50,13 @@ const SubscribeSection = styled(Section)`
 `
 
 export default function AboutSubscribe(){
+  const [subscribed, setSubscribed] = useState(false);
+
   return (
-    <SubscribeSection $gap="20px" $bg={({ theme }) => theme.colors.sec.two}>
+    <SubscribeSection $gap="20px" $bg={({ theme }) => theme.colors.sec.two} id="financial-advice">
+      {
+        subscribed === true && <MessageDisplay message="Subscribed successfully" closeMessage={() => setSubscribed(false)}/>
+      }
       <h1>Subscribe for financial advice</h1>
 
       <p>
@@ -84,7 +91,13 @@ export default function AboutSubscribe(){
           <li>
             <FlexRow $width="fit-content" $height="40px" $gap="0">
               <input type="text" placeholder="Enter email to access our advice" />
-              <BtnSecondary $width="120px" $height="100%" $bdradius="0">Subscribe</BtnSecondary>
+              <BtnSecondary
+              $width="120px"
+              $height="100%"
+              $bdradius="0"
+              onClick={() => setSubscribed(true)}>
+                Subscribe
+              </BtnSecondary>
             </FlexRow>
           </li>
         </ul>

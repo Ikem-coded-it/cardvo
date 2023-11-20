@@ -30,13 +30,6 @@ function App() {
     async function getUserData() {
       // check if user info is stored in local storage
       const user = JSON.parse(localStorage.getItem('cardvo-user'));
-      // if (!user) {
-      //   const response = await axios.get(`${serverURL}/auth/login/success`, {
-      //     withCredentials: true
-      //   });
-      //   if (response.data.user)
-      //     return setUser(response.data.user);
-      // }
 
       if (user) return setUser(user);
 

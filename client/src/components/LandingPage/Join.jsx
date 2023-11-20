@@ -65,7 +65,8 @@ export default function Join() {
     $height="480px" 
     $padding="0 90px" 
     $justify="center"
-    $gap="40px">
+    $gap="40px"
+    className="testimonies">
       <h2>Join over 50,000 people worldwide</h2>
       <TestimonialContainer $gap="50px">
         {

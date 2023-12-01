@@ -116,6 +116,11 @@ export const ExploreHeaderSection = styled(Section)`
   }
 `
 
+export const StyledSearchForm = styled.form`
+  display: flex;
+  height: 100%;
+`
+
 
 
 

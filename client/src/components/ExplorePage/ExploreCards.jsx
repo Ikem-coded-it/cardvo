@@ -14,6 +14,7 @@ import MessageDisplay from "../MessageDisplay";
 import { ExploreCardsContext } from "../../pages/ExplorePage";
 import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 export default function ExploreCards() {
   const {
@@ -93,9 +94,11 @@ export default function ExploreCards() {
                       <FaRegHeart />
                     </BtnPrimary>
 
-                    <BtnPrimary>
-                      <BiCommentDetail />
-                    </BtnPrimary>
+                    <HashLink smooth to={`/explore/card/${id}#comments`}>
+                      <BtnPrimary>
+                        <BiCommentDetail />
+                      </BtnPrimary>
+                    </HashLink>
                   </FlexRow>
 
                   <BtnPrimary>

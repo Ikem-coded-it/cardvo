@@ -3,18 +3,20 @@ import { OtherViewsContainer } from "../styles";
 import { CardFrontView, CardBackView } from "../../Card";
 import { StyledCardDisplay } from "../../Card/styles";
 import { useContext } from "react";
-import { CardViewContext } from "../../../pages/SingleCardPage";
+// import { CardViewContext } from "../../../pages/SingleCardPage";
+import { CardViewContext } from "../../../Contexts/SingleCardPageContext";
 import LoaderSpinner from "../../Loader";
+// import { changeCardView } from "../SingleCard.options";
 
 export default function OtherViews() {
-  const { setView, cardDetails } = useContext(CardViewContext);
+  const { cardDetails, viewChangeDispatch } = useContext(CardViewContext);
 
   const handleChangeToFrontView = () => {
-    setView('front')
+    viewChangeDispatch({type: "changed view to front"})
   }
 
   const handleChangeToBackView = () => {
-    setView('back')
+    viewChangeDispatch({type: "changed view to back"})
   }
 
   return (
@@ -56,6 +58,7 @@ export default function OtherViews() {
         </StyledCardDisplay>
 
         <StyledCardDisplay
+        id="comments" // this id is set here for linking to comments section of single cards page which is right below this in the UI
         onClick={handleChangeToBackView}
         $flex="1" 
         $height="100%"

@@ -4,7 +4,9 @@ const {
   getCardDesignById,
   updateCardDesignById,
   deleteCardDesignById,
-  getCardDesignByCategory 
+  getCardDesignByCategory,
+  likeOrUnlikeCardDesign,
+  checkIfUserLikedCard
 } = require("../controllers/cardDesign.controller");
 const { upload } = require("../utils/cloudinary");
 const router = require('express').Router();
@@ -20,5 +22,9 @@ router.route('/category/:category').get(getCardDesignByCategory);
 router.route('/:id/update').put(upload.single('background_image'), updateCardDesignById)
 
 router.route('/:id/delete').delete(deleteCardDesignById);
+
+router.route('/:id/toggle-like').post(likeOrUnlikeCardDesign);
+
+router.route('/:id/check-if-liked').post(checkIfUserLikedCard);
 
 module.exports = router;

@@ -33,7 +33,6 @@ CREATE TABLE likes (
   id BIGSERIAL NOT NULL PRIMARY KEY,
   user_id BIGINT NOT NULL REFERENCES users (id),
   card_design_id BIGINT NOT NULL REFERENCES card_designs (id),
-  created_at TIMESTAMP NOT NULL,
   UNIQUE (user_id, card_design_id)
 );
 

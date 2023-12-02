@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const { validateCardDetails } = require("../utils/validator");
 const { cloudinaryDelete } = require("../utils/cloudinary");
 const formatDate = require("../utils/dateFormater");
+const { deleteLike, createLike } = require("../queries/likes.queries");
 
 const getAllCardDesigns = asyncHandler(async(req, res) => {
   const cardDesigns = await dbAsyncQuery(queries.getAllCardDesigns);
@@ -107,7 +108,6 @@ const getCardDesignById = asyncHandler(async(req, res) => {
 
 const getCardDesignByCategory = asyncHandler(async(req, res) => {
   const { category } = req.params;
-  console.log(category)
   const { rows } = await dbAsyncQuery(queries.getCardDesignByCategory, [category]);
   if (!rows.length) {
     return res.status(404).json({
@@ -226,11 +226,70 @@ const deleteCardDesignById = asyncHandler(async(req, res) => {
   })
 })
 
+const likeOrUnlikeCardDesign = asyncHandler(async(req, res) => {
+  const { userId } = req.body;
+  const { id: cardDesignId } = req.params;
+  const { rows } = await dbAsyncQuery(queries.getUsersLike, [userId, cardDesignId]);
+
+  if (!rows.length) {
+    // no like so create like
+    const createdLike = await dbAsyncQuery(createLike, [userId, cardDesignId]);
+    if (!createdLike) {
+      return res.status(400).json({
+        success: false,
+        message: "Could not create like"
+      })
+    } else if (createdLike instanceof Error) {
+      return res.status(400).json({
+        success: false,
+        message: createdLike.message
+      })
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "Like created"
+    })
+  }
+
+  // if there's already a like then delete it
+  const deletedLike = await dbAsyncQuery(deleteLike, [userId, cardDesignId]);
+  if (!deletedLike) {
+    return res.status(400).json({
+      success: false,
+      message: "Could not delete like"
+    })
+  } else if (deletedLike instanceof Error) {
+    return res.status(400).json({
+      success: false,
+      message: deletedLike.message
+    })
+  }
+
+  return res.status(201).json({
+    success: true,
+    message: "Like deleted"
+  })
+})
+
+const checkIfUserLikedCard = asyncHandler(async(req, res) => {
+  const { userId } = req.body;
+  const { id: cardDesignId } = req.params;
+  const { rows } = await dbAsyncQuery(queries.getUsersLike, [userId, cardDesignId]);
+  if (rows.length === 0) {
+    return res.send({liked: false})
+  }
+
+  return res.send({liked: true})
+})
+
 module.exports = {
   getAllCardDesigns,
   createCardDesign,
   getCardDesignById,
   updateCardDesignById,
   deleteCardDesignById,
-  getCardDesignByCategory 
+  getCardDesignByCategory,
+  likeOrUnlikeCardDesign,
+  checkIfUserLikedCard
 }

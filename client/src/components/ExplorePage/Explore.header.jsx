@@ -1,4 +1,4 @@
-import { ExploreHeaderSection } from "./styles";
+import { ExploreHeaderSection, StyledSearchForm } from "./styles";
 import { FlexColumn, FlexRow } from "../styles/Container.styled";
 import { BtnSecondary } from "../styles/Button.styled";
 import { FaCaretDown } from "react-icons/fa";
@@ -45,6 +45,36 @@ export default function ExploreHeader() {
     }
   }
 
+  async function getCardDesignCategoryBySearch(e) {
+    e.preventDefault()
+
+    try {
+      setFetching(true)
+      const category = e.target.category.value.toLowerCase();
+      const availableCategories = ['anime', 'nature', 'cartoon', 'people'];
+
+      if (!availableCategories.includes(category)) {
+        setMessage('This category is not available. Please search for "anime", "cartoon", "nature" or "people".');
+        return setFetching(false)
+      }
+
+      setShowingCardsText(category)
+
+      const url = `${serverURL}/card-design/category/${category}`;
+       const response = await axios.get(url)
+      if(response.data.success === true) {
+        setCardsInfo(response.data.data)
+        setFetching(false)
+      } else {
+        setMessage(response.data.message);
+        setFetching(false)
+      }
+    } catch (error) {
+      setMessage(error.message);
+      setFetching(false)
+    }
+  }
+
   return (
     <>
     {message && <MessageDisplay message={message} closeMessage={() => setMessage(null)}/>}
@@ -70,14 +100,17 @@ export default function ExploreHeader() {
           </ul>
         </FlexColumn>
 
-        <input 
-        type="search"
-        placeholder="Search for anime, nature, cartoon or people"/>
+        <StyledSearchForm onSubmit={(e) => getCardDesignCategoryBySearch(e)}>
+          <input 
+          type="search"
+          name="category"
+          placeholder="Search for anime, nature, cartoon or people"/>
 
-        <BtnSecondary $width="120px" $bdradius="0">
-          <i className="fa-solid fa-search"></i>
-          Search
-        </BtnSecondary>
+          <BtnSecondary type="submit" $width="120px" $bdradius="0">
+            <i className="fa-solid fa-search"></i>
+            Search
+          </BtnSecondary>
+        </StyledSearchForm>
       </FlexRow>
     </ExploreHeaderSection>
     </>

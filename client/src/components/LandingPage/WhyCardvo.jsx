@@ -2,10 +2,10 @@ import { Section } from "../styles/Section.styled";
 import { BtnPrimary } from "../styles/Button.styled";
 // import { Image } from "../styles/Image.styled";
 import { FlexRow, FlexColumn, Container } from "../styles/Container.styled";
-import StyledLink from "../styles/Link.styled";
 import PropTypes from "prop-types";
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import imageOne from "../../../public/images/backgrounds/header2.png";
 import imageTwo from "../../../public/images/backgrounds/header1.png";
 import imageThree from "../../../public/images/frames/subscribefor.png";
@@ -114,6 +114,7 @@ export default function WhyCardvo() {
 function Card({ heading, description, src, data }) {
   const card = useRef()
   const btn = useRef()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const width = window.innerWidth;
@@ -124,9 +125,17 @@ function Card({ heading, description, src, data }) {
       card.current.style.flexDirection = "column";
     }
 
+    if(data < 2) {
+      btn.current.addEventListener('click', () => navigate("/explore"))
+    }
+
     if(data === 2) {
       btn.current.innerText = "Subscribe to mailing list";
       btn.current.style.width = "260px";
+      btn.current.addEventListener('click', () => {
+        const mailingListForm = document.querySelector('.mailing-list');
+        mailingListForm.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+      })
     } else {
       btn.current.innerText = "Explore";
     }
@@ -143,13 +152,11 @@ function Card({ heading, description, src, data }) {
       <FlexColumn $height="100%" $flex="1" $align="flex-start">
         <h2>{heading}</h2>
         <p>{description}</p>
-        <StyledLink to="/explore">
-          <BtnPrimary 
-          $width="130px" 
-          $height="60px" 
-          ref={btn}
-          $color={({ theme }) => theme.colors.sec.eight}></BtnPrimary>
-        </StyledLink>
+        <BtnPrimary 
+        $width="130px" 
+        $height="60px" 
+        ref={btn}
+        $color={({ theme }) => theme.colors.sec.eight}></BtnPrimary>
       </FlexColumn>
       <Background
       $height="100%"

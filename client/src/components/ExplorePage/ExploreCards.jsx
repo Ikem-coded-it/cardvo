@@ -2,7 +2,6 @@ import { ExploreCardsSection, CardDisplay } from "./styles";
 import { CardsGrid } from "./styles";
 import { FlexRow, Container } from "../styles/Container.styled"; 
 import { BtnPrimary } from "../styles/Button.styled";
-import { FaRegHeart } from "react-icons/fa"; 
 import { BsShare, BsBookmarks } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi"; 
 import { BiCommentDetail } from "react-icons/bi"; 
@@ -10,10 +9,11 @@ import { CardFrontView } from "../Card";
 import { useContext } from "react";
 import LoaderSpinner from "../Loader";
 import MessageDisplay from "../MessageDisplay";
-// import StyledLink from "../styles/Link.styled";
 import { ExploreCardsContext } from "../../pages/ExplorePage";
 import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+import PropTypes from "prop-types";
 
 export default function ExploreCards() {
   const {
@@ -58,53 +58,19 @@ export default function ExploreCards() {
             id
           }, index) => {
             return(
-              <CardDisplay key={index}>
-                <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
-                  <BtnPrimary
-                  $font="17px"
-                  onClick={() => checkIfLoggedInAndNavigate(id)}>
-                    View
-                  </BtnPrimary>
-
-                  <FlexRow>
-                    <BtnPrimary>
-                      <BsBookmarks />
-                    </BtnPrimary>
-                    <BtnPrimary>
-                      <FiDownload />
-                    </BtnPrimary>
-                  </FlexRow>
-                </FlexRow>
-
-                <CardFrontView
-                cardNumberOne={card_number_one}
-                cardNumberTwo={card_number_two}
-                cardNumberThree={card_number_three}
-                cardNumberFour={card_number_four}
-                name={card_holder_name}
-                expiration={expiration}
-                color={color}
-                image={background_image}
-                />
-
-                <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
-                  <FlexRow>
-                    <BtnPrimary>
-                      <FaRegHeart />
-                    </BtnPrimary>
-
-                    <BtnPrimary>
-                      <BiCommentDetail />
-                    </BtnPrimary>
-                  </FlexRow>
-
-                  <BtnPrimary>
-                    <BsShare />
-                  </BtnPrimary>
-                </FlexRow>
-
-                <Container $height="100%" $width="100%" />
-              </CardDisplay>
+              <CardDisplayWithOptions
+              key={index}
+              checkIfLoggedInAndNavigate={checkIfLoggedInAndNavigate}
+              cardNumberOne={card_number_one}
+              cardNumberTwo={card_number_two}
+              cardNumberThree={card_number_three}
+              cardNumberFour={card_number_four}
+              name={card_holder_name}
+              expiration={expiration}
+              color={color}
+              image={background_image}
+              id={id}
+              />
             )
           }))
         }
@@ -112,6 +78,82 @@ export default function ExploreCards() {
     </ExploreCardsSection>
     </>
   )
+}
+
+function CardDisplayWithOptions({
+  checkIfLoggedInAndNavigate,
+  cardNumberOne,
+  cardNumberTwo,
+  cardNumberThree,
+  cardNumberFour,
+  name,
+  expiration,
+  color,
+  image,
+  id
+}) {
+
+  return (
+    <CardDisplay>
+      <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
+        <BtnPrimary
+        $font="17px"
+        onClick={() => checkIfLoggedInAndNavigate(id)}>
+          View
+        </BtnPrimary>
+
+        <FlexRow>
+          <BtnPrimary>
+            <BsBookmarks />
+          </BtnPrimary>
+          <BtnPrimary>
+            <FiDownload />
+          </BtnPrimary>
+        </FlexRow>
+      </FlexRow>
+
+      <CardFrontView
+      cardNumberOne={cardNumberOne}
+      cardNumberTwo={cardNumberTwo}
+      cardNumberThree={cardNumberThree}
+      cardNumberFour={cardNumberFour}
+      name={name}
+      expiration={expiration}
+      color={color}
+      image={image}
+      />
+
+      <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
+        <FlexRow>
+          <HashLink smooth to={`/explore/card/${id}#comments`}>
+            <BtnPrimary>
+              <BiCommentDetail />
+            </BtnPrimary>
+          </HashLink>
+        </FlexRow>
+
+        <BtnPrimary>
+          <BsShare />
+        </BtnPrimary>
+      </FlexRow>
+
+      <Container $height="100%" $width="100%" />
+    </CardDisplay>
+  )
+}
+
+CardDisplayWithOptions.propTypes = {
+  checkIfLoggedInAndNavigate: PropTypes.func,
+  likeOrUnlikeCard: PropTypes.func,
+  cardNumberOne: PropTypes.string,
+  cardNumberTwo: PropTypes.string,
+  cardNumberThree: PropTypes.string,
+  cardNumberFour: PropTypes.string,
+  name: PropTypes.string,
+  expiration: PropTypes.string,
+  color: PropTypes.string,
+  image: PropTypes.string,
+  id: PropTypes.string,
 }
 
 // const cardsInfo = [

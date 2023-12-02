@@ -2,7 +2,8 @@ import { SimilarDesignsContainer } from "../styles"
 import { FlexColumn } from "../../styles/Container.styled"
 import { CardFrontView } from "../../Card";
 import { StyledCardDisplay } from "../../Card/styles";
-import { CardViewContext } from "../../../pages/SingleCardPage";
+// import { CardViewContext } from "../../../pages/SingleCardPage";
+import { CardViewContext } from "../../../Contexts/SingleCardPageContext";
 import { AppContext } from "../../../App";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";

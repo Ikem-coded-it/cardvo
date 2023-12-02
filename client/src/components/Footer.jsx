@@ -4,17 +4,21 @@ import { Link } from "react-router-dom";
 import { FlexRow, FlexColumn } from "./styles/Container.styled";
 import { Image } from "./styles/Image.styled";
 import styled from "styled-components";
-import youtube from "../../public/images/icons/youtube.png";
+// import youtube from "../../public/images/icons/youtube.png";
 import twitter from "../../public/images/icons/twitter.png";
-import facebook from "../../public/images/icons/facebook.png";
+// import facebook from "../../public/images/icons/facebook.png";
 import linkedin from "../../public/images/icons/linkedin.png";
 import { BtnSecondary } from "./styles/Button.styled";
+import { AppContext } from "../App";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import MessageDisplay from "./MessageDisplay";
 
 const icons = [
-  {name: "youtube icon", src: youtube},
-  {name: "twitter icon", src: twitter},
-  {name: "facebook icon", src: facebook},
-  {name: "linkedin icon", src: linkedin},
+  // {name: "youtube icon", src: youtube},
+  {name: "twitter icon", src: twitter, path: "https://twitter.com/IkemO06934594"},
+  // {name: "facebook icon", src: facebook},
+  {name: "linkedin icon", src: linkedin, path: "https://www.linkedin.com/in/ikemefuna-onubogu-84914323a"},
 ]
 
 const StyledLink = styled(Link)`
@@ -23,8 +27,27 @@ const StyledLink = styled(Link)`
 `
 
 export default function Footer() {
+  const {setClickedFooterLink, currentPage} = useContext(AppContext);
+  const [subscribed, setSubscribed] = useState(false);
+  const navigate = useNavigate();
+
+  function goToTestimonies() {
+    // if not on landin page, navigate to landing page then it
+    //checks if a clicked footer link is set before scrolling to the section
+    if (currentPage === "/") {
+      const testimoniesSection = document.querySelector(".testimonies");
+      testimoniesSection.scrollIntoView({behavior: "smooth"});
+    } else {
+      setClickedFooterLink("testimonies");
+      navigate("/")
+    }
+  }
   return (
     <StyledFooter>
+      {
+        subscribed === true && <MessageDisplay message="Subscribed successfully" closeMessage={() => setSubscribed(false)}/>
+      }
+
       <FlexRow $width="100%" $align="flex-start" $justify="space-between">
         <StyledList>
           <li>
@@ -34,10 +57,10 @@ export default function Footer() {
             <StyledLink to="/about">About us</StyledLink>
           </li>
           <li>
-            <StyledLink to="/cards">Credit cards</StyledLink>
+            <StyledLink to="/explore">Credit cards</StyledLink>
           </li>
-          <li>
-            <StyledLink to="/#testimonies">Testimonies</StyledLink>
+          <li onClick={goToTestimonies}>
+            Testimonies
           </li>
         </StyledList>
 
@@ -46,10 +69,10 @@ export default function Footer() {
             <h3>Services</h3>
           </li>
           <li>
-            <StyledLink to="/cards">Explore designs</StyledLink>
+            <StyledLink to="/explore">Explore designs</StyledLink>
           </li>
           <li>
-            <StyledLink to="/about/#financial-advice">Financial advice</StyledLink>
+            <a href="#financial-advice">Financial advice</a>
           </li>
           <li>
             <StyledLink to="/">Mailing list</StyledLink>
@@ -73,7 +96,9 @@ export default function Footer() {
             <h3>Useful Resources</h3>
           </li>
           <li>
-            Documentation
+            <StyledLink to="https://docs.google.com/document/d/1GCstBg1apptAuBVQ82zGVSG9X5FzeGC7zPY7X-HBJSA/edit?usp=sharing">
+              Documentation
+            </StyledLink>
           </li>
         </StyledList>
       </FlexRow>
@@ -84,13 +109,15 @@ export default function Footer() {
           <FlexRow $gap="50px">
             {
               icons.map((icon, index) => {
-                return <Image
-                  key={index}
-                  src={icon.src}
-                  $height="30px"
-                  $width="auto"
-                  alt={icon.name}
-                />
+                return (
+                  <StyledLink key={index} to={icon.path} target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src={icon.src}
+                      $height="40px"
+                      width="40px"
+                    />
+                  </StyledLink>
+                )
               })
             }
           </FlexRow>
@@ -101,7 +128,13 @@ export default function Footer() {
           <h3>Subscribe to Mailing List</h3>
           <FlexRow $gap="0" $height="35px">
             <input type="text" placeholder="Save money with our financial advice" />
-            <BtnSecondary $width="120px" $height="100%">Subscribe</BtnSecondary>
+            <BtnSecondary
+            $width="120px"
+            $height="100%"
+            className="mailing-list"
+            onClick={() => setSubscribed(true)}>
+              Subscribe
+            </BtnSecondary>
           </FlexRow>
         </FlexColumn>
       </FlexRow>

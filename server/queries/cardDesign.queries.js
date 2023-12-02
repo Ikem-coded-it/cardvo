@@ -12,6 +12,8 @@ const updateCardDesignById = 'UPDATE card_designs SET card_holder_name = $1, car
 
 const deleteCardDesignById = 'DELETE FROM card_designs WHERE id = $1';
 
+const getUsersLike = 'SELECT * FROM likes WHERE user_id = $1 AND card_design_id = $2';
+
 module.exports = {
   getAllCardDesigns,
   getCardDesignByNumber,
@@ -19,5 +21,6 @@ module.exports = {
   getCardDesignById,
   updateCardDesignById,
   deleteCardDesignById,
-  getCardDesignByCategory
+  getCardDesignByCategory,
+  getUsersLike
 }

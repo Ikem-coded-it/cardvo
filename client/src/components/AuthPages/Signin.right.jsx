@@ -52,7 +52,8 @@ export default function SigninRightSide() {
     try {
       const response = await axios.post(serverURL, userLoginDetails);
       if (response.data.success === true) {
-        context.setUser(response.data.user);
+        const res = await axios.get(`${serverURL}/success`, { withCredentials: true })
+        if (res.data.success === true) context.setUser(res.data.user);
         
         if(userLoginDetails.rememberMe === true) {
           localStorage.setItem('cardvo-user', JSON.stringify(response.data.user))

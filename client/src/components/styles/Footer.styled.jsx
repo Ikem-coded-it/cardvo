@@ -61,6 +61,15 @@ export const StyledList = styled.ul`
   color: #fff;
   gap: 20px;
 
+  & > li {
+    cursor: pointer;
+
+    & a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+
   @media(max-width: ${({ theme }) => theme.tablet}) {
     border-bottom: 2px solid #fff;
     width: 100%;

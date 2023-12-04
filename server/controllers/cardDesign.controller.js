@@ -5,6 +5,7 @@ const { validateCardDetails } = require("../utils/validator");
 const { cloudinaryDelete } = require("../utils/cloudinary");
 const formatDate = require("../utils/dateFormater");
 const { deleteLike, createLike } = require("../queries/likes.queries");
+const { saveCard, unsaveCard } = require("../queries/save.queries");
 
 const getAllCardDesigns = asyncHandler(async(req, res) => {
   const cardDesigns = await dbAsyncQuery(queries.getAllCardDesigns);
@@ -231,7 +232,7 @@ const likeOrUnlikeCardDesign = asyncHandler(async(req, res) => {
   const { id: cardDesignId } = req.params;
   const { rows } = await dbAsyncQuery(queries.getUsersLike, [userId, cardDesignId]);
 
-  if (!rows.length) {
+  if (rows.length === 0) {
     // no like so create like
     const createdLike = await dbAsyncQuery(createLike, [userId, cardDesignId]);
     if (!createdLike) {
@@ -283,6 +284,63 @@ const checkIfUserLikedCard = asyncHandler(async(req, res) => {
   return res.send({liked: true})
 })
 
+const saveOrUnsaveCard = asyncHandler(async(req, res) => {
+  const { userId } = req.body;
+  const { id: cardDesignId } = req.params;
+  const { rows } = await dbAsyncQuery(queries.getUsersSavedCard, [userId, cardDesignId]);
+
+  if (rows.length === 0) {
+    // no like so create like
+    const savedCard = await dbAsyncQuery(saveCard, [userId, cardDesignId]);
+    if (!savedCard) {
+      return res.status(400).json({
+        success: false,
+        message: "Could not save card"
+      })
+    } else if (savedCard instanceof Error) {
+      return res.status(400).json({
+        success: false,
+        message: savedCard.message
+      })
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "Card saved"
+    })
+  }
+
+  // if there's already a like then delete it
+  const unsavedCard = await dbAsyncQuery(unsaveCard, [userId, cardDesignId]);
+  if (!unsavedCard) {
+    return res.status(400).json({
+      success: false,
+      message: "Could not unsave card"
+    })
+  } else if (unsavedCard instanceof Error) {
+    return res.status(400).json({
+      success: false,
+      message: unsavedCard.message
+    })
+  }
+
+  return res.status(201).json({
+    success: true,
+    message: "Card unsaved"
+  })
+})
+
+const checkIfUserSavedCard = asyncHandler(async(req, res) => {
+  const { userId } = req.body;
+  const { id: cardDesignId } = req.params;
+  const { rows } = await dbAsyncQuery(queries.getUsersSavedCard, [userId, cardDesignId]);
+  if (rows.length === 0) {
+    return res.send({saved: false})
+  }
+
+  return res.send({saved: true})
+})
+
 module.exports = {
   getAllCardDesigns,
   createCardDesign,
@@ -291,5 +349,7 @@ module.exports = {
   deleteCardDesignById,
   getCardDesignByCategory,
   likeOrUnlikeCardDesign,
-  checkIfUserLikedCard
+  checkIfUserLikedCard,
+  saveOrUnsaveCard,
+  checkIfUserSavedCard
 }

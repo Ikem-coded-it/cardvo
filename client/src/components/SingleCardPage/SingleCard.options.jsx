@@ -2,8 +2,8 @@
 import {  CardFrontView, CardBackView } from "../Card";
 import { FlexColumn, FlexRow } from "../styles/Container.styled";
 import { BtnPrimary, BtnSecondary } from "../styles/Button.styled";
-import { FaHeart } from "react-icons/fa6"; 
-import { BsShare, BsBookmarks } from "react-icons/bs"; 
+import { FaHeart, FaBookmark } from "react-icons/fa6";
+import { BsShare } from "react-icons/bs"; 
 import { AiOutlineEdit } from "react-icons/ai"; 
 import { FiDownload } from "react-icons/fi";
 import { StyledViewOptionsSection } from "./styles";
@@ -24,6 +24,7 @@ export default function ViewOptions() {
   const { user, serverURL } = useContext(AppContext);
   const navigate = useNavigate();
   const [liked, setLiked] = useState(null);
+  const [saved, setSaved] = useState(null);
 
   useEffect(() => {
     const checkIfUserAlreadyLikedCard = async() => {
@@ -40,7 +41,22 @@ export default function ViewOptions() {
       }
     }
 
+    const checkIfUserAlreadySavedCard = async() => {
+      try {
+        const url = `${serverURL}/card-design/${id}/check-if-saved`;
+        const response = await axios.post(url, {userId: user.id});
+        if (response.data.saved === true) {
+          setSaved(true)
+        } else {
+          setSaved(false)
+        }
+      } catch (error) {
+        setMessage(error.message)
+      }
+    }
+
     checkIfUserAlreadyLikedCard()
+    checkIfUserAlreadySavedCard()
   }, [id, serverURL, user.id])
 
   useEffect(() => {
@@ -52,6 +68,16 @@ export default function ViewOptions() {
       heartIcon.style.fill = "grey";
     }
   }, [liked])
+
+  useEffect(() => {
+    const bookmarkIcon = document.getElementById('bookmark');
+
+    if (saved === true) {
+      bookmarkIcon.style.fill = "blue";
+    } else {
+      bookmarkIcon.style.fill = "grey";
+    }
+  }, [saved])
 
   const likeOrUnlikeCard = async() => {
     const url = `${serverURL}/card-design/${id}/toggle-like`;
@@ -66,6 +92,31 @@ export default function ViewOptions() {
       if (response.data.success) {
         if (response.data.message === "Like created") return setLiked(true)
         if (response.data.message === "Like deleted") return setLiked(false)
+      }
+    } catch (error) {
+      setMessage(error.message)
+    }
+  }
+
+  const saveOrUnsaveCard = async() => {
+    const url = `${serverURL}/card-design/${id}/toggle-save-card`;
+    try {
+      if(!user) return navigate("/auth/signin")
+      const response = await axios.post(url, {userId: user.id});
+
+      if (response instanceof Error) {
+        return setMessage(response.message)
+      }
+
+      if (response.data.success) {
+        if (response.data.message === "Card saved") {
+          setSaved(true)
+          return setMessage("You've added this card design to your bookmarks");
+        }
+        if (response.data.message === "Card unsaved") {
+          setSaved(false)
+          return setMessage("You've removed this card design from your bookmarks");
+        }
       }
     } catch (error) {
       setMessage(error.message)
@@ -127,18 +178,18 @@ export default function ViewOptions() {
               <FiDownload/> Download
             </BtnSecondary>
 
-            <StyledLink $width="100%" >
+            <StyledLink $width="100%" to={`/explore/card/${id}/edit`}>
               <BtnPrimary $width="100%" $height="50px">
                 <AiOutlineEdit/> Edit
               </BtnPrimary>
             </StyledLink>
 
-            <BtnPrimary $width="35%" $height="50px">
-              <BsBookmarks/> Save
+            <BtnPrimary $width="35%" $height="50px" onClick={saveOrUnsaveCard}>
+              <FaBookmark id='bookmark'/>
             </BtnPrimary>
 
             <BtnPrimary $width="35%" $height="50px" id='like-btn' onClick={likeOrUnlikeCard}>
-              <FaHeart id="heart"/> Like
+              <FaHeart id="heart"/>
             </BtnPrimary>
 
             <BtnPrimary $width="35%" $height="50px">

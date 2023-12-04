@@ -34,7 +34,6 @@ export default function ControlPanel({ designState, designDispatch }) {
 
     switch(id) {
       case "number-1": {
-        console.log(value)
         const action = {
           type: "changed_number",
           newNumberOne: value,
@@ -129,7 +128,7 @@ export default function ControlPanel({ designState, designDispatch }) {
     $padding="0 20px"
     >
       <BackBtnContainer $height="10%" $width="100%">
-        <BtnPrimary $width="100%" >
+        <BtnPrimary $width="100%" onClick={() => history.back()}>
           <i className="fa-solid fa-arrow-left"></i>
           Edit Properties
         </BtnPrimary>
@@ -197,6 +196,7 @@ export default function ControlPanel({ designState, designDispatch }) {
             id="number-1" 
             onChange={(e) => handleNumberChange(e)}
             onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.cardNumberOne}
             />
 
             <input 
@@ -205,7 +205,8 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="0000" 
             id="number-2" 
             onChange={(e) => handleNumberChange(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.cardNumberTwo}/>
 
             <input 
             maxLength={4}
@@ -213,7 +214,8 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="0000" 
             id="number-3" 
             onChange={(e) => handleNumberChange(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.cardNumberThree}/>
 
             <input 
             maxLength={4}
@@ -221,7 +223,8 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="0000" 
             id="number-4" 
             onChange={(e) => handleNumberChange(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.cardNumberFour}/>
           </NumberInputContainer>
 
           <FlexRow $justify="flex-start" $width="100%">
@@ -231,7 +234,8 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="YOUR NAME HERE" 
             maxLength={22} 
             onChange={(e) => handleNameChange(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.name}/>
           </FlexRow>
           <FlexRow $width="100%" $justify="space-between">
             <input 
@@ -240,11 +244,13 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="cvv" 
             onChange={(e) => handleChangeCvv(e)}
             onFocus={() => handleChangeViewToBack()}
+            defaultValue={designState.cvv}
             />
             <input 
             type="date" 
             onChange={(e) => handleChangeExpirationDate(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.expiration}/>
           </FlexRow>
         </FlexColumn>
 

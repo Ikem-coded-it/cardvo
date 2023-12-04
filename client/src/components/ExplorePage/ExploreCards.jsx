@@ -2,7 +2,7 @@ import { ExploreCardsSection, CardDisplay } from "./styles";
 import { CardsGrid } from "./styles";
 import { FlexRow, Container } from "../styles/Container.styled"; 
 import { BtnPrimary } from "../styles/Button.styled";
-import { BsShare, BsBookmarks } from "react-icons/bs";
+import { BsShare } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi"; 
 import { BiCommentDetail } from "react-icons/bi"; 
 import { CardFrontView } from "../Card";
@@ -103,9 +103,6 @@ function CardDisplayWithOptions({
         </BtnPrimary>
 
         <FlexRow>
-          <BtnPrimary>
-            <BsBookmarks />
-          </BtnPrimary>
           <BtnPrimary>
             <FiDownload />
           </BtnPrimary>

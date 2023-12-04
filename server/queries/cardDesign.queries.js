@@ -14,6 +14,8 @@ const deleteCardDesignById = 'DELETE FROM card_designs WHERE id = $1';
 
 const getUsersLike = 'SELECT * FROM likes WHERE user_id = $1 AND card_design_id = $2';
 
+const getUsersSavedCard = 'SELECT * FROM saved_cards WHERE user_id = $1 AND card_design_id = $2';
+
 module.exports = {
   getAllCardDesigns,
   getCardDesignByNumber,
@@ -22,5 +24,6 @@ module.exports = {
   updateCardDesignById,
   deleteCardDesignById,
   getCardDesignByCategory,
-  getUsersLike
+  getUsersLike,
+  getUsersSavedCard
 }

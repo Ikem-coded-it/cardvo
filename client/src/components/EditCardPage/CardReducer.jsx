@@ -165,6 +165,12 @@ export default function CardReducer (designState, action) {
       return newDesignState;
     }
 
+    case "changed-card-after-database-fetch": {
+      // changes all card info 
+      const newDesignState = action.fetchedDesign
+      return newDesignState;
+    }
+
     default:
       throw Error('Unknown action: ' + action.type);
   }

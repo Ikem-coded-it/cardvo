@@ -29,6 +29,21 @@ CREATE TABLE card_designs (
   CONSTRAINT unique_numbers UNIQUE (card_number_one, card_number_two, card_number_three, card_number_four)
 );
 
+CREATE TABLE user_designed_cards (
+  id BIGSERIAL NOT NULL PRIMARY KEY,
+  user_id BIGINT NOT NULL REFERENCES users (id),
+  card_holder_name VARCHAR(60) NOT NULL,
+  card_number_one BIGINT  NOT NULL,
+  card_number_two BIGINT  NOT NULL,
+  card_number_three BIGINT  NOT NULL,
+  card_number_four BIGINT  NOT NULL,
+  expiration DATE NOT NULL,
+  color VARCHAR(9),
+  background_image VARCHAR,
+  cvv VARCHAR(3)  NOT NULL,
+  CONSTRAINT unique_numbers UNIQUE (card_number_one, card_number_two, card_number_three, card_number_four)
+);
+
 CREATE TABLE likes (
   id BIGSERIAL NOT NULL PRIMARY KEY,
   user_id BIGINT NOT NULL REFERENCES users (id),

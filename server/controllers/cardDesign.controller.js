@@ -1,7 +1,7 @@
 const { db, dbAsyncQuery } =  require("../config/db");
 const queries = require("../queries/cardDesign.queries");
 const asyncHandler = require("express-async-handler");
-const { validateCardDetails } = require("../utils/validator");
+const { validateCardDetails, validateUserCollectionCardDetails } = require("../utils/validator");
 const { cloudinaryDelete } = require("../utils/cloudinary");
 const formatDate = require("../utils/dateFormater");
 const { deleteLike, createLike } = require("../queries/likes.queries");
@@ -341,6 +341,66 @@ const checkIfUserSavedCard = asyncHandler(async(req, res) => {
   return res.send({saved: true})
 })
 
+const createCardForUsersCollection = asyncHandler(async(req, res) => {
+  if (req.file) {
+    req.body.background_image = req.file.path
+    delete req.body.defaultImage
+  }
+  const {error, value} = validateUserCollectionCardDetails(req.body);
+
+  if (error) {
+    console.log(error)
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+      key: error.key,
+      value: error.value,
+    })
+  }
+
+  const existingCardDesign = await dbAsyncQuery(queries.getCardUserCollectionDesignByNumber, [
+    value.card_number_one,
+    value.card_number_two,
+    value.card_number_three,
+    value.card_number_four,
+  ]);
+
+  if (existingCardDesign.rows.length > 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Card with this number already exists"
+    })
+  }
+
+  const image = req.body.defaultImage ? req.body.defaultImage : req.body.background_image
+  const createdDesign = await dbAsyncQuery(queries.createUserCollectionDesign, [
+    value.user_id,
+    value.name,
+    value.card_number_one,
+    value.card_number_two,
+    value.card_number_three,
+    value.card_number_four,
+    value.expiration,
+    value.color,
+    image,
+    value.cvv
+  ]);
+
+  if (!createdDesign || createdDesign instanceof Error) {
+    console.log("here4")
+    return res.status(400).json({
+      success: false,
+      message: "Failed to add to collection"
+    })
+  }
+  
+  return res.status(201).json({
+    success: true,
+    message: "Card design added to your collection",
+    createdDesign: createdDesign.rows
+  })
+})
+
 module.exports = {
   getAllCardDesigns,
   createCardDesign,
@@ -351,5 +411,6 @@ module.exports = {
   likeOrUnlikeCardDesign,
   checkIfUserLikedCard,
   saveOrUnsaveCard,
-  checkIfUserSavedCard
+  checkIfUserSavedCard,
+  createCardForUsersCollection
 }

@@ -25,7 +25,7 @@ export default function CardReducer (designState, action) {
         cardNumberThree: designState.cardNumberThree,
         cardNumberFour: designState.cardNumberFour,
         expiration: designState.expiration,
-        color: "",
+        color: designState.color,
         image: action.newImage,
         cvv: designState.cvv,
         view: designState.view,

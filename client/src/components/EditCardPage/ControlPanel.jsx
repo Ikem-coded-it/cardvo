@@ -8,9 +8,32 @@ import {
   ColorsGrid
 } from "./styles";
 import downloadDesign from "../../utils/designDownloader";
+import { useContext, useState } from "react";
+import { AppContext }from "../../App";
+import MessageDisplay from "../MessageDisplay";
+import LoaderSpinner from "../Loader";
+import axios from "axios";
 import PropTypes from "prop-types";
 
+const colorPalette = [
+  "#0891b2",
+  "#dc2626",
+  "#fde047",
+  "#84cc16",
+  "#7c3aed",
+  "#fb923c",
+  "#22d3ee",
+  "#854d0e",
+  "#d946ef",
+  "#334155",
+  "#171717",
+  "#030712"
+]
+
 export default function ControlPanel({ designState, designDispatch }) {
+  const { user, serverURL } = useContext(AppContext);
+  const [message, setMessage] = useState(null);
+  const [addingToCollection, setAddingToCollection] = useState(false); // show loader in button
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
@@ -120,7 +143,65 @@ export default function ControlPanel({ designState, designDispatch }) {
     designDispatch(action);
   }
 
+  const addToCollection = async() => {
+    setAddingToCollection(true);
+    const fileInput = document.getElementById('image-file');
+
+    const formData = new FormData();
+
+    formData.append('user_id', user.id);
+    formData.append('name', designState.name);
+    formData.append('card_number_one', designState.cardNumberOne);
+    formData.append('card_number_two', designState.cardNumberTwo);
+    formData.append('card_number_three', designState.cardNumberThree);
+    formData.append('card_number_four', designState.cardNumberFour);
+    formData.append('expiration', designState.expiration);
+    formData.append('color', designState.color);
+    formData.append('cvv', designState.cvv);
+
+    if (fileInput.files[0]) {
+      formData.append('background_image', fileInput.files[0]);
+    } else {
+      formData.append('defaultImage', designState.image);
+    }
+
+    try {
+      const url = `${serverURL}/card-design/add-to-collection`;
+      const response = await axios.post(url, formData);
+      if (response instanceof Error) {
+        console.log("here1")
+        setMessage(response.message);
+        return setAddingToCollection(false);
+      }
+
+      if (response.data.success === false) {
+        console.log("here2")
+        setMessage(response.data.message);
+        return setAddingToCollection(false);
+      }
+
+      if (response.data.success === true) {
+        console.log("here3")
+        setMessage(response.data.message);
+        return setAddingToCollection(false);
+      }
+    } catch (error) {
+      console.log("here4")
+      if (error.response) {
+        setMessage(error.response.data.message);
+        return setAddingToCollection(false);
+      }
+      setMessage(error.message)
+      return setAddingToCollection(false);
+    }
+  }
+
   return (
+    <>
+    {
+      message && <MessageDisplay message={message} closeMessage={() => setMessage(null)}/>
+    }
+
     <ControlPanelContainer 
     $width="25%"
     $height="100%"
@@ -174,6 +255,7 @@ export default function ControlPanel({ designState, designDispatch }) {
             accept="image/*" 
             name="card-background-image"
             onChange={(e) => handleImageUpload(e)}
+            id="image-file"
             />
           </FlexRow>
         </FlexColumn>
@@ -259,18 +341,27 @@ export default function ControlPanel({ designState, designDispatch }) {
           <BtnSecondary 
           $width="100%" 
           $bdradius="5px"
-          $height="50px">
-            Add to my collection
+          $height="50px"
+          onClick={addToCollection}>
+            {
+              addingToCollection ? (
+                <LoaderSpinner type="spin" height={20} width={20} color="white"/>
+              ) : (
+                "Add to my Collection"
+              )
+            }
           </BtnSecondary>
           <BtnPrimary 
           $width="100%"
           $height="50px"
-          onClick={downloadDesign}>
+          onClick={downloadDesign}
+          type="button">
             Download
           </BtnPrimary>
         </FlexColumn>
       </Controls>
     </ControlPanelContainer>
+    </>
   )
 }
 
@@ -300,18 +391,3 @@ Color.propTypes = {
   hexCode: PropTypes.string,
   designDispatch: PropTypes.func
 }
-
-const colorPalette = [
-  "#0891b2",
-  "#dc2626",
-  "#fde047",
-  "#84cc16",
-  "#7c3aed",
-  "#fb923c",
-  "#22d3ee",
-  "#854d0e",
-  "#d946ef",
-  "#334155",
-  "#171717",
-  "#030712"
-]

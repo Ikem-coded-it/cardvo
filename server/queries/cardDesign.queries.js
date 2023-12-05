@@ -16,6 +16,10 @@ const getUsersLike = 'SELECT * FROM likes WHERE user_id = $1 AND card_design_id 
 
 const getUsersSavedCard = 'SELECT * FROM saved_cards WHERE user_id = $1 AND card_design_id = $2';
 
+const createUserCollectionDesign = 'INSERT INTO user_designed_cards (user_id, card_holder_name, card_number_one, card_number_two, card_number_three, card_number_four, expiration, color, background_image, cvv) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id, user_id, card_holder_name, card_number_one, card_number_two, card_number_three, card_number_four, expiration, color, background_image, cvv';
+
+const getCardUserCollectionDesignByNumber = 'SELECT * FROM user_designed_cards WHERE card_number_one = $1 AND card_number_two = $2 AND card_number_three = $3 AND card_number_four = $4';
+
 module.exports = {
   getAllCardDesigns,
   getCardDesignByNumber,
@@ -25,5 +29,7 @@ module.exports = {
   deleteCardDesignById,
   getCardDesignByCategory,
   getUsersLike,
-  getUsersSavedCard
+  getUsersSavedCard,
+  createUserCollectionDesign,
+  getCardUserCollectionDesignByNumber
 }

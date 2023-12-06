@@ -169,24 +169,20 @@ export default function ControlPanel({ designState, designDispatch }) {
       const url = `${serverURL}/card-design/add-to-collection`;
       const response = await axios.post(url, formData);
       if (response instanceof Error) {
-        console.log("here1")
         setMessage(response.message);
         return setAddingToCollection(false);
       }
 
       if (response.data.success === false) {
-        console.log("here2")
         setMessage(response.data.message);
         return setAddingToCollection(false);
       }
 
       if (response.data.success === true) {
-        console.log("here3")
         setMessage(response.data.message);
         return setAddingToCollection(false);
       }
     } catch (error) {
-      console.log("here4")
       if (error.response) {
         setMessage(error.response.data.message);
         return setAddingToCollection(false);
@@ -354,7 +350,7 @@ export default function ControlPanel({ designState, designDispatch }) {
           <BtnPrimary 
           $width="100%"
           $height="50px"
-          onClick={downloadDesign}
+          onClick={() => downloadDesign()}
           type="button">
             Download
           </BtnPrimary>

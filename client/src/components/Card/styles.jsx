@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FlexColumn, FlexRow } from "../styles/Container.styled";
 
 export const StyledCardFrontView = styled(FlexColumn)`
-  box-shadow: 3px 3px 5px ${({ theme }) => theme.colors.sec.nine};
+  // box-shadow: 3px 3px 5px ${({ theme }) => theme.colors.sec.nine};
   height: ${({ $height }) => $height || "60%"};
   width: ${({ $width }) => $width || "70%"};
   background-repeat: no-repeat;
@@ -71,7 +71,7 @@ export const StyledCardFrontView = styled(FlexColumn)`
 `
 
 export const StyledCardBackView = styled(FlexColumn)`
-  box-shadow: 3px 3px 5px ${({ theme }) => theme.colors.sec.nine};
+  // box-shadow: 3px 3px 5px ${({ theme }) => theme.colors.sec.nine};
   height: ${({ $height }) => $height || "60%"};
   width: ${({ $width }) => $width || "70%"};
   background-repeat: no-repeat;

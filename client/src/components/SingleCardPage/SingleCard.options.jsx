@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import StyledLink from "../styles/Link.styled";
 import LoaderSpinner from "../Loader";
 import MessageDisplay from "../MessageDisplay";
+import downloadDesign from "../../utils/designDownloader";
 import axios from "axios";
 
 export default function ViewOptions() {
@@ -123,6 +124,8 @@ export default function ViewOptions() {
     }
   }
 
+  const displayedCard = document.getElementsByClassName("displayed-card")[0];
+
   return(
     <>
       {
@@ -174,11 +177,11 @@ export default function ViewOptions() {
           </FlexRow>
 
           <FlexColumn $height="100%" $flex="1" $gap="20px">
-            <BtnSecondary $width="100%" $height="50px">
+            <BtnSecondary $width="100%" $height="50px" onClick={()=>downloadDesign(displayedCard)}>
               <FiDownload/> Download
             </BtnSecondary>
 
-            <StyledLink $width="100%" to={`/explore/card/${id}/edit`}>
+            <StyledLink to={`/explore/card/${id}/edit`}>
               <BtnPrimary $width="100%" $height="50px">
                 <AiOutlineEdit/> Edit
               </BtnPrimary>

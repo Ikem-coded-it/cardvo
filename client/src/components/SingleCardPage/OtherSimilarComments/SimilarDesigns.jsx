@@ -8,6 +8,7 @@ import { AppContext } from "../../../App";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import MessageDisplay from "../../MessageDisplay";
+import StyledLink from "../../styles/Link.styled";
 import LoaderSpinner from "../../Loader";
 
 export default function SimilarDesigns() {
@@ -60,31 +61,33 @@ export default function SimilarDesigns() {
                 card_number_four,
                 expiration,
                 color,
-                background_image
+                background_image,
+                id
               }, index) => {
                 return(
-                  <StyledCardDisplay
-                  $m_width="160px"
-                  key={index}>
-                    <CardFrontView
-                    $height="70%"
-                    $width="80%"
-                    $h3size="15px"
-                    $psize="12px"
-                    $imgsize="20px"
-                    $m_imgsize="15px"
-                    $m_width="90%"
-                    $m_h3size="12px"
-                    $m_psize="8px"
-                    cardNumberOne={card_number_one}
-                    cardNumberTwo={card_number_two}
-                    cardNumberThree={card_number_three}
-                    cardNumberFour={card_number_four}
-                    expiration={expiration}
-                    color={color}
-                    image={background_image}
-                    />
-                  </StyledCardDisplay>
+                  <StyledLink key={index} to={`/explore/card/${id}`}>
+                    <StyledCardDisplay
+                    $m_width="160px">
+                      <CardFrontView
+                      $height="70%"
+                      $width="80%"
+                      $h3size="15px"
+                      $psize="12px"
+                      $imgsize="20px"
+                      $m_imgsize="15px"
+                      $m_width="90%"
+                      $m_h3size="12px"
+                      $m_psize="8px"
+                      cardNumberOne={card_number_one}
+                      cardNumberTwo={card_number_two}
+                      cardNumberThree={card_number_three}
+                      cardNumberFour={card_number_four}
+                      expiration={expiration}
+                      color={color}
+                      image={background_image}
+                      />
+                    </StyledCardDisplay>
+                  </StyledLink>
                 )
               })
           ) : (<LoaderSpinner type="spin" height={20} width={20} color="#375694"/>)

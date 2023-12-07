@@ -119,9 +119,81 @@ const validateComment = (comment, userId, cardDesignId) => {
   return schema.validate(comment, userId, cardDesignId);
 }
 
+const validateUserCollectionCardDetails = ({
+  user_id,
+  card_number_one,
+  card_number_two,
+  card_number_three,
+  card_number_four,
+  name,
+  background_image,
+  cvv,
+  expiration,
+  color
+}) => {
+  const schema = Joi.object({
+    user_id: Joi.string(),
+
+    card_number_one: Joi.number()
+      .min(1000)
+      .max(9999)
+      .required(),
+
+    card_number_two: Joi.number()
+      .min(1000)
+      .max(9999)
+      .required(),
+
+    card_number_three: Joi.number()
+      .min(1000)
+      .max(9999)
+      .required(),
+
+    card_number_four: Joi.number()
+      .min(1000)
+      .max(9999)
+      .required(),
+
+    name: Joi.string()
+      .min(3)
+      .max(60)
+      .required(),
+
+    background_image: Joi.string()
+      .uri(),
+
+    defaultImage: Joi.string()
+      .uri(),
+
+    cvv: Joi.number()
+      .min(100)
+      .max(999)
+      .required(),
+
+    expiration: Joi.date()
+      .required(),
+
+    color: Joi.allow(),
+  })
+
+  return schema.validate({
+    user_id,
+    card_number_one,
+    card_number_two,
+    card_number_three,
+    card_number_four,
+    name,
+    background_image,
+    cvv,
+    expiration,
+    color
+  });
+}
+
 module.exports = {
   validateSignUp,
   validateSignIn,
   validateCardDetails,
   validateComment,
+  validateUserCollectionCardDetails
 }

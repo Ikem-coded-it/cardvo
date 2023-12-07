@@ -25,7 +25,7 @@ export default function CardReducer (designState, action) {
         cardNumberThree: designState.cardNumberThree,
         cardNumberFour: designState.cardNumberFour,
         expiration: designState.expiration,
-        color: "",
+        color: designState.color,
         image: action.newImage,
         cvv: designState.cvv,
         view: designState.view,
@@ -162,6 +162,12 @@ export default function CardReducer (designState, action) {
         cvv: designState.cvv,
         view: action.newView
       }
+      return newDesignState;
+    }
+
+    case "changed-card-after-database-fetch": {
+      // changes all card info 
+      const newDesignState = action.fetchedDesign
       return newDesignState;
     }
 

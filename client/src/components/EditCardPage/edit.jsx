@@ -4,6 +4,11 @@ import CardPreview from "./CardPreview";
 import ControlPanel from "./ControlPanel";
 import styled from "styled-components";
 import CardReducer from "./CardReducer";
+import { useEffect, useContext, useState } from "react";
+import { AppContext } from "../../App";
+import { useParams } from "react-router-dom";
+import MessageDisplay from "../MessageDisplay";
+import axios from "axios";
 
 const EditSection = styled(Section)`
   flex-direction: row;
@@ -18,27 +23,59 @@ const EditSection = styled(Section)`
 `
 
 export default function Edit() {
-  const initialState = {
-    name: "YOUR NAME HERE",
-    cardNumberOne: "0000",
-    cardNumberTwo: "0000",
-    cardNumberThree: "0000",
-    cardNumberFour: "0000",
-    expiration: "08/27",
-    cvv: "344",
-    image: "https://images.unsplash.com/photo-1604998103924-89e012e5265a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGFuc2NhcGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-    color: "transparent",
-    view: "front"
-  }
+  const { id } = useParams();
+  const { serverURL } = useContext(AppContext);
+  const [designState, designDispatch] = useReducer(CardReducer, null);
+  const [message, setMessage] = useState(null)
 
-  const [designState, designDispatch] = useReducer(CardReducer, initialState)
+  useEffect(() => {
+    const fetchCardDesignAndDisplay = async() => {
+      try {
+        const url = `${serverURL}/card-design/${id}`;
+        const response = await axios.get(url)
+        if (response.data.success === true) {
+          const card = response.data.data;
+          const fetchedDesign = {
+            name: card.card_holder_name,
+            cardNumberOne: card.card_number_one,
+            cardNumberTwo: card.card_number_two,
+            cardNumberThree: card.card_number_three,
+            cardNumberFour: card.card_number_four,
+            expiration: card.expiration,
+            cvv: card.cvv,
+            image: card.background_image,
+            color: card.color,
+            view: "front"
+          }
+          const action = {type: "changed-card-after-database-fetch", fetchedDesign};
+          return designDispatch(action)
+        }else {
+          setMessage(response.data.message)
+        }
+      } catch (error) {
+        setMessage(error.message)
+      }
+    }
+
+    fetchCardDesignAndDisplay()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <EditSection 
     $padding="0 30px" 
     $align="flex-start">
-      <ControlPanel designDispatch={designDispatch} designState={designState} />
-      <CardPreview designState={designState} designDispatch={designDispatch} />
+      {
+        message && <MessageDisplay message={message} closeMessage={() => setMessage(null)}/>
+      }
+      {
+        designState && (
+          <>
+            <ControlPanel designDispatch={designDispatch} designState={designState} />
+            <CardPreview designState={designState} designDispatch={designDispatch} />
+          </>
+        )
+      }
     </EditSection>
   )
 }

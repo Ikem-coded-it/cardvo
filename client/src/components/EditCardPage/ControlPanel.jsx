@@ -8,9 +8,32 @@ import {
   ColorsGrid
 } from "./styles";
 import downloadDesign from "../../utils/designDownloader";
+import { useContext, useState } from "react";
+import { AppContext }from "../../App";
+import MessageDisplay from "../MessageDisplay";
+import LoaderSpinner from "../Loader";
+import axios from "axios";
 import PropTypes from "prop-types";
 
+const colorPalette = [
+  "#0891b2",
+  "#dc2626",
+  "#fde047",
+  "#84cc16",
+  "#7c3aed",
+  "#fb923c",
+  "#22d3ee",
+  "#854d0e",
+  "#d946ef",
+  "#334155",
+  "#171717",
+  "#030712"
+]
+
 export default function ControlPanel({ designState, designDispatch }) {
+  const { user, serverURL } = useContext(AppContext);
+  const [message, setMessage] = useState(null);
+  const [addingToCollection, setAddingToCollection] = useState(false); // show loader in button
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
@@ -34,7 +57,6 @@ export default function ControlPanel({ designState, designDispatch }) {
 
     switch(id) {
       case "number-1": {
-        console.log(value)
         const action = {
           type: "changed_number",
           newNumberOne: value,
@@ -121,7 +143,61 @@ export default function ControlPanel({ designState, designDispatch }) {
     designDispatch(action);
   }
 
+  const addToCollection = async() => {
+    setAddingToCollection(true);
+    const fileInput = document.getElementById('image-file');
+
+    const formData = new FormData();
+
+    formData.append('user_id', user.id);
+    formData.append('name', designState.name);
+    formData.append('card_number_one', designState.cardNumberOne);
+    formData.append('card_number_two', designState.cardNumberTwo);
+    formData.append('card_number_three', designState.cardNumberThree);
+    formData.append('card_number_four', designState.cardNumberFour);
+    formData.append('expiration', designState.expiration);
+    formData.append('color', designState.color);
+    formData.append('cvv', designState.cvv);
+
+    if (fileInput.files[0]) {
+      formData.append('background_image', fileInput.files[0]);
+    } else {
+      formData.append('defaultImage', designState.image);
+    }
+
+    try {
+      const url = `${serverURL}/card-design/add-to-collection`;
+      const response = await axios.post(url, formData);
+      if (response instanceof Error) {
+        setMessage(response.message);
+        return setAddingToCollection(false);
+      }
+
+      if (response.data.success === false) {
+        setMessage(response.data.message);
+        return setAddingToCollection(false);
+      }
+
+      if (response.data.success === true) {
+        setMessage(response.data.message);
+        return setAddingToCollection(false);
+      }
+    } catch (error) {
+      if (error.response) {
+        setMessage(error.response.data.message);
+        return setAddingToCollection(false);
+      }
+      setMessage(error.message)
+      return setAddingToCollection(false);
+    }
+  }
+
   return (
+    <>
+    {
+      message && <MessageDisplay message={message} closeMessage={() => setMessage(null)}/>
+    }
+
     <ControlPanelContainer 
     $width="25%"
     $height="100%"
@@ -129,7 +205,7 @@ export default function ControlPanel({ designState, designDispatch }) {
     $padding="0 20px"
     >
       <BackBtnContainer $height="10%" $width="100%">
-        <BtnPrimary $width="100%" >
+        <BtnPrimary $width="100%" onClick={() => history.back()}>
           <i className="fa-solid fa-arrow-left"></i>
           Edit Properties
         </BtnPrimary>
@@ -175,6 +251,7 @@ export default function ControlPanel({ designState, designDispatch }) {
             accept="image/*" 
             name="card-background-image"
             onChange={(e) => handleImageUpload(e)}
+            id="image-file"
             />
           </FlexRow>
         </FlexColumn>
@@ -197,6 +274,7 @@ export default function ControlPanel({ designState, designDispatch }) {
             id="number-1" 
             onChange={(e) => handleNumberChange(e)}
             onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.cardNumberOne}
             />
 
             <input 
@@ -205,7 +283,8 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="0000" 
             id="number-2" 
             onChange={(e) => handleNumberChange(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.cardNumberTwo}/>
 
             <input 
             maxLength={4}
@@ -213,7 +292,8 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="0000" 
             id="number-3" 
             onChange={(e) => handleNumberChange(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.cardNumberThree}/>
 
             <input 
             maxLength={4}
@@ -221,7 +301,8 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="0000" 
             id="number-4" 
             onChange={(e) => handleNumberChange(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.cardNumberFour}/>
           </NumberInputContainer>
 
           <FlexRow $justify="flex-start" $width="100%">
@@ -231,7 +312,8 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="YOUR NAME HERE" 
             maxLength={22} 
             onChange={(e) => handleNameChange(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.name}/>
           </FlexRow>
           <FlexRow $width="100%" $justify="space-between">
             <input 
@@ -240,11 +322,13 @@ export default function ControlPanel({ designState, designDispatch }) {
             placeholder="cvv" 
             onChange={(e) => handleChangeCvv(e)}
             onFocus={() => handleChangeViewToBack()}
+            defaultValue={designState.cvv}
             />
             <input 
             type="date" 
             onChange={(e) => handleChangeExpirationDate(e)}
-            onFocus={() => handleChangeViewToFront()}/>
+            onFocus={() => handleChangeViewToFront()}
+            defaultValue={designState.expiration}/>
           </FlexRow>
         </FlexColumn>
 
@@ -253,18 +337,27 @@ export default function ControlPanel({ designState, designDispatch }) {
           <BtnSecondary 
           $width="100%" 
           $bdradius="5px"
-          $height="50px">
-            Add to my collection
+          $height="50px"
+          onClick={addToCollection}>
+            {
+              addingToCollection ? (
+                <LoaderSpinner type="spin" height={20} width={20} color="white"/>
+              ) : (
+                "Add to my Collection"
+              )
+            }
           </BtnSecondary>
           <BtnPrimary 
           $width="100%"
           $height="50px"
-          onClick={downloadDesign}>
+          onClick={() => downloadDesign()}
+          type="button">
             Download
           </BtnPrimary>
         </FlexColumn>
       </Controls>
     </ControlPanelContainer>
+    </>
   )
 }
 
@@ -294,18 +387,3 @@ Color.propTypes = {
   hexCode: PropTypes.string,
   designDispatch: PropTypes.func
 }
-
-const colorPalette = [
-  "#0891b2",
-  "#dc2626",
-  "#fde047",
-  "#84cc16",
-  "#7c3aed",
-  "#fb923c",
-  "#22d3ee",
-  "#854d0e",
-  "#d946ef",
-  "#334155",
-  "#171717",
-  "#030712"
-]

@@ -2,8 +2,6 @@ import { ExploreCardsSection, CardDisplay } from "./styles";
 import { CardsGrid } from "./styles";
 import { FlexRow, Container } from "../styles/Container.styled"; 
 import { BtnPrimary } from "../styles/Button.styled";
-import { BsShare, BsBookmarks } from "react-icons/bs";
-import { FiDownload } from "react-icons/fi"; 
 import { BiCommentDetail } from "react-icons/bi"; 
 import { CardFrontView } from "../Card";
 import { useContext } from "react";
@@ -101,15 +99,6 @@ function CardDisplayWithOptions({
         onClick={() => checkIfLoggedInAndNavigate(id)}>
           View
         </BtnPrimary>
-
-        <FlexRow>
-          <BtnPrimary>
-            <BsBookmarks />
-          </BtnPrimary>
-          <BtnPrimary>
-            <FiDownload />
-          </BtnPrimary>
-        </FlexRow>
       </FlexRow>
 
       <CardFrontView
@@ -121,6 +110,7 @@ function CardDisplayWithOptions({
       expiration={expiration}
       color={color}
       image={image}
+      id={id}
       />
 
       <FlexRow $width="100%" $justify="space-between" $padding="0 10px">
@@ -131,10 +121,6 @@ function CardDisplayWithOptions({
             </BtnPrimary>
           </HashLink>
         </FlexRow>
-
-        <BtnPrimary>
-          <BsShare />
-        </BtnPrimary>
       </FlexRow>
 
       <Container $height="100%" $width="100%" />

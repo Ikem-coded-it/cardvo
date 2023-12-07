@@ -35,7 +35,7 @@ export default function AboutParagraph() {
         users have full access to the website, they are able to download credit card code sample, see usage 
         example, interact with the documentation, comment under a design, react and share on social media,
         save designs and come back to download. Though, you cannot have this experience if you do not have
-        an account with Cardvo. <Link to="/signin">Join us now.</Link>
+        an account with Cardvo. <Link to="/auth/signup">Join us now.</Link>
       </p>
     </AboutParagraphSection>
   )

@@ -24,7 +24,8 @@ export function CardFrontView ({
   name,
   expiration,
   color,
-  image
+  image,
+  id
 }) {
   const background = useRef()
  
@@ -52,7 +53,9 @@ export function CardFrontView ({
     $m_psize={$m_psize}
     $m_h3size={$m_h3size}
     $justify="space-between" 
-    ref={background}>
+    ref={background}
+    id="card-front"
+    className={`${id} displayed-card`}>
       <FlexRow $justify="space-between" $width="100%">
         <Image
         src={chipLogo}
@@ -144,7 +147,8 @@ export function CardBackView({
     $m_cvvheight={$m_cvvheight}
     id="card-back"
     $gap="0" 
-    ref={cardBackground}>
+    ref={cardBackground}
+    className="displayed-card">
 
       <FlexRow $justify="flex-end" $width="100%" $padding="0 20px">ELECTRONIC USE ONLY</FlexRow>
       <FlexRow $width="100%" $height="20px" $bg="black" />
@@ -196,6 +200,7 @@ CardFrontView.propTypes = {
   expiration: PropTypes.string,
   color: PropTypes.string,
   image: PropTypes.string,
+  id: PropTypes.string
 }
 
 CardBackView.propTypes = {

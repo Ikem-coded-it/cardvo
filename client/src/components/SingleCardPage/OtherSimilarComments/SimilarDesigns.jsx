@@ -8,8 +8,8 @@ import { AppContext } from "../../../App";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import MessageDisplay from "../../MessageDisplay";
-import LoaderSpinner from "../../Loader";
 import StyledLink from "../../styles/Link.styled";
+import LoaderSpinner from "../../Loader";
 
 export default function SimilarDesigns() {
   const { category, currentCardId } = useContext(CardViewContext);
@@ -65,7 +65,7 @@ export default function SimilarDesigns() {
                 id
               }, index) => {
                 return(
-                  <StyledLink to={`/explore/card/${id}`} key={index}>
+                  <StyledLink key={index} to={`/explore/card/${id}`}>
                     <StyledCardDisplay
                     $m_width="160px">
                       <CardFrontView

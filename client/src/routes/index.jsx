@@ -4,6 +4,7 @@ import AboutUsPage from '../pages/AboutUsPage';
 import ContactUsPage from '../pages/ContactUsPage';
 import authRoutes from './auth.routes';
 import cardRoutes from './exploreCards.routes';
+import SocialShare from '../components/SocialShare';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   },
   authRoutes,
   cardRoutes,
+  {
+    path: "/social",
+    element: <SocialShare/>
+  }
 ])
 
 export default router;

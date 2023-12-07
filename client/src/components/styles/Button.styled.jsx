@@ -41,7 +41,7 @@ export const BtnSecondary = styled.button`
   width: ${({ $width }) => $width || "80px"};
   border: 1px solid ${({ theme }) => theme.colors.sec.nine};
   border-radius: ${({ $bdradius }) => $bdradius || "10px"};
-  border: none;
+  // border: none;
   font-size: ${({ $font }) => $font || "21px"};
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.btn};

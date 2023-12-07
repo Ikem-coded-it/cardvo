@@ -24,7 +24,8 @@ export function CardFrontView ({
   name,
   expiration,
   color,
-  image
+  image,
+  id
 }) {
   const background = useRef()
  
@@ -54,7 +55,7 @@ export function CardFrontView ({
     $justify="space-between" 
     ref={background}
     id="card-front"
-    className=" displayed-card">
+    className={`${id} displayed-card`}>
       <FlexRow $justify="space-between" $width="100%">
         <Image
         src={chipLogo}
@@ -199,6 +200,7 @@ CardFrontView.propTypes = {
   expiration: PropTypes.string,
   color: PropTypes.string,
   image: PropTypes.string,
+  id: PropTypes.string
 }
 
 CardBackView.propTypes = {

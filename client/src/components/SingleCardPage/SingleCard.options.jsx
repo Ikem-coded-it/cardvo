@@ -16,6 +16,7 @@ import StyledLink from "../styles/Link.styled";
 import LoaderSpinner from "../Loader";
 import MessageDisplay from "../MessageDisplay";
 import downloadDesign from "../../utils/designDownloader";
+import SocialShare from "../SocialShare";
 import axios from "axios";
 
 export default function ViewOptions() {
@@ -26,6 +27,7 @@ export default function ViewOptions() {
   const navigate = useNavigate();
   const [liked, setLiked] = useState(null);
   const [saved, setSaved] = useState(null);
+  const [showSocials, setShowSocials] = useState(false);
 
   useEffect(() => {
     const checkIfUserAlreadyLikedCard = async() => {
@@ -195,13 +197,15 @@ export default function ViewOptions() {
               <FaHeart id="heart"/>
             </BtnPrimary>
 
-            <BtnPrimary $width="35%" $height="50px">
+            <BtnPrimary $width="35%" $height="50px" onClick={()=>setShowSocials(true)}>
               <BsShare/> Share
             </BtnPrimary>
           </FlexColumn>
         </FlexRow>
 
-        {/* <OtherViews setView={setView}/> */}
+        {
+          showSocials && <SocialShare cardId={id} close={()=>setShowSocials(false)}/>
+        }
       </StyledViewOptionsSection>
     </>  
   )

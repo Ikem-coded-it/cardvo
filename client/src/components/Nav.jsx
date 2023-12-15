@@ -191,16 +191,16 @@ export function LoggedInNav() {
             <StyledLink to="/contact">Contact us</StyledLink>
           </li>
         </ul>
-      </StyledNav>
 
-      <BtnContainer>
-        <BtnPrimary
-        $height="55px"
-        $width="130px"
-        onClick={logout}>
-          Logout
-        </BtnPrimary>
-      </BtnContainer>
+        <BtnContainer>
+          <BtnPrimary
+          $height="55px"
+          $width="130px"
+          onClick={logout}>
+            Logout
+          </BtnPrimary>
+        </BtnContainer>
+      </StyledNav>
 
       {
         window.innerWidth <= 900 &&

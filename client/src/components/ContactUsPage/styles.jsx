@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { StyledHeader } from "../styles/Header.styled";
 import { Section } from "../styles/Section.styled";
+import { motion } from "framer-motion";
 
 export const StyledContactUsHeader = styled(StyledHeader)`
   @media(max-width: ${({ theme }) => theme.tablet}) {
@@ -124,5 +125,110 @@ export const StyledContactUsCustomer = styled(Section)`
       height: 70px;
     }
   }
+  }
+`
+
+export const EmailForm = styled(motion.form)`
+  height: fit-content;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px 30px 20px 20px;
+  background-color: ${({theme}) => theme.colors.prim.four};
+  border-radius: 10px;
+
+  & > div {
+    height: fit-content;
+    width: 100%;
+
+    & > button {
+      &:hover {
+        background-color: transparent;
+        transform: scale(1.02);
+      }
+    }
+  }
+
+  & svg {
+    cursor: pointer;
+  }
+
+  & h1 {
+    color: white;
+    font-size: 25px;
+  }
+
+  & label {
+    color: white;
+    font-size: 20px;
+  }
+
+  & input {
+    height: 40px;
+    width: 100%;
+    font-size: 17px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  & span {
+    height: 10px;
+    font-size: 15px;
+    color: red;
+  }
+
+  & textarea {
+    min-height: 150px;
+    max-height: 150px;
+    min-width: 100%;
+    max-width: 100%;
+    font-size: 17px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  @media(max-width: ${({theme}) => theme.tablet}) {
+     & > div {
+      & button {
+        padding: 0;
+        width: 80%;
+      }
+    }
+  }
+
+  @media(max-width: ${({theme}) => theme.mobile}) {
+    width: 300px;
+    gap: 15px;
+    padding: 10px;
+
+    & > div {
+      gap: 10px;
+    }
+
+    & h1 {
+      font-size: 20px;
+    }
+
+    & label {
+      font-size: 17px;
+    }
+
+    & input {
+      height: 30px;
+      width: 95%;
+      font-size: 15px;
+    }
+
+    & textarea {
+      min-height: 100px;
+      max-height: 100px;
+      min-width: 95%;
+      max-width: 95%;
+      font-size: 15px;
+    }
   }
 `

@@ -28,7 +28,7 @@ const LeftSideSection = styled(Section)`
 const RightSideSection = styled(Section)`
   gap: 30px;
   padding: 40px 30px;
-  height: 200vh;
+  height: 100vh;
 
   & h1 {
     font-size: 40px;
@@ -147,7 +147,7 @@ const BackBtn = styled(BtnPrimary)`
 
 function LeftSide({ paragragh }) {
   return (
-    <LeftSideSection $flex="1" $height="200vh">
+    <LeftSideSection $flex="1" $height="100vh">
       <BackBtn onClick={() => history.back()}>
         <i className="fa-solid fa-arrow-left"></i> Back
       </BackBtn>

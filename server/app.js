@@ -13,7 +13,6 @@ const indexRouter = require('./routes/index');
 const authRouter = require("./routes/auth.routes");
 const cardDesignRouter = require("./routes/cardDesign.routes");
 const commentRouter = require("./routes/comment.routes");
-const emailRouter = require("./routes/email.routes")
 
 const corsOptions = {
   origin: process.env.ALLOWED_CORS_ORIGIN,
@@ -50,7 +49,6 @@ app.use('/api/v1', indexRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/card-design', cardDesignRouter);
 app.use('/api/v1/comment', commentRouter);
-app.use('/api/v1/email', emailRouter);
 
 // to start server ahead of time on entering landing page in live site
 app.get('/api/v1/start', (req, res) => {

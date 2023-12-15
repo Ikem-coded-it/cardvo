@@ -83,7 +83,7 @@ export default function SigninRightSide() {
   }
 
   return (
-    <SigninRightSideSection>
+    <SigninRightSideSection $flex="1">
       {
         displayMessage !== null ? (
           <MessageDisplay message={displayMessage} closeMessage={() => setDisplayMessage(null)} />

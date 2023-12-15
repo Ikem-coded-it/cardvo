@@ -61,7 +61,7 @@ export default function SignupRightSide() {
   }
 
   return (
-    <RightSideSection>
+    <RightSideSection $flex="1">
       {
         displayMessage !== null ? (
           <MessageDisplay message={displayMessage} closeMessage={closeMessage} />

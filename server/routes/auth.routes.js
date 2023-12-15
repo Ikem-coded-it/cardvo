@@ -54,6 +54,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
 
 // called with useEffect in frontend after redirect
 router.get('/login/success', (req, res) => {
+  console.log(req.session)
   if (req.session.passport.user) {
     res.status(200).json({
       success: true,

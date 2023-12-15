@@ -37,7 +37,7 @@ app.use(session({
   resave: false, 
   saveUninitialized: true,
   cookie: {
-    secure: false, // if true only transmit cookie over https
+    secure: process.env.NODE_ENV === "development" ? false : true, // if true only transmit cookie over https
     httpOnly: false, // if true prevent client side JS from reading the cookie 
     maxAge: 1000 * 60 * 10 // session max age in miliseconds
   }

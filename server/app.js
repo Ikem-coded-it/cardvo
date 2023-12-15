@@ -36,7 +36,7 @@ app.use(session({
   store: sessionStore,
   secret: process.env.SESSION_SECRET,
   resave: false, 
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     secure: process.env.NODE_ENV === "development" ? false : true, // if true only transmit cookie over https
     httpOnly: true, // if true prevent client side JS from reading the cookie 

@@ -2,9 +2,16 @@ import { StyledContactUsAnytimeSection } from "./styles";
 import { FlexColumn } from "../styles/Container.styled";
 import StyledLink from "../styles/Link.styled";
 import { BtnSecondary } from "../styles/Button.styled";
+import { useState } from "react";
+import EmailModal from "./ContactUs.emailModal";
 
 export default function ContactUsAnytime() {
+  const [openEmailModal, setOpenEmailModal] = useState(false);
   return (
+    <>
+    {
+      openEmailModal && <EmailModal close={() => setOpenEmailModal(false)}/>
+    }
     <StyledContactUsAnytimeSection $padding="0 0 50px 0">
       <h1>Contact us anytime</h1>
 
@@ -22,10 +29,12 @@ export default function ContactUsAnytime() {
         <BtnSecondary 
         $width="400px"
         $bdradius="5px"
-        $height="55px">
+        $height="55px"
+        onClick={() => setOpenEmailModal(true)}>
           Email us
         </BtnSecondary>
       </FlexColumn>
     </StyledContactUsAnytimeSection>
+    </>
   )
 }

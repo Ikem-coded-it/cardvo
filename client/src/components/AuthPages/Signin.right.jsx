@@ -50,7 +50,8 @@ export default function SigninRightSide() {
     }
 
     try {
-      const response = await axios.post(serverURL, userLoginDetails);
+      const response = await axios.post(serverURL, userLoginDetails, { withCredentials: true });
+      
       if (response.data.success === true) {
         const res = await axios.get(`${serverURL}/success`, { withCredentials: true })
         if (res.data.success === true) context.setUser(res.data.user);

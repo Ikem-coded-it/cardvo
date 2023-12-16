@@ -86,14 +86,12 @@ const initializeLocalStrategy = () => {
     }));
 
   passport.serializeUser(function(user, done) {
-    console.log("here")
     process.nextTick(function() {
       done(null, { id: user.id, username: user.email});
     });
   });
 
   passport.deserializeUser(function(user, done) {
-    console.log("here2")
     process.nextTick(function() {
       db.query(queries.getUserByEmail, [user.username], (err, result) => {
         if (err) throw err
@@ -160,14 +158,12 @@ const initializeGoogleStrategy = () => {
   }));
 
   passport.serializeUser(function(user, done) {
-  console.log("s",user)
     process.nextTick(function() {
       done(null, { id: user.id, username: user.email});
     });
   });
 
   passport.deserializeUser(function(user, done) {
-    console.log("d",user)
     process.nextTick(function() {
       return done(null, user);
     });

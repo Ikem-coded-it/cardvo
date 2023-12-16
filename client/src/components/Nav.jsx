@@ -151,7 +151,10 @@ export function LoggedInNav() {
   }
 
   const logout = async() => {
-    const loggedOut = await axios.post(`${context.serverURL}/auth/logout`);
+    const loggedOut = await axios.post(
+      `${context.serverURL}/auth/logout`,
+      {withCredentials: true}
+    );
     if (loggedOut.data.success === true) {
       localStorage.removeItem('cardvo-user')
       context.setUser(null);

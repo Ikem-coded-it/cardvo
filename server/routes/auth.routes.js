@@ -22,19 +22,14 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
   req.session.isAuth = true
   res.status(200).json({
     success: true,
-    message: "Login successful",
-    user: req.user
+    message: "Login successful"
   })
 });
 
 // Google login and redirect routes
 router.get(
   '/login/google',
-  passport.authenticate('google', { scope : ['profile', 'email'] }),
-  (req, res, next) => {
-    req.session.isAuth = true
-    next()
-  }
+  passport.authenticate('google', { scope : ['profile', 'email'] })
 );
  
 router.get('/google/callback', passport.authenticate('google', {
@@ -55,10 +50,10 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
 // called with useEffect in frontend after redirect
 router.get('/login/success', (req, res) => {
   console.log(req.session)
-  if (req.session.passport.user) {
+  if (req.user) {
     res.status(200).json({
       success: true,
-      user: req.session.passport.user
+      user: req.user
     })
   } else {
     res.status(403).json({

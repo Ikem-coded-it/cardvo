@@ -14,7 +14,7 @@ const logout = asyncHandler(async(req, res) => {
   const refreshTokenUser = await dbAsyncQuery(queries.getUserByRefreshToken, [refreshToken]);
 
   if (refreshTokenUser.rows.length === 0) {
-    res.clearCookie('jwt', {httpOnly: true, sameSite: "None", secure: process.env['NODE_ENV'] === "development" ? false: true});
+    res.clearCookie('jwt', {httpOnly: true, secure: process.env['NODE_ENV'] === "development" ? false : true});
     return res.sendStatus(204);
   };
 
@@ -22,7 +22,7 @@ const logout = asyncHandler(async(req, res) => {
   const user = refreshTokenUser.rows[0]
   await dbAsyncQuery(queries.setRefreshToken, [user.id, null]);
 
-  res.clearCookie('jwt', {httpOnly: true, secure: process.env['NODE_ENV'] === "development" ? false: true});
+  res.clearCookie('jwt', {httpOnly: true, secure: process.env['NODE_ENV'] === "development" ? false : true});
   
   res.sendStatus(204);
 })

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { db, dbAsyncQuery } =  require("../../config/db");
 const queries = require("../../queries/auth.queries");
 const asyncHandler = require("express-async-handler");
@@ -44,7 +45,8 @@ const registerUser = asyncHandler(async(req, res) => {
     [
       value.fullName, value.email,
       hashedPassword, new Date().toISOString(),
-      "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg"
+      "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg",
+      null
     ]
   )
 
@@ -104,7 +106,7 @@ const loginUser = asyncHandler(async(req, res) => {
   await dbAsyncQuery(queries.setRefreshToken, [user.id, refreshToken]);
 
   // send refresh token to frontend in cookie, accessToken in response
-  res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: process.env['NODE_ENV'] === "development" ? false: true})
+  res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: process.env['NODE_ENV'] === "development" ? false : true})
 
   user.accessToken = accessToken
   return res.status(200).json({

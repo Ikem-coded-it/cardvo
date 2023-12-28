@@ -1,6 +1,6 @@
 const getAllUsers = "SELECT * FROM users";
 
-const registerUser = "INSERT INTO users (full_name, email, pass_word, photo_url) values ($1, $2, $3, $4) RETURNING id, full_name, email, pass_word, photo_url";
+const registerUser = "INSERT INTO users (full_name, email, pass_word, photo_url, refresh_token) values ($1, $2, $3, $4, $5) RETURNING id, full_name, email, pass_word, photo_url";
 
 const getUserByEmail = "SELECT * FROM users WHERE email = $1";
 

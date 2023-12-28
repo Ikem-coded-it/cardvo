@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import { useEffect, useContext, createContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../App";
-import axios from "axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 export const ExploreCardsContext = createContext();
 
@@ -16,6 +16,8 @@ export default function ExplorePage() {
   const [cardsInfo, setCardsInfo] = useState(null);
   const [fetching, setFetching] = useState(false);
   const location = useLocation();
+  // const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     context.setCurrentPage(location.pathname)
@@ -25,9 +27,8 @@ export default function ExplorePage() {
   useEffect(() => {
     async function fetchCardDesigns() {
       setFetching(true)
-      const url = `${context.serverURL}/card-design`;
       try {
-        const response = await axios.get(url);
+        const response = await axiosPrivate.get("/card-design");
         if (response.data.success === false) {
           setDisplayMessage(response.data.message)
         }

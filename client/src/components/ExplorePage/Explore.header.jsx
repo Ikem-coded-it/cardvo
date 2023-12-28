@@ -4,64 +4,46 @@ import { BtnSecondary } from "../styles/Button.styled";
 import { FaCaretDown } from "react-icons/fa";
 import { useRef, useContext, useState } from "react";
 import { ExploreCardsContext } from "../../pages/ExplorePage";
-import { AppContext } from "../../App";
+import { useSearchParams } from "react-router-dom";
 import MessageDisplay from "../MessageDisplay";
-import axios from "axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function ExploreHeader() {
   const categoriesMenu = useRef();
   const { setCardsInfo, setFetching } = useContext(ExploreCardsContext);
-  const { serverURL } = useContext(AppContext);
   const [showingCardsText, setShowingCardsText] = useState("All Cards")
   const [ message, setMessage ] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleOpenCategories = () => {
     categoriesMenu.current.classList.toggle("show");
   }
 
-  async function getCategoryCardDesigns(e) {
-    setFetching(true)
-    const category = e.target.textContent.toLowerCase();
-    setShowingCardsText(category)
-    try {
-      let url
-      if (category === "all cards") 
-        url = `${serverURL}/card-design`
-      else
-        url = `${serverURL}/card-design/category/${category}`
-
-      
-      const response = await axios.get(url)
-      if(response.data.success === true) {
-        setCardsInfo(response.data.data)
-        setFetching(false)
-      } else {
-        setMessage(response.data.message);
-        setFetching(false)
-      }
-    } catch (error) {
-      setMessage(error.message);
-      setFetching(false)
+  function updateSearchParams(e) {
+    e.type === "submit" && e.preventDefault()
+    const query = e.target.category ? e.target.category.value : e.target.textContent.toLowerCase();
+    const availableCategories = ['anime', 'nature', 'cartoon', 'people', 'all cards']
+    if (!availableCategories.includes(query)) {
+      setMessage('This category is not available. Please search for "anime", "cartoon", "nature" or "people".');
+      return setFetching(false)
     }
+    setSearchParams({category: query})
+    getCategoryCardDesigns(query)
   }
 
-  async function getCardDesignCategoryBySearch(e) {
-    e.preventDefault()
-
+  async function getCategoryCardDesigns(query) {
+    setShowingCardsText(query)
     try {
-      setFetching(true)
-      const category = e.target.category.value.toLowerCase();
-      const availableCategories = ['anime', 'nature', 'cartoon', 'people'];
+      let url
+      if (query === "all cards") 
+        url = `/card-design`
+      else
+        url = `/card-design/category/${query}`
 
-      if (!availableCategories.includes(category)) {
-        setMessage('This category is not available. Please search for "anime", "cartoon", "nature" or "people".');
-        return setFetching(false)
-      }
-
-      setShowingCardsText(category)
-
-      const url = `${serverURL}/card-design/category/${category}`;
-       const response = await axios.get(url)
+      
+      const response = await axiosPrivate.get(url)
       if(response.data.success === true) {
         setCardsInfo(response.data.data)
         setFetching(false)
@@ -92,15 +74,15 @@ export default function ExploreHeader() {
             />
           </FlexRow>
           <ul ref={categoriesMenu}>
-            <li onClick={(e) => getCategoryCardDesigns(e)}>All cards</li>
-            <li onClick={(e) => getCategoryCardDesigns(e)}>Anime</li>
-            <li onClick={(e) => getCategoryCardDesigns(e)}>Nature</li>
-            <li onClick={(e) => getCategoryCardDesigns(e)}>Cartoon</li>
-            <li onClick={(e) => getCategoryCardDesigns(e)}>People</li>
+            <li onClick={(e) => updateSearchParams(e)}>All cards</li>
+            <li onClick={(e) => updateSearchParams(e)}>Anime</li>
+            <li onClick={(e) => updateSearchParams(e)}>Nature</li>
+            <li onClick={(e) => updateSearchParams(e)}>Cartoon</li>
+            <li onClick={(e) => updateSearchParams(e)}>People</li>
           </ul>
         </FlexColumn>
 
-        <StyledSearchForm onSubmit={(e) => getCardDesignCategoryBySearch(e)}>
+        <StyledSearchForm onSubmit={updateSearchParams}>
           <input 
           type="search"
           name="category"

@@ -1,17 +1,18 @@
 import { 
   NavContainer, 
-  LogoContainer, 
-  MenuBars,
-  CloseMenu
+  LogoContainer,
 } from "./styles/Nav.styled";
 import { FlexRow } from "./styles/Container.styled"
 import { StyledNav } from "./styles/Nav.styled";
 import { BtnPrimary, BtnSecondary } from "./styles/Button.styled";
 import StyledLink from "./styles/Link.styled";
+import { CiMenuFries } from "react-icons/ci";
+import { RiCloseCircleLine } from "react-icons/ri";
 import { useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
-import axios from "axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAuth from "../hooks/useAuth";
 import styled from "styled-components";
 
 const BtnContainer = styled(FlexRow)`
@@ -36,11 +37,11 @@ const BtnContainer = styled(FlexRow)`
 
 export function LoggedOutNav() {
   const context = useContext(AppContext);
-  const mobileNav = useRef()
-  const signupBtn = useRef()
-  const signinBtn = useRef()
-  const navContainer = useRef()
-  const navigate = useNavigate()
+  const mobileNav = useRef();
+  const signupBtn = useRef();
+  const signinBtn = useRef();
+  const navContainer = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (context.currentPage) {
@@ -61,9 +62,17 @@ export function LoggedOutNav() {
   }
 
   const checkAuthAndNavigate = () => {
-    const { user } = context;
+    const { user, setNextPage } = context;
     if (user) return navigate("/explore")
+    setNextPage("/explore")
     return navigate("/auth/signin")
+  }
+
+  const goToSigninPage = () => {
+    window.scrollTo(0, 0)
+    const { setNextPage, currentPage } = context;
+    setNextPage(currentPage);
+    return navigate("/auth/signin");
   }
 
   return (
@@ -79,17 +88,14 @@ export function LoggedOutNav() {
       </LogoContainer>
 
       <StyledNav ref={mobileNav}>
-        <CloseMenu 
-        className="fa-solid fa-x" 
-        onClick={handleCloseMenu}>
-        </CloseMenu>
+        <RiCloseCircleLine className="close-menu" aria-label="close menu button" size="30px" onClick={handleCloseMenu}/>
 
         <ul>
            <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/">Home</StyledLink>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
-            <StyledLink onClick={checkAuthAndNavigate}>Explore</StyledLink>
+            <StyledLink onClick={checkAuthAndNavigate} >Explore</StyledLink>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/about">About us</StyledLink>
@@ -105,8 +111,8 @@ export function LoggedOutNav() {
         >
           {
             !context.user && (
-              <StyledLink to="/auth/signin" ref={signinBtn}>
-                <BtnPrimary onClick={window.scrollTo(0, 0)} $height="55px" $width="130px">Sign in</BtnPrimary>
+              <StyledLink ref={signinBtn}>
+                <BtnPrimary onClick={goToSigninPage} $height="55px" $width="130px">Sign in</BtnPrimary>
               </StyledLink>
             )
           }
@@ -117,10 +123,7 @@ export function LoggedOutNav() {
 
       </StyledNav>
 
-     {
-      window.innerWidth <= 900 &&
-      <MenuBars className="fa-solid fa-bars" onClick={handleOpenMenu}></MenuBars>
-    }
+      <CiMenuFries size="30px" className="open-menu" onClick={handleOpenMenu}></CiMenuFries>
 
     </NavContainer>
   )
@@ -128,9 +131,11 @@ export function LoggedOutNav() {
 
 export function LoggedInNav() {
   const context = useContext(AppContext);
-  const mobileNav = useRef()
-  const navContainer = useRef()
-  const navigate = useNavigate()
+  const mobileNav = useRef();
+  const navContainer = useRef();
+  const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
+  const { setUser } = useAuth();
 
   useEffect(() => {
     if (context.currentPage) {
@@ -151,13 +156,9 @@ export function LoggedInNav() {
   }
 
   const logout = async() => {
-    const loggedOut = await axios.post(
-      `${context.serverURL}/auth/logout`,
-      {withCredentials: true}
-    );
-    if (loggedOut.data.success === true) {
-      localStorage.removeItem('cardvo-user')
-      context.setUser(null);
+    const response = await axiosPrivate.get("/auth/logout");
+    if (response.status === 204) {
+      setUser(null);
       return navigate("/")
     }
   }
@@ -175,10 +176,7 @@ export function LoggedInNav() {
       </LogoContainer>
 
       <StyledNav ref={mobileNav}>
-        <CloseMenu 
-        className="fa-solid fa-x" 
-        onClick={handleCloseMenu}>
-        </CloseMenu>
+        <RiCloseCircleLine className="close-menu" aria-label="close menu button" size="30px" onClick={handleCloseMenu}/>
 
         <ul>
            <li onClick={window.scrollTo(0, 0)}>
@@ -205,10 +203,7 @@ export function LoggedInNav() {
         </BtnContainer>
       </StyledNav>
 
-      {
-        window.innerWidth <= 900 &&
-        <MenuBars className="fa-solid fa-bars" onClick={handleOpenMenu}></MenuBars>
-      }
+      <CiMenuFries size="30px" className="open-menu" onClick={handleOpenMenu}></CiMenuFries>
 
     </NavContainer>
   )

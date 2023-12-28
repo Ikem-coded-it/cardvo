@@ -17,23 +17,24 @@ import LoaderSpinner from "../Loader";
 import MessageDisplay from "../MessageDisplay";
 import downloadDesign from "../../utils/designDownloader";
 import SocialShare from "../SocialShare";
-import axios from "axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function ViewOptions() {
   const { cardDetails, view } = useContext(CardViewContext);
   const { id } = useParams();
   const [message, setMessage] = useState(null);
-  const { user, serverURL } = useContext(AppContext);
+  const { user } = useContext(AppContext);
   const navigate = useNavigate();
   const [liked, setLiked] = useState(null);
   const [saved, setSaved] = useState(null);
   const [showSocials, setShowSocials] = useState(false);
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     const checkIfUserAlreadyLikedCard = async() => {
       try {
-        const url = `${serverURL}/card-design/${id}/check-if-liked`;
-        const response = await axios.post(url, {userId: user.id});
+        const url = `/card-design/${id}/check-if-liked`;
+        const response = await axiosPrivate.post(url, {userId: user.id});
         if (response.data.liked === true) {
           setLiked(true)
         } else {
@@ -46,8 +47,8 @@ export default function ViewOptions() {
 
     const checkIfUserAlreadySavedCard = async() => {
       try {
-        const url = `${serverURL}/card-design/${id}/check-if-saved`;
-        const response = await axios.post(url, {userId: user.id});
+        const url = `/card-design/${id}/check-if-saved`;
+        const response = await axiosPrivate.post(url, {userId: user.id});
         if (response.data.saved === true) {
           setSaved(true)
         } else {
@@ -60,7 +61,8 @@ export default function ViewOptions() {
 
     checkIfUserAlreadyLikedCard()
     checkIfUserAlreadySavedCard()
-  }, [id, serverURL, user.id])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, user.id])
 
   useEffect(() => {
     const heartIcon = document.getElementById('heart');
@@ -83,10 +85,10 @@ export default function ViewOptions() {
   }, [saved])
 
   const likeOrUnlikeCard = async() => {
-    const url = `${serverURL}/card-design/${id}/toggle-like`;
+    const url = `/card-design/${id}/toggle-like`;
     try {
       if(!user) return navigate("/auth/signin")
-      const response = await axios.post(url, {userId: user.id});
+      const response = await axiosPrivate.post(url, {userId: user.id});
 
       if (response instanceof Error) {
         return setMessage(response.message)
@@ -102,10 +104,10 @@ export default function ViewOptions() {
   }
 
   const saveOrUnsaveCard = async() => {
-    const url = `${serverURL}/card-design/${id}/toggle-save-card`;
+    const url = `/card-design/${id}/toggle-save-card`;
     try {
       if(!user) return navigate("/auth/signin")
-      const response = await axios.post(url, {userId: user.id});
+      const response = await axiosPrivate.post(url, {userId: user.id});
 
       if (response instanceof Error) {
         return setMessage(response.message)

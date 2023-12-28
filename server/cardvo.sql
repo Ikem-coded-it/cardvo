@@ -5,6 +5,7 @@ CREATE TABLE users (
   email VARCHAR(50) NOT NULL,
   photo_url VARCHAR(100) NOT NULL,
   created_at TIMESTAMP NOT NULL,
+  refresh_token VARCHAR
   UNIQUE (email)
 );
 

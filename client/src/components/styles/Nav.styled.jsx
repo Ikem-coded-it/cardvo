@@ -17,8 +17,18 @@ export const NavContainer = styled(FlexRow)`
     right: 0;
   }
 
-  @media(max-width: ${({theme}) => theme.tablet}) {
+  & > .open-menu {
+    display: none;
+  }
+
+  @media(max-width: 1200px) {
     padding: 0 30px;
+  }
+
+  @media(max-width: 770px) {
+    & > .open-menu {
+      display: block;
+    }
   }
 
   @media(max-width: ${({ theme }) => theme.mobile}) {
@@ -33,12 +43,13 @@ export const StyledNav = styled.nav`
   display: flex;
   width: 85%;
   z-index: 3;
+  position: relative;
 
   & ul {
     height: 100%;
     display: flex;
     gap: 50px;
-    justify-content: flex-start;
+    justify-content: flex-end;
     list-style: none;
     width: 60%;
     font-weight: 700px;
@@ -51,21 +62,32 @@ export const StyledNav = styled.nav`
     width: 40%;
   }
 
-  @media(max-width: ${({theme}) => theme.tablet}) {
+  & > .close-menu {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+
+  @media(max-width: 1200px) {
     & ul {
       gap: 20px;
-      font-weight: 700px;
-      justify-content: flex-end;
     }
   }
 
-  @media(max-width: ${({ theme }) => theme.mobile}) {
+  @media(max-width: 770px) {
+    & > .close-menu {
+      display: block;
+    }
+  }
+
+  @media(max-width: 770px) {
     background-color: ${({ theme }) => theme.colors.sec.two};
     justify-content: space-evenly;
     align-items: center;
     position: fixed;
     top: 0;
-    right: -480px;
+    right: -800px;
     flex-direction: column;
     height: 100vh;
     width: 70vw;
@@ -142,27 +164,3 @@ export const LogoContainer = styled(FlexRow)`
   }
 `
 
-export const MenuBars = styled.i`
-  display: none;
-  font-size: 30px;
-  z-index: 2;
-
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    display: block;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-  }
-`
-
-export const CloseMenu = styled.i`
-  display: none;
-  font-size: 30px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-
-  @media(max-width: ${({ theme }) => theme.mobile}) {
-    display: block;
-  }
-`

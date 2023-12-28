@@ -1,8 +1,7 @@
-import { createContext, useEffect, useState, useContext, useReducer } from "react";
-import { AppContext } from "../App";
+import { createContext, useEffect, useState, useReducer } from "react";
 import { useParams } from "react-router-dom"
 import PropTypes from "prop-types";
-import axios from "axios"
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import MessageDisplay from "../components/MessageDisplay";
 
 export const CardViewContext = createContext();
@@ -18,17 +17,16 @@ const CardViewReducer = (state, action) => {
 
 export default function CardViewContextProvider({ children }) {
   const { id } = useParams();
-  const context = useContext(AppContext);
   const [cardDetails, setCardDetails] = useState(null);
   const [category, setCategory] = useState(null);
   const [view, dispatch] = useReducer(CardViewReducer, "front");
   const [ message, setMessage ] = useState(null);
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     async function fetchCard() {
       try {
-        const url = `${context.serverURL}/card-design/${id}`;
-        const response = await axios.get(url)
+        const response = await axiosPrivate.get(`/card-design/${id}`)
         if (response.data.success === true) {
           setCategory(response.data.data.category)
           setCardDetails(response.data.data);
@@ -41,7 +39,8 @@ export default function CardViewContextProvider({ children }) {
     }
 
     fetchCard()
-  }, [id, context.serverURL])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const cardViewContextValues = {
     currentCardId: id,

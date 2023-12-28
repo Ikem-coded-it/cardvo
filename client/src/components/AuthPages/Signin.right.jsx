@@ -1,16 +1,16 @@
 import { 
   RightSideSection,
-  GoogleBtn,
-  FacebookBtn,
+  // GoogleBtn,
+  // FacebookBtn,
   OrLine,
   StyledForm,
   SignupSigninBtn,
   PasswordInput
-} from "./shared";
+} from "./shared"; 
 import { FlexColumn, FlexRow } from "../styles/Container.styled";
 import StyledLink from "../styles/Link.styled";
 import { useState, useContext } from "react";
-import axios from 'axios';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import MessageDisplay from "../MessageDisplay";
@@ -36,12 +36,12 @@ export default function SigninRightSide() {
   const [displayMessage, setDisplayMessage] = useState(null);
   const context = useContext(AppContext);
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
   // sign up with email and password
   const handleLocalSignin  = async(e) => {
     e.preventDefault()
     setLoggingIn(true);
-    const serverURL = `${context.serverURL}/auth/login`;
 
     const userLoginDetails = {
       email: e.target.email.value,
@@ -50,18 +50,18 @@ export default function SigninRightSide() {
     }
 
     try {
-      const response = await axios.post(serverURL, userLoginDetails, { withCredentials: true });
+      const response = await axiosPrivate.post("/auth/login", userLoginDetails);
       
       if (response.data.success === true) {
-        const res = await axios.get(`${serverURL}/success`, { withCredentials: true })
-        if (res.data.success === true) context.setUser(res.data.user);
+        const user = response.data.user;
+        context.setUser(user);
         
         if(userLoginDetails.rememberMe === true) {
-          localStorage.setItem('cardvo-user', JSON.stringify(response.data.user))
+          localStorage.setItem('cardvo-user', JSON.stringify(user))
         }
 
         setLoggingIn(false);
-        navigate("/explore")
+        navigate(context.nextPage);
       } else {
         setDisplayMessage(response.data.message);
       }
@@ -73,15 +73,21 @@ export default function SigninRightSide() {
     }
   }
 
+  // function authNavigate(url) {
+  //   window.location.href = url;
+  // }
+
   // signin with google
-  const handleGoogleAuth = () => {
-    window.open(`${context.serverURL}/auth/login/google`, "_self");
-  }
+  // const handleGoogleAuth = async() => {
+  //   const response = await axiosPrivate.post(`${context.serverURL}/auth/google/signin`);
+  //   const data = response.data;
+  //   authNavigate(data.url)
+  // }
 
   // signin with facebook
-  const handleFacebookAuth = () => {
-    window.open(`${context.serverURL}/auth/login/facebook`, "_self");
-  }
+  // const handleFacebookAuth = () => {
+  //   window.open(`${context.serverURL}/auth/login/facebook`, "_self");
+  // }
 
   return (
     <SigninRightSideSection $flex="1">
@@ -98,9 +104,9 @@ export default function SigninRightSide() {
         Sign in to your account
       </p>
 
-      <GoogleBtn onClick={handleGoogleAuth} />
+      {/* <GoogleBtn onClick={handleGoogleAuth}/> */}
 
-      <FacebookBtn onClick={handleFacebookAuth} />
+      {/* <FacebookBtn onClick={handleFacebookAuth} /> */}
 
       <OrLine $width="100%"><div />  OR <div /></OrLine>
 

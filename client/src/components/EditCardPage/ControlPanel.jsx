@@ -12,7 +12,7 @@ import { useContext, useState } from "react";
 import { AppContext }from "../../App";
 import MessageDisplay from "../MessageDisplay";
 import LoaderSpinner from "../Loader";
-import axios from "axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import PropTypes from "prop-types";
 
 const colorPalette = [
@@ -31,9 +31,10 @@ const colorPalette = [
 ]
 
 export default function ControlPanel({ designState, designDispatch }) {
-  const { user, serverURL } = useContext(AppContext);
+  const { user } = useContext(AppContext);
   const [message, setMessage] = useState(null);
   const [addingToCollection, setAddingToCollection] = useState(false); // show loader in button
+  const axiosPrivate = useAxiosPrivate();
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
@@ -166,8 +167,8 @@ export default function ControlPanel({ designState, designDispatch }) {
     }
 
     try {
-      const url = `${serverURL}/card-design/add-to-collection`;
-      const response = await axios.post(url, formData);
+      const url = "/card-design/add-to-collection";
+      const response = await axiosPrivate.post(url, formData);
       if (response instanceof Error) {
         setMessage(response.message);
         return setAddingToCollection(false);

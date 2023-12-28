@@ -1,66 +1,64 @@
 import { FlexRow, FlexColumn } from "../../styles/Container.styled"
 import { CommentsContainer, SingleCommentContainer } from "../styles"
 import PropTypes from "prop-types";
-// import picOne from "../../../../public/images/founders/ceo1.png";
-// import picTwo from "../../../../public/images/founders/ceo2.png";
-// import picThree from "../../../../public/images/founders/ceo3.png";
+import picOne from "../../../../public/images/founders/ceo1.png";
+import picTwo from "../../../../public/images/founders/ceo2.png";
+import picThree from "../../../../public/images/founders/ceo3.png";
 import { Image } from "../../styles/Image.styled";
 import { BtnPrimary } from "../../styles/Button.styled";
-import { useRef, useEffect, useState, useContext } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AppContext } from "../../../App";
-import axios from "axios";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import MessageDisplay from "../../MessageDisplay";
 
-// const comments = [
-//   {
-//     id: "suhciusdciuds",
-//     name: "Calatrava Manderi",
-//     time: "3 hours ago",
-//     image: picOne,
-//     comment: "Nice design"
-//   },
-//   {
-//   id: "ksjdncdnckjld",
-//   name: "Mary John",
-//   time: "3 hours ago",
-//   image: picTwo,
-//   comment: "I don't like this"
-//   },
-//   {
-//     id: "kdjscnkjdnckjwn",
-//     name: "Charles",
-//     time: "3 hours ago",
-//     image: picThree,
-//     comment: "Nice design"
-//   },
-//   {
-//     id: "ckcjvvskjnvdm",
-//     name: "Racheal",
-//     time: "3 hours ago",
-//     image: picOne,
-//     comment: "cool design yo"
-//   }
-// ]
+const mockComments = [
+  {
+    id: "suhciusdciuds",
+    full_name: "Calatrava Manderi",
+    created_at: "3 hours ago",
+    photo_url: picOne,
+    comment: "Nice design"
+  },
+  {
+  id: "ksjdncdnckjld",
+  full_name: "Mary John",
+  created_at: "3 hours ago",
+  photo_url: picTwo,
+  comment: "I don't like this"
+  },
+  {
+    id: "kdjscnkjdnckjwn",
+    full_name: "Charles",
+    created_at: "3 hours ago",
+    photo_url: picThree,
+    comment: "Nice design"
+  },
+  {
+    id: "ckcjvvskjnvdm",
+    full_name: "Racheal",
+    created_at: "3 hours ago",
+    photo_url: picOne,
+    comment: "cool design yo"
+  }
+]
 
 export default function Comments() {
   const [comments, setComments] = useState(null)
   const { id } = useParams();
-  const { serverURL } = useContext(AppContext);
   const [message, setMessage] = useState(null);
   const commentsContainer = useRef()
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     async function fetchComments() {
       try {
-        const URL = `${serverURL}/comment/${id}`
-        const response = await axios.get(URL);
+        const response = await axiosPrivate.get(`/comment/${id}`);
         if(response instanceof Error) {
           setMessage(response.message)
         }
 
         if (response.data.success === false) {
-          setMessage(response.data.message)
+          return setMessage(response.data.message)
         }
 
         if (response.data.success === true) {
@@ -72,7 +70,8 @@ export default function Comments() {
     }
 
     fetchComments()
-  }, [serverURL, id])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
 
   const handleToggleShowAllComments = () => {
     commentsContainer.current.classList.toggle("show");
@@ -98,18 +97,31 @@ export default function Comments() {
       $height="500px" 
       $gap="50px">
         {
-          comments &&
-          comments.map(comment => {
-            return (
-              <SingleComment
-              key={comment.id}
-              name={comment.full_name}
-              comment={comment.comment}
-              image={comment.photo_url}
-              time={comment.created_at}
-              />
-            )
-          })
+          comments && comments.length > 0 ? (
+            comments.map(comment => {
+              return (
+                <SingleComment
+                key={comment.id}
+                name={comment.full_name}
+                comment={comment.comment}
+                image={comment.photo_url}
+                time={comment.created_at}
+                />
+              )
+            })
+          ) : (
+            mockComments.map(comment => {
+              return (
+                <SingleComment
+                key={comment.id}
+                name={comment.full_name}
+                comment={comment.comment}
+                image={comment.photo_url}
+                time={comment.created_at}
+                />
+              )
+            })
+          )
         }
       </FlexColumn>
 

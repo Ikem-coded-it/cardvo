@@ -5,8 +5,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const corsMiddleware = require("./middleware/cors");
 const logger = require('morgan');
-const passport = require("passport");
-const sessionMiddleware = require("./middleware/session");
 
 const indexRouter = require('./routes/index');
 const authRouter = require("./routes/auth.routes");
@@ -20,12 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// passport
-app.set('trust proxy', 1);
-app.use(passport.initialize());
-app.use(sessionMiddleware);
-app.use(passport.authenticate("session"));
 
 app.use('/api/v1', indexRouter);
 app.use('/api/v1/auth', authRouter);

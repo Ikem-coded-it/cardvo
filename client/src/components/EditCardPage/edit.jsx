@@ -4,11 +4,10 @@ import CardPreview from "./CardPreview";
 import ControlPanel from "./ControlPanel";
 import styled from "styled-components";
 import CardReducer from "./CardReducer";
-import { useEffect, useContext, useState } from "react";
-import { AppContext } from "../../App";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MessageDisplay from "../MessageDisplay";
-import axios from "axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const EditSection = styled(Section)`
   flex-direction: row;
@@ -24,15 +23,15 @@ const EditSection = styled(Section)`
 
 export default function Edit() {
   const { id } = useParams();
-  const { serverURL } = useContext(AppContext);
   const [designState, designDispatch] = useReducer(CardReducer, null);
   const [message, setMessage] = useState(null)
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     const fetchCardDesignAndDisplay = async() => {
       try {
-        const url = `${serverURL}/card-design/${id}`;
-        const response = await axios.get(url)
+        const url = `/card-design/${id}`;
+        const response = await axiosPrivate.get(url)
         if (response.data.success === true) {
           const card = response.data.data;
           const fetchedDesign = {

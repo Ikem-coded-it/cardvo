@@ -58,6 +58,7 @@ export default function Comments() {
         }
 
         if (response.data.success === false) {
+          setComments(mockComments)
           return setMessage(response.data.message)
         }
 

@@ -1,11 +1,12 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
+const environment = process.env.NODE_ENV;
 const signAccessToken = (user) => {
   const accessToken = jwt.sign(
     user,
     process.env['JWT_ACCESS_SECRET'],
-    { expiresIn: process.env['NODE_ENV'] = 'development' ? '10s' : '30m' },
+    { expiresIn: environment = 'development' ? '30s' : '15m' },
     { algorithm: 'RS256' }
   );
 
@@ -16,7 +17,7 @@ const signRefreshToken = (user) => {
   const refreshToken = jwt.sign(
     user,
     process.env['JWT_REFRESH_SECRET'],
-    { expiresIn: process.env['NODE_ENV'] = 'development' ? '20s' : '1d' },
+    { expiresIn: environment = 'development' ? '30m' : '1d' },
     { algorithm: 'RS256' }
   );
 

@@ -267,7 +267,7 @@ const likeOrUnlikeCardDesign = asyncHandler(async(req, res) => {
     })
   }
 
-  return res.status(201).json({
+  return res.status(200).json({
     success: true,
     message: "Like deleted"
   })
@@ -324,7 +324,7 @@ const saveOrUnsaveCard = asyncHandler(async(req, res) => {
     })
   }
 
-  return res.status(201).json({
+  return res.status(200).json({
     success: true,
     message: "Card unsaved"
   })

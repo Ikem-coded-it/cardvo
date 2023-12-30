@@ -42,6 +42,13 @@ const getCardComments = asyncHandler(async(req, res) => {
   const {id} = req.params;
   const cardComments = await dbAsyncQuery(getCommentsById, [id])
 
+  if (cardComments.rows.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "No comments available"
+    })
+  }
+
   return res.status(200).json({
     success: true,
     data: cardComments.rows

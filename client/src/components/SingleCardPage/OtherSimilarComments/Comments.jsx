@@ -66,6 +66,9 @@ export default function Comments() {
           return setComments(response.data.data)
         }
       } catch (error) {
+        if(error.response.data.message === "No comments available") {
+          return setComments(mockComments);
+        }
         setMessage(error.message)
       }
     }

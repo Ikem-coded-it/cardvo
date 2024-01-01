@@ -56,6 +56,16 @@ export const StyledNav = styled.nav`
     color: ${({ theme }) => theme.colors.sec.eight};
     box-sizing: border-box;
     padding: 0;
+
+    & > li {
+      flex-direction: column;
+
+      > div {
+        width: 50px;
+        opacity: 0;
+        transition: all .2s ease;
+      }
+    }
   }
 
   & div {
@@ -96,6 +106,7 @@ export const StyledNav = styled.nav`
     & ul {
       height: fit-content;
       justify-content: center;
+      align-items: center;
       flex-direction: column;
       width: 100%;
       gap: 40px;
@@ -103,7 +114,6 @@ export const StyledNav = styled.nav`
 
     & ul li {
       font-weight: 600;
-      width: 100%;
       display: flex;
       justify-content: center;
     }
@@ -163,4 +173,3 @@ export const LogoContainer = styled(FlexRow)`
     }
   }
 `
-

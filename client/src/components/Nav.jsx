@@ -2,7 +2,7 @@ import {
   NavContainer, 
   LogoContainer,
 } from "./styles/Nav.styled";
-import { FlexRow } from "./styles/Container.styled"
+import { FlexRow, Container } from "./styles/Container.styled"
 import { StyledNav } from "./styles/Nav.styled";
 import { BtnPrimary, BtnSecondary } from "./styles/Button.styled";
 import StyledLink from "./styles/Link.styled";
@@ -42,6 +42,31 @@ export function LoggedOutNav() {
   const signinBtn = useRef();
   const navContainer = useRef();
   const navigate = useNavigate();
+  const {currentPage} = context;
+
+  useEffect(() => {
+    function hightlightCurrentPage() {
+      const hightlights = Array.from(document.getElementsByClassName('highlight'));
+
+      hightlights.forEach(h => {
+        const link = h.previousElementSibling;
+
+        let path = link.textContent.toLowerCase();
+        if (path === 'home') path = '/'
+        if (path === 'contact us') path = '/contact'
+        if (path === 'explore') path = '/explore'
+        if (path === 'about us') path = '/about'
+
+        if (path ===currentPage) {
+          h.style.opacity = 1
+        } else {
+          h.style.opacity = 0
+        }
+      })
+    }
+
+    hightlightCurrentPage()
+  }, [currentPage])
 
   useEffect(() => {
     if (context.currentPage) {
@@ -93,15 +118,19 @@ export function LoggedOutNav() {
         <ul>
            <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/">Home</StyledLink>
+            <Container $width="100px" $height="3px" $bg={({theme})=>theme.colors.prim.six} className="highlight"/>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
             <StyledLink onClick={checkAuthAndNavigate} >Explore</StyledLink>
+            <Container $width="100px" $height="3px" $bg={({theme})=>theme.colors.prim.six} className="highlight"/>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/about">About us</StyledLink>
+            <Container $width="100px" $height="3px" $bg={({theme})=>theme.colors.prim.six} className="highlight"/>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/contact">Contact us</StyledLink>
+            <Container $width="100px" $height="3px" $bg={({theme})=>theme.colors.prim.six} className="highlight"/>
           </li>
         </ul>
 
@@ -136,6 +165,31 @@ export function LoggedInNav() {
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const { setUser } = useAuth();
+  const { currentPage } = context;
+
+  useEffect(() => {
+    function hightlightCurrentPage() {
+      const hightlights = Array.from(document.getElementsByClassName('highlight'));
+
+      hightlights.forEach(h => {
+        const link = h.previousElementSibling;
+        
+        let path = link.textContent.toLowerCase();
+        if (path === 'home') path = '/'
+        if (path === 'contact us') path = '/contact'
+        if (path === 'explore') path = '/explore'
+        if (path === 'about us') path = '/about'
+
+        if (path === currentPage) {
+          h.style.opacity = 1
+        } else {
+          h.style.opacity = 0
+        }
+      })
+    }
+
+    hightlightCurrentPage()
+  }, [currentPage])
 
   useEffect(() => {
     if (context.currentPage) {
@@ -181,15 +235,19 @@ export function LoggedInNav() {
         <ul>
            <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/">Home</StyledLink>
+            <Container $width="100px" $height="3px" $bg={({theme})=>theme.colors.prim.six} className="highlight"/>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/explore">Explore</StyledLink>
+            <Container $width="100px" $height="3px" $bg={({theme})=>theme.colors.prim.six} className="highlight"/>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/about">About us</StyledLink>
+            <Container $width="100px" $height="3px" $bg={({theme})=>theme.colors.prim.six} className="highlight"/>
           </li>
           <li onClick={window.scrollTo(0, 0)}>
             <StyledLink to="/contact">Contact us</StyledLink>
+            <Container $width="100px" $height="3px" $bg={({theme})=>theme.colors.prim.six} className="highlight"/>
           </li>
         </ul>
 

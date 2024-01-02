@@ -1,5 +1,6 @@
 import { FlexRow, FlexColumn } from "../../styles/Container.styled"
-import { CommentsContainer, SingleCommentContainer } from "../styles"
+import { BtnSecondary } from "../../styles/Button.styled";
+import { CommentsContainer, SingleCommentContainer, CommentForm } from "../styles"
 import PropTypes from "prop-types";
 import picOne from "../../../../public/images/founders/ceo1.png";
 import picTwo from "../../../../public/images/founders/ceo2.png";
@@ -9,6 +10,7 @@ import { BtnPrimary } from "../../styles/Button.styled";
 import { useRef, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAuth from "../../../hooks/useAuth";
 import MessageDisplay from "../../MessageDisplay";
 
 const mockComments = [
@@ -43,11 +45,13 @@ const mockComments = [
 ]
 
 export default function Comments() {
-  const [comments, setComments] = useState(null)
+  const [comments, setComments] = useState(null);
+  const [comment, setComment] = useState('');
   const { id } = useParams();
   const [message, setMessage] = useState(null);
   const commentsContainer = useRef()
   const axiosPrivate = useAxiosPrivate()
+  const { user } = useAuth();
 
   useEffect(() => {
     async function fetchComments() {
@@ -80,6 +84,31 @@ export default function Comments() {
   const handleToggleShowAllComments = () => {
     commentsContainer.current.classList.toggle("show");
   }
+  
+  async function postComment(e) {
+    e.preventDefault();
+    if(comment === '') return;
+    try {
+      const data = {
+        comment,
+        userId: user.id,
+        cardDesignId: id
+      }
+      const response = await axiosPrivate.post('/comment/post', data);
+      if (response.status === 201) {
+        setComments(prev => {
+          const newComment =  response.data.postedComment;
+          newComment.photo_url = user.photo_url;
+          newComment.full_name = user.full_name;
+
+          return [...prev, newComment];
+        })
+        return setComment('');
+      }
+    } catch (error) {
+      return setMessage(error.message)
+    }
+  }
 
   return(
     <>
@@ -90,8 +119,21 @@ export default function Comments() {
       <h3>Comments</h3>
 
       <FlexRow $width="100%" $justify="flex-start">
-        <FlexRow $width="15%"></FlexRow>
-        <textarea placeholder="Add comment ..."></textarea>
+        <CommentForm onSubmit={postComment}>
+          <textarea
+          name="comment"
+          placeholder="Add comment ..."
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}></textarea>
+
+          <BtnSecondary
+          type="submit"
+          $height="50px"
+          $width="15%"
+          $bdradius="0">
+            Post
+          </BtnSecondary>
+        </CommentForm>
       </FlexRow>
 
       <FlexColumn

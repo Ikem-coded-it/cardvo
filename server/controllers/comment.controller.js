@@ -1,6 +1,7 @@
 const { createComment, getCommentsById } = require("../queries/comment.queries");
-const { dbAsyncQuery, db } = require("../config/db");
+const { dbAsyncQuery } = require("../config/db");
 const { validateComment } = require("../utils/validator");
+const getDifferenceInTime = require("../utils/timeFormater");
 const asyncHandler = require("express-async-handler");
 
 const postComment = asyncHandler(async(req, res) => {
@@ -17,24 +18,27 @@ const postComment = asyncHandler(async(req, res) => {
 
   const { userId, comment, cardDesignId } = value;
 
-  const postedComment = await dbAsyncQuery(createComment, [
+  const result = await dbAsyncQuery(createComment, [
     comment,
     userId,
     cardDesignId,
     new Date().toISOString()
   ]);
 
-  if (!postedComment || postedComment instanceof Error) {
+  if (!result || result instanceof Error) {
     return res.status(400).json({
       success: false,
       message: "Failed to post comment"
     })
   }
 
+  const postedComment = result.rows[0];
+  postedComment.created_at = getDifferenceInTime(postedComment.created_at)
+
   return res.status(201).json({
     success: true,
     message: "Comment posted successfully",
-    postedComment: postedComment.rows[0]
+    postedComment: postedComment
   })
 })
 
@@ -49,9 +53,15 @@ const getCardComments = asyncHandler(async(req, res) => {
     })
   }
 
+  const comments = cardComments.rows
+
+  comments.map(comment => {
+    comment.created_at = getDifferenceInTime(comment.created_at);
+  })
+
   return res.status(200).json({
     success: true,
-    data: cardComments.rows
+    data: comments
   })
 })
 

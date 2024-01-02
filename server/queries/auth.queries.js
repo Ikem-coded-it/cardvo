@@ -1,6 +1,6 @@
 const getAllUsers = "SELECT * FROM users";
 
-const registerUser = "INSERT INTO users (full_name, email, pass_word, photo_url, refresh_token) values ($1, $2, $3, $4, $5) RETURNING id, full_name, email, pass_word, photo_url";
+const registerUser = "INSERT INTO users (full_name, email, pass_word, photo_url, created_at) values ($1, $2, $3, $4, $5) RETURNING id, full_name, email, photo_url";
 
 const getUserByEmail = "SELECT * FROM users WHERE email = $1";
 
@@ -10,6 +10,7 @@ const getUserByRefreshToken = "SELECT * FROM users WHERE refresh_token = $1";
 
 module.exports = {
   getAllUsers,
+  registerUser,
   getUserByEmail,
   setRefreshToken,
   getUserByRefreshToken

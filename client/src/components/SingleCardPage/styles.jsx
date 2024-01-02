@@ -120,29 +120,13 @@ export const CommentsContainer = styled(FlexColumn)`
     text-decoration: underline;
   }
 
-  & > .show {
-    overflow-y: visible;
+  & > div:nth-child(3) {
+    overflow-y: scroll;
   }
-
-  & > div:nth-child(2) {
-    overflow-y: hidden;
-  }
-
-  // & textarea {
-  //   max-width: 85%;
-  //   min-width: 85%;
-  //   max-height: 50px;
-  //   min-height: 50px;
-  //   padding: 5px 10px;
-  //   font-family: 'Inter';
-  //   font-size: 17px;
-  //   border: 1px solid ${({ theme }) => theme.colors.sec.eight};
-  // }
 
   @media(max-width: ${({ theme }) => theme.tablet}) {
     grid-row: 3 / 4;
     grid-column: 1 / 2;
-    // margin-bottom: 40px;
   }
 `
 

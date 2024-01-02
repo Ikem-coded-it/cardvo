@@ -22,9 +22,11 @@ export default function SingleCardPage() {
       context.user ? (<LoggedInNav/>) : (<LoggedOutNav/>)
     }
     <CardViewContextProvider>
+      <>
       <ViewOptions />
       <OtherSimilarComments />
       <Footer />
+      </>
     </CardViewContextProvider>
     </>
   )

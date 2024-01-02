@@ -1,7 +1,7 @@
 import { 
   RightSideSection,
-  GoogleBtn,
-  FacebookBtn,
+  // GoogleBtn,
+  // FacebookBtn,
   OrLine,
   StyledForm,
   SignupSigninBtn,
@@ -47,14 +47,14 @@ export default function SignupRightSide() {
   }
 
   // sign up with google
-  const handleGoogleAuth = () => {
-    window.open(`${context.serverURL}/auth/google/callback`, "_self");
-  }
+  // const handleGoogleAuth = () => {
+  //   window.open(`${context.serverURL}/auth/google/callback`, "_self");
+  // }
 
   // sign up with facebook
-  const handleFacebookAuth = () => {
-    window.open(`${context.serverURL}/auth/login/facebook`, "_self");
-  }
+  // const handleFacebookAuth = () => {
+  //   window.open(`${context.serverURL}/auth/login/facebook`, "_self");
+  // }
 
   function closeMessage() {
     setDisplayMessage(null)
@@ -77,9 +77,9 @@ export default function SignupRightSide() {
         <span>Free</span> for all to use.
       </p>
 
-      <GoogleBtn onClick={handleGoogleAuth} />
+      {/* <GoogleBtn onClick={handleGoogleAuth} /> */}
 
-      <FacebookBtn onClick={handleFacebookAuth} />
+      {/* <FacebookBtn onClick={handleFacebookAuth} /> */}
 
       <OrLine $width="100%"><div />  OR <div /></OrLine>
 

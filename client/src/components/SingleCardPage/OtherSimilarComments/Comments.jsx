@@ -4,7 +4,7 @@ import { CommentsContainer, SingleCommentContainer, CommentForm } from "../style
 import PropTypes from "prop-types";
 import picOne from "../../../../public/images/founders/ceo1.png";
 import picTwo from "../../../../public/images/founders/ceo2.png";
-import picThree from "../../../../public/images/founders/ceo3.png";
+// import picThree from "../../../../public/images/founders/ceo3.png";
 import { Image } from "../../styles/Image.styled";
 import { BtnPrimary } from "../../styles/Button.styled";
 import { useRef, useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
 import MessageDisplay from "../../MessageDisplay";
+import LoaderSpinner from "../../Loader";
 
 const mockComments = [
   {
@@ -28,61 +29,97 @@ const mockComments = [
   photo_url: picTwo,
   comment: "I don't like this"
   },
-  {
-    id: "kdjscnkjdnckjwn",
-    full_name: "Charles",
-    created_at: "3 hours ago",
-    photo_url: picThree,
-    comment: "Nice design"
-  },
-  {
-    id: "ckcjvvskjnvdm",
-    full_name: "Racheal",
-    created_at: "3 hours ago",
-    photo_url: picOne,
-    comment: "cool design yo"
-  }
+  // {
+  //   id: "kdjscnkjdnckjwn",
+  //   full_name: "Charles",
+  //   created_at: "3 hours ago",
+  //   photo_url: picThree,
+  //   comment: "Nice design"
+  // },
+  // {
+  //   id: "ckcjvvskjnvdm",
+  //   full_name: "Racheal",
+  //   created_at: "3 hours ago",
+  //   photo_url: picOne,
+  //   comment: "cool design yo"
+  // }
 ]
 
 export default function Comments() {
+  const [fetching, setFetching] = useState(false);
   const [comments, setComments] = useState(null);
   const [comment, setComment] = useState('');
+  const [nextSetNumber, setNextSetNumber] = useState(0);
   const { id } = useParams();
   const [message, setMessage] = useState(null);
-  const commentsContainer = useRef()
-  const axiosPrivate = useAxiosPrivate()
+  const commentsContainer = useRef();
+  const axiosPrivate = useAxiosPrivate();
   const { user } = useAuth();
 
   useEffect(() => {
-    async function fetchComments() {
+    async function fetchFirstSetOfComments() {
+      setFetching(true)
       try {
-        const response = await axiosPrivate.get(`/comment/${id}`);
+        const response = await axiosPrivate.get(`/comment/${id}/${nextSetNumber}`);
         if(response instanceof Error) {
           setMessage(response.message)
         }
-
         if (response.data.success === false) {
-          setComments(mockComments)
+          setFetching(false)
           return setMessage(response.data.message)
         }
 
         if (response.data.success === true) {
-          return setComments(response.data.data)
+          const newComments = response.data.data;
+          if (newComments.length === 0) {
+            setFetching(false)
+            return setComments(mockComments);
+          }
+          setNextSetNumber(newComments.length)
+          setFetching(false)
+          return setComments(newComments)
         }
       } catch (error) {
-        if(error.response.data.message === "No comments available") {
+        if(error.response?.data?.message === "No comments available") {
           return setComments(mockComments);
         }
         setMessage(error.message)
+        setFetching(false)
       }
     }
 
-    fetchComments()
+    fetchFirstSetOfComments()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [id]);
 
-  const handleToggleShowAllComments = () => {
-    commentsContainer.current.classList.toggle("show");
+  async function getNextSetOfComments() {
+    setFetching(true)
+    try {
+      const response = await axiosPrivate.get(`/comment/${id}/${nextSetNumber}`);
+      if(response instanceof Error) {
+        setMessage(response.message)
+        return setFetching(false)
+      }
+
+      if (response.data.success === false) {
+        setFetching(false)
+        return setMessage(response.data.message)
+      }
+
+      if (response.data.success === true) {
+        const newComments = response.data.data
+        if (newComments.length === 0) return setFetching(false)
+        setNextSetNumber(comments.length + newComments.length)
+        setFetching(false)
+        return setComments(prev => [...prev, ...newComments])
+      }
+    } catch (error) {
+      if(error.response?.data?.message === "No comments available") {
+        return setComments(mockComments);
+      }
+      setMessage(error.message)
+      setFetching(false)
+    }
   }
   
   async function postComment(e) {
@@ -101,7 +138,7 @@ export default function Comments() {
           newComment.photo_url = user.photo_url;
           newComment.full_name = user.full_name;
 
-          return [...prev, newComment];
+          return [newComment, ...prev];
         })
         return setComment('');
       }
@@ -140,23 +177,12 @@ export default function Comments() {
       ref={commentsContainer}
       $align="flex-start" 
       $width="100%" 
-      $height="500px" 
+      $height="500px"
+      $justify="flex-start"
       $gap="50px">
         {
-          comments && comments.length > 0 ? (
+          comments && comments.length > 0 && (
             comments.map(comment => {
-              return (
-                <SingleComment
-                key={comment.id}
-                name={comment.full_name}
-                comment={comment.comment}
-                image={comment.photo_url}
-                time={comment.created_at}
-                />
-              )
-            })
-          ) : (
-            mockComments.map(comment => {
               return (
                 <SingleComment
                 key={comment.id}
@@ -169,14 +195,22 @@ export default function Comments() {
             })
           )
         }
+
+        <FlexRow
+        $width="100%"
+        $height="40px">
+          {
+            fetching === true && <LoaderSpinner height={40} width={100} type="bubbles" color="#2c4577"/>
+          }
+        </FlexRow>
       </FlexColumn>
 
       <BtnPrimary
-      onClick={handleToggleShowAllComments}
+      onClick={getNextSetOfComments}
       $width="100%" 
       $bdradius="0" 
       $bg={({ theme }) => theme.colors.sec.two}>
-        + 5 more
+        See more
       </BtnPrimary>
     </CommentsContainer>
     </>

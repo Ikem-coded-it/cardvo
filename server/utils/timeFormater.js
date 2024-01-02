@@ -1,41 +1,23 @@
-const { differenceInHours, differenceInMinutes, differenceInSeconds, differenceInDays } = require("date-fns");
-
 function getDifferenceInTime(date) {
-  const seconds = differenceInSeconds(
-    new Date(),
-    date
-  )
-  if (seconds >= 60) {
-    const minutes = differenceInMinutes(
-      new Date(),
-      date
-    )
+  const now = new Date();
+  const diffMilliseconds = now - date;
 
-    if(minutes >= 60) {
-      const hours = differenceInHours(
-        new Date(),
-        date
-      )
+  // Calculate time differences in seconds, minutes, hours, and days
+  const seconds = Math.floor(diffMilliseconds / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
 
-      if (hours >= 24) {
-        const days = differenceInDays(
-          new Date(),
-          date
-        )
-
-        return days + ' days ago';
-        
-      } else {
-        return hours + ' hrs ago';
-      }
-
-    } else {
-      return minutes + ' mins ago';
-    }
-
+  if (seconds < 60) {
+    return seconds + (seconds === 1 ? ' second' : ' seconds') + ' ago';
+  } else if (minutes < 60) {
+    return minutes + (minutes === 1 ? ' minute' : ' minutes') + ' ago';
+  } else if (hours < 24) {
+    return hours + (hours === 1 ? ' hour' : ' hours') + ' ago';
   } else {
-    return seconds + ' secs ago'
+    return days + (days === 1 ? ' day' : ' days') + ' ago';
   }
-};
+}
+
 
 module.exports = getDifferenceInTime;

@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async(req, res) => {
 
   const existingUser = await dbAsyncQuery(queries.getUserByEmail, [value.email]);
 
-  if (existingUser.rows.length) {
+  if (existingUser.rows.length > 0) {
     return res.status(400).json({
       success: false,
       message: "User with this email already exists"
@@ -43,20 +43,14 @@ const registerUser = asyncHandler(async(req, res) => {
   const result = await dbAsyncQuery(
     queries.registerUser,
     [
-      value.fullName, value.email,
-      hashedPassword, new Date().toISOString(),
+      value.fullName,
+      value.email,
+      hashedPassword,
       "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg",
-      null
+      new Date().toISOString()
     ]
   )
 
-  if (!result || result instanceof Error) {
-    return res.status(400).json({
-      success: false,
-      error: result.message
-    })
-  }
-  
   return res.status(201).json({
     success: true,
     message: "Registration successful",

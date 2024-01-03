@@ -98,10 +98,10 @@ const loginUser = asyncHandler(async(req, res) => {
 
   // have to store refresh token in db
   await dbAsyncQuery(queries.setRefreshToken, [user.id, refreshToken]);
-
+  console.log(res.cookie)
   // send refresh token to frontend in cookie, accessToken in response
   res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: process.env['NODE_ENV'] === "development" ? false : true})
-
+  console.log(res.cookie)
   user.accessToken = accessToken
   return res.status(200).json({
     success: true,

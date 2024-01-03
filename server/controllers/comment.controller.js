@@ -43,15 +43,17 @@ const postComment = asyncHandler(async(req, res) => {
 })
 
 const getPaginatedCardComments = asyncHandler(async(req, res) => {
+  console.log("here1")
   const { id, offset } = req.params;
+  console.log(id, offset)
   const cardComments = await dbAsyncQuery(getCommentsById, [id, offset])
-
+  console.log("here2")
   const comments = cardComments.rows
 
   comments.map(comment => {
     comment.created_at = getDifferenceInTime(comment.created_at);
   })
-
+  console.log("here3")
   return res.status(200).json({
     success: true,
     data: comments

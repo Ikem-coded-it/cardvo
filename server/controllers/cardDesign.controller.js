@@ -228,26 +228,19 @@ const deleteCardDesignById = asyncHandler(async(req, res) => {
 })
 
 const likeOrUnlikeCardDesign = asyncHandler(async(req, res) => {
-  console.log("here1")
   const { userId } = req.body;
-  console.log(userId)
   const { id: cardDesignId } = req.params;
-  console.log(cardDesignId)
   const { rows } = await dbAsyncQuery(queries.getUsersLike, [userId, cardDesignId]);
-  console.log("here2", rows)
 
   if (rows.length === 0) {
     // no like so create like
     const createdLike = await dbAsyncQuery(createLike, [userId, cardDesignId]);
-    console.log("here3")
     if (!createdLike) {
-      console.log("created")
       return res.status(400).json({
         success: false,
         message: "Could not create like"
       })
     } else if (createdLike instanceof Error) {
-      console.log("like creation error")
       return res.status(400).json({
         success: false,
         message: createdLike.message
@@ -259,24 +252,21 @@ const likeOrUnlikeCardDesign = asyncHandler(async(req, res) => {
       message: "Like created"
     })
   }
-  console.log("here4")
+
   // if there's already a like then delete it
   const deletedLike = await dbAsyncQuery(deleteLike, [userId, cardDesignId]);
-  console.log("here5", deletedLike)
   if (!deletedLike) {
-    console.log("here5")
     return res.status(400).json({
       success: false,
       message: "Could not delete like"
     })
   } else if (deletedLike instanceof Error) {
-    console.log("here6")
     return res.status(400).json({
       success: false,
       message: deletedLike.message
     })
   }
-  console.log("here7")
+
   return res.status(200).json({
     success: true,
     message: "Like deleted"

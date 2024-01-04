@@ -21,7 +21,6 @@ const isAuth = (req, res, next) => {
     next()
   } catch (error) {
     res.sendStatus(403);
-    // next(error);
   }
 }
 

@@ -2,6 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const environment = process.env.NODE_ENV;
+
 const signAccessToken = (user) => {
   const accessToken = jwt.sign(
     user,

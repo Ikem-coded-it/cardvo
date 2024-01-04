@@ -2,7 +2,7 @@ import { Section } from "../styles/Section.styled";
 import { FlexRow } from "../styles/Container.styled";
 import { Image } from "../styles/Image.styled";
 import { BtnSecondary } from "../styles/Button.styled";
-import image from "../../../public/images/frames/threecards.png";
+import image from "/images/frames/threecards.png";
 import StyledLink from "../styles/Link.styled";
 import { SliderWrapper } from "./GettingStarted";
 import styled from "styled-components";

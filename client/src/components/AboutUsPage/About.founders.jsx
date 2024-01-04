@@ -2,9 +2,9 @@ import { Section } from "../styles/Section.styled";
 import styled from "styled-components";
 import { FlexRow, FlexColumn } from "../styles/Container.styled";
 import { Image } from "../styles/Image.styled";
-import imageOne from "../../../public/images/founders/ceo1.png";
-import imageTwo from "../../../public/images/founders/ceo2.png";
-import imageThree from "../../../public/images/founders/ceo3.png";
+import imageOne from "/images/founders/ceo1.png";
+import imageTwo from "/images/founders/ceo2.png";
+import imageThree from "/images/founders/ceo3.png";
 import PropTypes from "prop-types";
 
 const data = [

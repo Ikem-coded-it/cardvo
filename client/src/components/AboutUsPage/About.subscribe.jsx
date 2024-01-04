@@ -1,7 +1,7 @@
 import { Section } from "../styles/Section.styled";
 import { FlexRow } from "../styles/Container.styled";
 import { Image } from "../styles/Image.styled";
-import twoWomenImage from "../../../public/images/frames/twowomen.png";
+import twoWomenImage from "/images/frames/twowomen.png";
 import { BtnSecondary } from "../styles/Button.styled";
 import styled from "styled-components";
 import MessageDisplay from "../MessageDisplay";

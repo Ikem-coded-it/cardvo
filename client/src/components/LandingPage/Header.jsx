@@ -8,8 +8,8 @@ import { BtnPrimary, BtnSecondary } from "../styles/Button.styled";
 import { Image } from "../styles/Image.styled";
 import StyledLink from "../styles/Link.styled";
 import styled from "styled-components";
-import card from "../../../public/images/backgrounds/header1.png"
-import cardGrid from "../../../public/images/backgrounds/header2.png"
+import card from "/images/backgrounds/header1.png"
+import cardGrid from "/images/backgrounds/header2.png"
 
 const WriteupContainer = styled(FlexColumn)`
   flex: 0 1 40%;

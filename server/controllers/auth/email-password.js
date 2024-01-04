@@ -105,7 +105,7 @@ const loginUser = asyncHandler(async(req, res) => {
     {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
-      // sameSite: process.env['NODE_ENV'] === "development" ? 'Lax' : 'None',
+      sameSite: 'Lax',
       secure: process.env['NODE_ENV'] === "development" ? false : true,
       domain: process.env['NODE_ENV'] === "development" ? "localhost:3000" : process.env['LIVE_DOMAIN'],
       path: "/api/v1"

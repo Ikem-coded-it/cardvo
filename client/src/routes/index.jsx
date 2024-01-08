@@ -4,6 +4,7 @@ import AboutUsPage from '../pages/AboutUsPage';
 import ContactUsPage from '../pages/ContactUsPage';
 import authRoutes from './auth.routes';
 import cardRoutes from './exploreCards.routes';
+import dashboardRoutes from './dashboard.routes';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,8 @@ const router = createBrowserRouter([
     element: <ContactUsPage />
   },
   authRoutes,
-  cardRoutes
+  cardRoutes,
+  dashboardRoutes
 ])
 
 export default router;

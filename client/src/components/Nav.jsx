@@ -193,7 +193,8 @@ export function LoggedInNav() {
 
   useEffect(() => {
     if (context.currentPage) {
-      if (context.currentPage.includes('/edit')) {
+      if (context.currentPage.includes('/edit') ||
+          context.currentPage.includes('/dashboard')) {
         navContainer.current.style.position = "static";
       } else {
         navContainer.current.style.position = "fixed";

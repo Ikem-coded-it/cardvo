@@ -111,7 +111,7 @@ const StyledForm = styled.form`
   }
 `
 
-const PasswordInputContainer = styled(FlexRow)`
+export const PasswordInputContainer = styled(FlexRow)`
   gap: 0;
   border: 1px solid ${({ theme }) => theme.colors.sec.six};
   border-radius: 6px;

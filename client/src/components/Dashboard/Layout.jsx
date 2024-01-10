@@ -1,6 +1,6 @@
 import { Section } from "../styles/Section.styled"
 import { Outlet } from "react-router-dom";
-import { DashboardContainer } from "./styles";
+import { DashboardContainer, DynamicPageContainer } from "./styles";
 import Sidebar from "./Sidebar";
 
 const Layout = () => {
@@ -15,8 +15,10 @@ const Layout = () => {
       <Section
       $width="80%"
       $height="100%"
-      $bg={({theme}) => theme.colors.sec.two}>
-        <Outlet />
+      $bg={({theme}) => theme.colors.sec.three}>
+        <DynamicPageContainer $padding="20px" $height="530px" $width="1000px">
+          <Outlet />
+        </DynamicPageContainer>
       </Section>
     </DashboardContainer>
   )

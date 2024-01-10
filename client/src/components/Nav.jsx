@@ -1,17 +1,18 @@
 import { 
   NavContainer, 
   LogoContainer,
+  UserImageContainer
 } from "./styles/Nav.styled";
 import { FlexRow, Container } from "./styles/Container.styled"
 import { StyledNav } from "./styles/Nav.styled";
 import { BtnPrimary, BtnSecondary } from "./styles/Button.styled";
+import { Image } from "./styles/Image.styled"
 import StyledLink from "./styles/Link.styled";
 import { CiMenuFries } from "react-icons/ci";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from "../hooks/useAuth";
 import styled from "styled-components";
 
@@ -162,9 +163,7 @@ export function LoggedInNav() {
   const context = useContext(AppContext);
   const mobileNav = useRef();
   const navContainer = useRef();
-  const navigate = useNavigate();
-  const axiosPrivate = useAxiosPrivate();
-  const { setUser } = useAuth();
+  const { logout } = useAuth();
   const { currentPage } = context;
 
   useEffect(() => {
@@ -210,14 +209,6 @@ export function LoggedInNav() {
     mobileNav.current.classList.remove('open');
   }
 
-  const logout = async() => {
-    const response = await axiosPrivate.get("/auth/logout");
-    if (response.status === 204) {
-      setUser(null);
-      return navigate("/")
-    }
-  }
-
   return (
     <NavContainer
     ref={navContainer}
@@ -253,17 +244,60 @@ export function LoggedInNav() {
         </ul>
 
         <BtnContainer>
-          <BtnPrimary
-          $height="55px"
-          $width="130px"
-          onClick={logout}>
-            Logout
-          </BtnPrimary>
+          {
+            !context.currentPage.includes("dashboard") ? (
+              <BtnPrimary
+              $height="55px"
+              $width="130px"
+              onClick={logout}>
+                Logout
+              </BtnPrimary>
+            ) : (
+              null
+            )
+          }
+
+          {
+            !context.currentPage.includes("dashboard") ? (
+              <StyledLink to="/dashboard/profile">
+                <BtnSecondary
+                $height="55px"
+                $width="130px">
+                  Dashboard
+                </BtnSecondary>
+              </StyledLink>
+            ) : (
+              null
+            )
+          }
+
+          {
+            context.currentPage.includes("dashboard") ? (
+              <LoggedInUserImage/>
+            ) : (null)
+          }
         </BtnContainer>
       </StyledNav>
 
       <CiMenuFries size="30px" className="open-menu" onClick={handleOpenMenu}></CiMenuFries>
 
     </NavContainer>
+  )
+}
+
+function LoggedInUserImage() {
+  const { user: { photo_url, full_name } } = useAuth();
+  return (
+    <UserImageContainer $width="200px">
+      <p>{full_name.split(" ")[0]}</p>
+
+      <Image
+        src={photo_url}
+        alt={full_name}
+        $height="50px"
+        $width="50px"
+        $bdradius="50%"
+      />
+    </UserImageContainer>
   )
 }

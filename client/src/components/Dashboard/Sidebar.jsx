@@ -4,10 +4,12 @@ import { BtnPrimary } from "../styles/Button.styled";
 import StyledLink from "../styles/Link.styled";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 
 export default function Sidebar() {
   const location = useLocation();
+  const { logout } = useAuth();
   const profileText = useRef();
   const profileIcon = useRef();
   const profileSideHighlight = useRef();
@@ -70,6 +72,7 @@ export default function Sidebar() {
             </StyledLink>
           </FlexRow>
         </SidebarListItem>
+
         <SidebarListItem>
           <FlexRow $width="100%" $height="70px" $gap="40px" $justify="flex-start">
             <Container ref={likedCardsSideHighlight} $width="7px" $height="90%" $bdradius="0 5px 5px 0"/>
@@ -83,6 +86,7 @@ export default function Sidebar() {
             </StyledLink>
           </FlexRow>
         </SidebarListItem>
+        
         <SidebarListItem>
           <FlexRow $width="100%" $height="70px" $gap="40px" $justify="flex-start">
             <Container ref={savedCardsSideHighlight} $width="7px" $height="90%"  $bdradius="0 5px 5px 0"/>
@@ -104,9 +108,10 @@ export default function Sidebar() {
           $width="80%"
           $gap="20px"
           $margin="0 0 20px 0"
+          onClick={logout}
         >
           <i className="fa-solid fa-right-from-bracket"></i>
-          Logout
+          <p>Logout</p>
         </BtnPrimary>
       </FlexRow>
     </StyledSidebar>

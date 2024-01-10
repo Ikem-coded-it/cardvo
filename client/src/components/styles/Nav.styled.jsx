@@ -172,4 +172,23 @@ export const LogoContainer = styled(FlexRow)`
       font-size: 20px;
     }
   }
+`;
+
+export const UserImageContainer = styled(FlexRow)`
+  & p {
+    font-size: 16px;
+  }
+  
+  @media(max-width: ${({theme}) => theme.tablet}) {
+    width: 150px;
+
+    & img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  @media(max-width: ${({theme}) => theme.mobile}) {
+    display: none;
+  }
 `

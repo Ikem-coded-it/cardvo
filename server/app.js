@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const corsMiddleware = require("./middleware/cors");
+const cors = require("cors");
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
@@ -19,15 +20,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.options('*', cors())
 app.use('/api/v1', indexRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/card-design', cardDesignRouter);
 app.use('/api/v1/comment', commentRouter);
-
-// to start server ahead of time on entering landing page in live site
-app.get('/api/v1/start', (req, res) => {
-  res.send("Server started")
-})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -12,6 +12,7 @@ export const StyledEditProfileForm = styled.form`
   display: flex;
   align-items: flex-start;
   gap: 40px;
+  box-shadow: 7px 7px 20px ${({theme}) => theme.colors.prim.three};
 
   & > div:last-child {
 
@@ -23,6 +24,9 @@ export const StyledEditProfileForm = styled.form`
       & div {
         & input {
           height: 100%;
+          font-size: 17px;
+          padding: 0 5px;
+          box-sizing: border-box;
         }
       }
     }
@@ -52,6 +56,7 @@ export const StyledEditProfileForm = styled.form`
 
 export const PhotoContainer = styled(FlexRow)`
   position: relative;
+  margin-top: 50px;
 
   & > div {
     position: absolute;
@@ -82,6 +87,7 @@ export const PhotoContainer = styled(FlexRow)`
   }
 
   @media(max-width: ${({theme}) => theme.mobile}) {
+    margin-top: 30px;
     & img {
       height: 120px;
       width: 120px;

@@ -3,8 +3,15 @@ const { db, dbAsyncQuery } =  require("../../config/db");
 const queries = require("../../queries/auth.queries");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require('bcrypt');
-const { validateSignUp, validateSignIn } = require("../../utils/validator");
+const {
+  validateUser,
+  validateSignIn,
+  validateProfileUpdate
+} = require("../../utils/validator");
 const {signAccessToken, signRefreshToken} = require("../../utils/token");
+const { cloudinaryDelete } = require("../../utils/cloudinary");
+
+const defaultUserProfilePicURL = "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg";
 
 const getAllUsers = asyncHandler((req, res) => {
   db.query(queries.getAllUsers, (err, result) => {
@@ -17,7 +24,7 @@ const getAllUsers = asyncHandler((req, res) => {
 
 const registerUser = asyncHandler(async(req, res) => {
   const { fullName, password, email } = req.body;
-  const {error, value} = await validateSignUp({fullName, email, password});
+  const {error, value} = await validateUser({fullName, email, password});
 
   if (error) {
     return res.status(400).json({
@@ -46,7 +53,7 @@ const registerUser = asyncHandler(async(req, res) => {
       value.fullName,
       value.email,
       hashedPassword,
-      "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg",
+      defaultUserProfilePicURL,
       new Date().toISOString()
     ]
   )
@@ -83,13 +90,9 @@ const loginUser = asyncHandler(async(req, res) => {
   const user = emailUser.rows[0]
   const hashedPassword = user.pass_word
   const isPasswordMatch = await bcrypt.compare(password, hashedPassword)
-  
-  if (!isPasswordMatch) {
-    return res.status(400).json({
-      success: false,
-      message: "Incorrect email or password"
-    })
-  }
+
+  if (!isPasswordMatch)
+    return res.sendStatus(400);
 
   delete user.pass_word
   delete user.refresh_token
@@ -109,13 +112,76 @@ const loginUser = asyncHandler(async(req, res) => {
     }
   )
   user.accessToken = accessToken
+  user.password = password
+
   return res.status(200).json({
     success: true,
     user
   })
 })
 
+const editUser =  asyncHandler(async(req, res) => {
+  const { fullName, email } = req.body;
+  const currentUserId = req.params.id;
+  const {error, value} = await validateProfileUpdate({fullName, email});
+
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+      key: error.key,
+      value: error.value,
+    })
+  }
+
+  const user = await dbAsyncQuery(queries.getUserById, [currentUserId]);
+
+  if (user.rows.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "User does not exist"
+    })
+  }
+
+  const { rows } = await dbAsyncQuery(queries.getUserByEmail, [value.email]);
+  const existingUser = rows[0];
+
+  if (!existingUser) {
+    return res.status(400).json({
+      success: false,
+      message: "User does not exist"
+    })
+  }
+
+  if (existingUser.id !== currentUserId) {
+    return res.status(400).json({
+      success: false,
+      message: "Email address already taken"
+    })
+  }
+
+  // if new pic uploaded then delete old one
+  if (req.file) {
+    const oldPicURL = existingUser.photo_url;
+    if (oldPicURL !== defaultUserProfilePicURL) cloudinaryDelete(oldPicURL)
+  }
+
+  const newPicURL = req.file ? req.file.path : existingUser.photo_url;
+  const updated = await dbAsyncQuery(queries.editUser, [
+    value.fullName, 
+    value.email,
+    newPicURL,
+    currentUserId
+  ]);
+
+  return res.status(200).json({
+    success: true,
+    user: updated.rows[0]
+  })
+})
+
 module.exports = {
   loginUser,
-  registerUser
+  registerUser,
+  editUser
 };

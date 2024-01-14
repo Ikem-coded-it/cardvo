@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 
 const isAuth = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
-
   if (!token) {
     return res.status(403).json({
       success: false,
@@ -16,7 +15,6 @@ const isAuth = (req, res, next) => {
       token,
       process.env['JWT_ACCESS_SECRET']
     )
-
     req.user = verified;
     next()
   } catch (error) {

@@ -9,6 +9,7 @@ import {
 } from "./shared"; 
 import { FlexColumn, FlexRow } from "../styles/Container.styled";
 import StyledLink from "../styles/Link.styled";
+import { BtnPrimary } from "../styles/Button.styled";
 import { useState, useContext } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { AppContext } from "../../App";
@@ -33,25 +34,30 @@ const SigninRightSideSection = styled(RightSideSection)`
 
 export default function SigninRightSide() {
   const [loggingIn, setLoggingIn] = useState(false);
+  const [demoLogin, setDemoLogin] = useState(false);
   const [displayMessage, setDisplayMessage] = useState(null);
   const context = useContext(AppContext);
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
 
   // sign up with email and password
-  const handleLocalSignin  = async(e) => {
+  const handleLocalSignin  = async(e, email, password) => {
     e.preventDefault()
-    setLoggingIn(true);
+
+    // activate loader in demo login button or normal login button
+    if (email && password)
+      setDemoLogin(true)
+    else
+      setLoggingIn(true)
 
     const userLoginDetails = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-      rememberMe: e.target.remember_me.checked
+      email: !email ? e.target.email.value : email,
+      password: !password ? e.target.password.value: password,
+      rememberMe: e.target.remember_me?.checked
     }
 
     try {
       const response = await axiosPrivate.post("/auth/login", userLoginDetails);
-      
       if (response.data.success === true) {
         const user = response.data.user;
         context.setUser(user);
@@ -60,15 +66,22 @@ export default function SigninRightSide() {
           localStorage.setItem('cardvo-user', JSON.stringify(user))
         }
 
-        setLoggingIn(false);
+        !email && setLoggingIn(false);
+        email && setDemoLogin(false);
         navigate(context.nextPage);
+
       } else {
         setDisplayMessage(response.data.message);
       }
     } catch(error) {
+      if (error.response.status === 400) {
+        setDisplayMessage("Invalid username or password");
+        return setLoggingIn(false);
+      }
       if(error.response.data === "Unauthorized") {
         setDisplayMessage("Invalid username or password");
-        setLoggingIn(false);
+        !email && setLoggingIn(false);
+        email && setDemoLogin(false);
       }
     }
   }
@@ -107,6 +120,17 @@ export default function SigninRightSide() {
       {/* <GoogleBtn onClick={handleGoogleAuth}/> */}
 
       {/* <FacebookBtn onClick={handleFacebookAuth} /> */}
+
+      <BtnPrimary
+      $width="100%"
+      $height="50px"
+      onClick={(e)=>handleLocalSignin(e, "ikem2002@gmail.com", "idontknow")}>
+        { demoLogin ? (
+          <LoaderSpinner type="spin" height={40} width={40} color="#375694"/>
+        ) : (
+          "Login with Demo Account"
+        ) }
+      </BtnPrimary>
 
       <OrLine $width="100%"><div />  OR <div /></OrLine>
 

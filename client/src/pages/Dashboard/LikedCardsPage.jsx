@@ -12,7 +12,7 @@ const LikedCardsPage = () => {
   }, [])
   
   return (
-    <h2>LikedCardsPage</h2>
+    <h2>LikedCards Page coming soon</h2>
   )
 }
 

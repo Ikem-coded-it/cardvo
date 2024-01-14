@@ -2,7 +2,7 @@ import {
   RightSideSection,
   // GoogleBtn,
   // FacebookBtn,
-  OrLine,
+  // OrLine,
   StyledForm,
   SignupSigninBtn,
   PasswordInput,
@@ -81,7 +81,7 @@ export default function SignupRightSide() {
 
       {/* <FacebookBtn onClick={handleFacebookAuth} /> */}
 
-      <OrLine $width="100%"><div />  OR <div /></OrLine>
+      {/* <OrLine $width="100%"><div />  OR <div /></OrLine> */}
 
       <StyledForm onSubmit={(e) => handleLocalSignup(e)}>
         <FlexColumn $align="flex-start">

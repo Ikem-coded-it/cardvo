@@ -15,13 +15,11 @@ function App() {
 
   return (
     <>
-    {/* <AuthContextProvider> */}
       <AppContextProvider>
         <ThemeProvider theme={theme}>
           <RouterProvider router={router} /> 
         </ThemeProvider>
       </AppContextProvider>
-    {/* </AuthContextProvider> */}
     </>
   )
 }

@@ -1,7 +1,7 @@
 const Joi = require('joi');
 // const asyncHandler = require("express-async-handler");
 
-const validateSignUp = (fullName, email, password) => {
+const validateUser = (fullName, email, password) => {
   const schema = Joi.object({
     fullName: Joi.string()
       .min(3)
@@ -18,6 +18,21 @@ const validateSignUp = (fullName, email, password) => {
   })
 
   return schema.validate(fullName, email, password);
+};
+
+const validateProfileUpdate = (fullName, email) => {
+  const schema = Joi.object({
+    fullName: Joi.string()
+      .min(3)
+      .max(100)
+      .required(),
+
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+      .required(),
+  })
+
+  return schema.validate(fullName, email);
 };
 
 const validateSignIn = (email, password) => {
@@ -191,7 +206,8 @@ const validateUserCollectionCardDetails = ({
 }
 
 module.exports = {
-  validateSignUp,
+  validateUser,
+  validateProfileUpdate,
   validateSignIn,
   validateCardDetails,
   validateComment,

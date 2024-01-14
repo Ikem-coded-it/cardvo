@@ -38,6 +38,8 @@ export const StyledModal = styled(Container)`
     position: absolute;
     top: 10px;
     right: 10px;
+    min-width: 30px;
+    max-width: 30px;
 
     &:hover {
       background-color: none;
@@ -57,8 +59,8 @@ export const StyledModal = styled(Container)`
     }
 
     & button {
-      width: 22px;
-      height: 22px;
+      min-width: 22px;
+      max-width: 22px;
       padding: 0;
     }
   }

@@ -124,7 +124,7 @@ export default function SigninRightSide() {
       <BtnPrimary
       $width="100%"
       $height="50px"
-      onClick={(e)=>handleLocalSignin(e, "ikem2002@gmail.com", "idontknow")}>
+      onClick={(e)=>handleLocalSignin(e, "ikem2003@gmail.com", "idontknow")}>
         { demoLogin ? (
           <LoaderSpinner type="spin" height={40} width={40} color="#375694"/>
         ) : (

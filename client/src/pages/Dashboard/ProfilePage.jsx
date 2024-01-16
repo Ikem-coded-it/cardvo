@@ -1,7 +1,9 @@
 import { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../App";
-import EditProfileForm from "../../components/Dashboard/EditProfilePage";
+import { StyledProfileContainer } from "../../components/Dashboard/EditProfilePage/styles";
+import ProfileNavigation from "../../components/Dashboard/EditProfilePage/ProfileNavigation";
+import { Outlet } from "react-router-dom";
 
 const ProfilePage = () => {
   const context = useContext(AppContext);
@@ -13,7 +15,10 @@ const ProfilePage = () => {
   }, [])
 
   return (
-    <EditProfileForm/>
+    <StyledProfileContainer $justify="flex-start">
+      <ProfileNavigation/>
+      <Outlet/>
+    </StyledProfileContainer>
   )
 }
 

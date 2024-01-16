@@ -23,9 +23,9 @@ export default function Sidebar() {
   useEffect(() => {
     function changeColorsOnActive() {
       if (location.pathname.includes("profile")) {
-        profileText.current.style.color = "#375694";
-        profileIcon.current.style.color = "#375694";
-        profileSideHighlight.current.style.backgroundColor = "#375694";
+        profileText.current.style.color = "#4267b2";
+        profileIcon.current.style.color = "#4267b2";
+        profileSideHighlight.current.style.backgroundColor = "#4267b2";
       } else {
         profileText.current.style.color = "#50615D";
         profileIcon.current.style.color = "#50615D";
@@ -33,9 +33,9 @@ export default function Sidebar() {
       }
 
       if (location.pathname.includes("liked-cards")) {
-        likedCardsText.current.style.color = "#375694";
-        likedCardsIcon.current.style.color = "#375694";
-        likedCardsSideHighlight.current.style.backgroundColor = "#375694";
+        likedCardsText.current.style.color = "#4267b2";
+        likedCardsIcon.current.style.color = "#4267b2";
+        likedCardsSideHighlight.current.style.backgroundColor = "#4267b2";
       } else {
         likedCardsText.current.style.color = "#50615D";
         likedCardsIcon.current.style.color = "#50615D";
@@ -43,9 +43,9 @@ export default function Sidebar() {
       }
 
       if (location.pathname.includes("saved-cards")) {
-        savedCardsText.current.style.color = "#375694";
-        savedCardsIcon.current.style.color = "#375694";
-        savedCardsSideHighlight.current.style.backgroundColor = "#375694";
+        savedCardsText.current.style.color = "#4267b2";
+        savedCardsIcon.current.style.color = "#4267b2";
+        savedCardsSideHighlight.current.style.backgroundColor = "#4267b2";
       } else {
         savedCardsText.current.style.color = "#50615D";
         savedCardsIcon.current.style.color = "#50615D";

@@ -5,7 +5,8 @@ import PhotoEdit from "./PhotoEdit";
 import useAuth from "../../../hooks/useAuth";
 import EditInput from "./Input";
 import { Formik } from 'formik';
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { AppContext } from "../../../App";
 // import useFormDataFetch from "../../../hooks/useFormDataFetch";
 import useFormDataAxios from "../../../hooks/useFormDataAxios";
@@ -14,11 +15,16 @@ import LoaderSpinner from "../../Loader";
 
 export default function EditProfileForm() {
   const { user, setUser } = useAuth();
-  const { serverURL } = useContext(AppContext);
+  const { serverURL, setCurrentPage } = useContext(AppContext);
   const [message, setMessage] = useState(null);
   const [file, setFile] = useState(null);
   // const formDataFetch = useFormDataFetch();
   const formDataAxios = useFormDataAxios();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setCurrentPage(pathname)
+  }, [pathname, setCurrentPage])
 
   const initial = {
     full_name: user.full_name,
@@ -95,7 +101,7 @@ export default function EditProfileForm() {
         isSubmitting,
       }) => (
         <StyledEditProfileForm onSubmit={handleSubmit}>
-          <FlexColumn $height="100%" $justify="flex-start">
+          <FlexColumn $height="100%" $width="30%" $justify="flex-start">
             <PhotoEdit setFile={setFile} file={file}/>
           </FlexColumn>
 
@@ -115,14 +121,6 @@ export default function EditProfileForm() {
             label="Email"
             type="email"
             name="email"/>
-
-           {/* <EditInput
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-            label="Password"
-            type="password"
-            name="password"/> */}
 
             <FlexRow $width="100%" $justify="flex-end">
               <BtnSecondary

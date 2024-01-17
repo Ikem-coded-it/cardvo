@@ -5,6 +5,9 @@ import EditInput from "./Input";
 import { useLocation } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import { AppContext } from "../../../App";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAuth from "../../../hooks/useAuth";
+import MessageDisplay from "../../MessageDisplay";
 
 const ChangePassword = () => {
   const { setCurrentPage } = useContext(AppContext);
@@ -16,6 +19,9 @@ const ChangePassword = () => {
   const [oldPasswordError, setOldPasswordError] = useState(null);
   const [newPasswordError, setNewPasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
+  const { user } = useAuth();
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     setCurrentPage(pathname)
@@ -45,14 +51,42 @@ const ChangePassword = () => {
       setConfirmPasswordError(null);
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(oldPassword, newPassword, confirmPassword)
+    setSubmitting(true)
     if (oldPasswordError || newPasswordError || confirmPasswordError) return setSubmitting(false)
+
+    const data = {
+      oldPassword,
+      newPassword,
+      confirmPassword
+    }
+
+    try {
+      const response = await axiosPrivate.patch(`/auth/${user.id}/change-password`, data);
+      if (response.status === 200) {
+        setMessage(response.data.message)
+        setOldPassword("")
+        setNewPassword("")
+        setConfirmPassword("")
+        setSubmitting(false)
+      }
+    } catch (error) {
+      if (error.response?.data?.message) {
+        setMessage(error.response.data.message)
+        return setSubmitting(false)
+      }
+      setMessage(error.message)
+      return setSubmitting(false)
+    }
   }
 
   return (
     <ChangePasswordFormContainer $width="100%" $height="90%">
+      {
+        message && <MessageDisplay message={message} closeMessage={() => setMessage(null)}/>
+      }
+
       <form onSubmit={(e) => handleSubmit(e)}>
         <EditInput
         onChange={(e) => handleValidateOldPassword(e.target.value)}

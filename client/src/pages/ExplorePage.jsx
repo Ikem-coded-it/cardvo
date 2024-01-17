@@ -4,7 +4,7 @@ import ExploreHundreds from "../components/ExplorePage/ExploreHundreds";
 import ExploreCards from "../components/ExplorePage/ExploreCards";
 import Footer from "../components/Footer";
 import { useEffect, useContext, createContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
@@ -16,10 +16,11 @@ export default function ExplorePage() {
   const [cardsInfo, setCardsInfo] = useState(null);
   const [fetching, setFetching] = useState(false);
   const location = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
+    if (!context.user) return navigate("/auth/signin")
     context.setCurrentPage(location.pathname)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

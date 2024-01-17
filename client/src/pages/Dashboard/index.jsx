@@ -12,7 +12,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!user) return navigate("/")
+    if(!user) return navigate("/auth/signin")
     context.setCurrentPage(location.pathname)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

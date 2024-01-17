@@ -78,7 +78,7 @@ export const StyledSidebar = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 3;
+  z-index: 2;
 
   & > ul {
     padding: 0;

@@ -2,7 +2,7 @@ import { StyledEditInput } from "./styles";
 import { FlexColumn } from "../../styles/Container.styled";
 import PropTypes from "prop-types";
 
-export default function EditInput({label, onChange, onBlur, value, type, name}) {
+export default function EditInput({label, onChange, onBlur, value, type, name, minLength, onFocus}) {
   return (
     <FlexColumn $align="flex-start" $width="100%">
       <label>{label}</label>
@@ -12,6 +12,8 @@ export default function EditInput({label, onChange, onBlur, value, type, name}) 
       value={value}
       type={type}
       name={name}
+      minLength={minLength}
+      onFocus={onFocus}
       />
     </FlexColumn>
   )
@@ -24,4 +26,6 @@ EditInput.propTypes = {
   value: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
+  minLength: PropTypes.number,
+  onFocus: PropTypes.func
 }

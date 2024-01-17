@@ -68,7 +68,10 @@ export default function SigninRightSide() {
 
         !email && setLoggingIn(false);
         email && setDemoLogin(false);
-        navigate(context.nextPage);
+        if (context.nextPage)
+          navigate(context.nextPage);
+        else
+          navigate("/");
 
       } else {
         setDisplayMessage(response.data.message);

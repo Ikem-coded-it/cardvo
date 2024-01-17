@@ -12,6 +12,8 @@ const getUserByRefreshToken = "SELECT * FROM users WHERE refresh_token = $1";
 
 const editUser = "UPDATE users SET full_name = $1, email = $2, photo_url = $3 WHERE id = $4 RETURNING id, full_name, email, photo_url";
 
+const updatePassword = "UPDATE users SET pass_word = $1 WHERE id = $2 RETURNING id"
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -19,5 +21,6 @@ module.exports = {
   getUserByEmail,
   setRefreshToken,
   getUserByRefreshToken,
-  editUser
+  editUser,
+  updatePassword
 }

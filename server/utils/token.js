@@ -7,7 +7,7 @@ const signAccessToken = (user) => {
   const accessToken = jwt.sign(
     user,
     process.env['JWT_ACCESS_SECRET'],
-    { expiresIn: environment === 'development' ? '2m' : '5h' },
+    { expiresIn: environment === 'development' ? '10m' : '5h' },
     { algorithm: 'RS256' }
   );
 

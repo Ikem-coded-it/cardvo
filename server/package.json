@@ -12,7 +12,6 @@
     "cloudinary": "^1.41.0",
     "connect-redis": "^7.1.0",
     "cookie-parser": "~1.4.4",
-    "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^16.3.1",
@@ -22,13 +21,14 @@
     "http-errors": "~1.6.3",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.2",
+    "mailgen": "^2.0.28",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^6.9.8",
     "pg": "^8.11.3",
     "pg-pool": "^3.6.1",
-    "redis": "^4.6.8",
-    "socket.io": "^4.7.2"
+    "redis": "^4.6.8"
   },
   "devDependencies": {
     "jest": "^29.6.4",

@@ -10,6 +10,10 @@ const {
 } = require("../../utils/validator");
 const {signAccessToken, signRefreshToken} = require("../../utils/token");
 const { cloudinaryDelete } = require("../../utils/cloudinary");
+const {
+  sendNewSignupEmail,
+  sendConfirmPasswordChangeEmail
+} = require("../../services/email/index");
 
 const defaultUserProfilePicURL = "https://cdn2.vectorstock.com/i/1000x1000/92/16/default-profile-picture-avatar-user-icon-vector-46389216.jpg";
 
@@ -57,6 +61,9 @@ const registerUser = asyncHandler(async(req, res) => {
       new Date().toISOString()
     ]
   )
+
+  const sentMail = await sendNewSignupEmail(fullName, email);
+  if (sentMail !== "message sent") return res.sendStatus(500);
 
   return res.status(201).json({
     success: true,
@@ -120,7 +127,7 @@ const loginUser = asyncHandler(async(req, res) => {
   })
 })
 
-const editUser =  asyncHandler(async(req, res) => {
+const editUser = asyncHandler(async(req, res) => {
   const { fullName, email } = req.body;
   const currentUserId = req.params.id;
   const {error, value} = await validateProfileUpdate({fullName, email});
@@ -180,8 +187,39 @@ const editUser =  asyncHandler(async(req, res) => {
   })
 })
 
+const changePassword = asyncHandler(async(req, res) => {
+  const userId = req.params.id;
+  const { oldPassword, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({message: "Password confirmation does not match new password"});
+  }
+
+  const { rows : fetchedUser } = await dbAsyncQuery(queries.getUserById, [userId]);
+  if (fetchedUser.length === 0)
+    return res.status(404).json({message: "User does not exist"});
+
+  const user = fetchedUser[0]
+  const isPasswordMatch = await bcrypt.compare(oldPassword, user.pass_word);
+  if (!isPasswordMatch)
+    return res.status(400).json({message: "Incorrect old password"});
+
+  const saltRounds = 10;
+  const newHashedPassword = await bcrypt.hash(newPassword, saltRounds);
+  const { rows: savedPassword } = await dbAsyncQuery(queries.updatePassword, [newHashedPassword, userId]);
+
+  if (savedPassword.length === 0)
+    return res.status(500).json({message: "Failed to update password"});
+
+  const sentMail = await sendConfirmPasswordChangeEmail(user.full_name, user.email);
+  if (sentMail !== "message sent") return res.sendStatus(500);
+
+  return res.status(200).json({message: "Password changed, check your email"});
+})
+
 module.exports = {
   loginUser,
   registerUser,
-  editUser
+  editUser,
+  changePassword
 };

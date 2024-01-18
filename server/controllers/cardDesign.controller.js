@@ -4,8 +4,8 @@ const asyncHandler = require("express-async-handler");
 const { validateCardDetails, validateUserCollectionCardDetails } = require("../utils/validator");
 const { cloudinaryDelete } = require("../utils/cloudinary");
 const formatDate = require("../utils/dateFormater");
-const { deleteLike, createLike } = require("../queries/likes.queries");
-const { saveCard, unsaveCard } = require("../queries/save.queries");
+const { deleteLike, createLike, getLikedCardsByUserId } = require("../queries/likes.queries");
+const { saveCard, unsaveCard, getSavedCardsByUserId } = require("../queries/save.queries");
 
 const getAllCardDesigns = asyncHandler(async(req, res) => {
   const cardDesigns = await dbAsyncQuery(queries.getAllCardDesigns);
@@ -401,16 +401,48 @@ const createCardForUsersCollection = asyncHandler(async(req, res) => {
   })
 })
 
+const getUserLikedCards = asyncHandler(async(req, res) => {
+  const { userId } = req.params
+  const { rows: cards } = await dbAsyncQuery(getLikedCardsByUserId, [userId]);
+
+  const formatedRows = []
+  cards.forEach(card => {
+    const { expiration } = card;
+    const formatedDate = formatDate(expiration);
+    card['expiration'] = formatedDate
+    formatedRows.push(card)
+  })
+
+  return res.status(200).json({success: true, cards: formatedRows})
+})
+
+const getUserSavedCards = asyncHandler(async(req, res) => {
+  const { userId } = req.params
+  const { rows: cards } = await dbAsyncQuery(getSavedCardsByUserId, [userId]);
+
+  const formatedRows = []
+  cards.forEach(card => {
+    const { expiration } = card;
+    const formatedDate = formatDate(expiration);
+    card['expiration'] = formatedDate
+    formatedRows.push(card)
+  })
+
+  return res.status(200).json({success: true, cards: formatedRows})
+})
+
 module.exports = {
   getAllCardDesigns,
   createCardDesign,
   getCardDesignById,
   updateCardDesignById,
-  deleteCardDesignById,
-  getCardDesignByCategory,
   likeOrUnlikeCardDesign,
   checkIfUserLikedCard,
   saveOrUnsaveCard,
   checkIfUserSavedCard,
-  createCardForUsersCollection
+  deleteCardDesignById,
+  getCardDesignByCategory,
+  createCardForUsersCollection,
+  getUserLikedCards,
+  getUserSavedCards
 }

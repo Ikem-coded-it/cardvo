@@ -1,4 +1,4 @@
-import { FlexRow } from "../styles/Container.styled";
+import { FlexRow, Container } from "../styles/Container.styled";
 import styled from "styled-components";
 
 export const DashboardContainer = styled(FlexRow)`
@@ -170,4 +170,60 @@ export const SidebarListItem = styled.li`
       }
     }
   }
+`
+
+export const StyledCardsContainer = styled(Container)`
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  background-color: ${({theme}) => theme.colors.sec.one};
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 7px 7px 20px ${({theme}) => theme.colors.prim.three};
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-auto-rows: 200px;
+  gap: 30px;
+  overflow-y: scroll;
+  position: relative;
+
+  @media(max-width: ${({theme}) => theme.mobile}) {
+    box-shadow: none;
+    padding: 50px 0;
+    grid-template-columns: repeat(auto-fill, 300px);
+    grid-auto-rows: 250px;
+    row-gap: 150px;
+  }
+`
+
+export const NoCardsAlternativeContainer = styled(FlexRow)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+
+  & p {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  & button {
+    font-size: 16px;
+    width: 150px;
+  }
+
+  @media(max-width: ${({theme}) => theme.mobile}) {
+    & p {
+      font-size: 17px;
+    }
+  }
+`
+
+export const LoaderContainer = styled(FlexRow)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 `

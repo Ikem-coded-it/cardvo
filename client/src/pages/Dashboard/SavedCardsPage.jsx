@@ -1,6 +1,7 @@
 import { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../App";
+import SavedCards from "../../components/Dashboard/SavedCards";
 
 const SavedCardsPage = () => {
   const context = useContext(AppContext);
@@ -12,7 +13,7 @@ const SavedCardsPage = () => {
   }, [])
   
   return (
-    <h2>SavedCards Page coming soon</h2>
+    <SavedCards />
   )
 }
 

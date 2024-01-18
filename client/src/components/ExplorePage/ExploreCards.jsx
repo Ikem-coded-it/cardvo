@@ -78,7 +78,17 @@ export default function ExploreCards() {
   )
 }
 
-function CardDisplayWithOptions({
+export function CardDisplayWithOptions({
+  $height,
+  $width,
+  $imgsize,
+  $psize,
+  $h3size,
+  $m_height,
+  $m_width,
+  $m_imgsize,
+  $m_psize,
+  $m_h3size,
   checkIfLoggedInAndNavigate,
   cardNumberOne,
   cardNumberTwo,
@@ -102,6 +112,16 @@ function CardDisplayWithOptions({
       </FlexRow>
 
       <CardFrontView
+      $height={$height}
+      $width={$width}
+      $h3size={$h3size}
+      $psize={$psize}
+      $imgsize={$imgsize}
+      $m_height={$m_height}
+      $m_imgsize={$m_imgsize}
+      $m_width={$m_width}
+      $m_h3size={$m_h3size}
+      $m_psize={$m_psize}
       cardNumberOne={cardNumberOne}
       cardNumberTwo={cardNumberTwo}
       cardNumberThree={cardNumberThree}
@@ -129,6 +149,16 @@ function CardDisplayWithOptions({
 }
 
 CardDisplayWithOptions.propTypes = {
+  $height: PropTypes.string,
+  $width: PropTypes.string,
+  $imgsize: PropTypes.string,
+  $psize: PropTypes.string,
+  $h3size: PropTypes.string,
+  $m_height: PropTypes.string,
+  $m_width: PropTypes.string,
+  $m_imgsize: PropTypes.string,
+  $m_psize: PropTypes.string,
+  $m_h3size: PropTypes.string,
   checkIfLoggedInAndNavigate: PropTypes.func,
   likeOrUnlikeCard: PropTypes.func,
   cardNumberOne: PropTypes.string,
@@ -141,87 +171,3 @@ CardDisplayWithOptions.propTypes = {
   image: PropTypes.string,
   id: PropTypes.string,
 }
-
-// const cardsInfo = [
-//   {
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#0891b2",
-//     image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YW5pbWV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
-//   },{
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#dc2626",
-//     image: "https://media.istockphoto.com/id/1166651462/vector/cartoon-face-with-red-eyes-vector-illustration-for-anime-manga-in-japanese-style.jpg?s=612x612&w=0&k=20&c=KIyKkZte9nTt8Dv4gp_j7cnkhK3PP_UOiQm-dxmMpwA="
-//   },{
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#fde047",
-//     image: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzB8fGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
-//   },{
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#84cc16",
-//     image: "https://images.unsplash.com/photo-1580477667995-2b94f01c9516?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFuaW1lfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-//   },{
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#7c3aed",
-//     image: "https://assets-prd.ignimgs.com/2022/08/17/top25animecharacters-blogroll-1660777571580.jpg"
-//   },{
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#fb923c",
-//     image: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
-//   },{
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#22d3ee",
-//     image: "https://images.unsplash.com/photo-1433477155337-9aea4e790195?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
-//   },{
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#854d0e",
-//   },{
-//     name: "captain america",
-//     cardNumberOne: "5896",
-//     cardNumberTwo: "8712",
-//     cardNumberThree: "5698",
-//     cardNumberFour: "7391",
-//     expiration: "08/27",
-//     color: "#171717",
-//     image: "https://t4.ftcdn.net/jpg/05/62/02/41/360_F_562024161_tGM4lFlnO0OczLYHFFuNNdMUTG9ekHxb.jpg"
-//   },
-// ]

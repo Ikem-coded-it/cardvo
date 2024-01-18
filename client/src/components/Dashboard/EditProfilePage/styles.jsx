@@ -4,7 +4,7 @@ import { FlexRow, FlexColumn } from "../../styles/Container.styled";
 export const StyledProfileContainer = styled(FlexColumn)`
   height: 100%;
   width: 100%;
-  border-radius: 40px;
+  border-radius: 10px;
   background-color: ${({theme}) => theme.colors.sec.one};
   padding: 20px;
   box-sizing: border-box; 

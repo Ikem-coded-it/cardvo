@@ -1,6 +1,10 @@
 import { Section } from "../styles/Section.styled"
-import { Outlet } from "react-router-dom";
-import { DashboardContainer, DynamicPageContainer } from "./styles";
+import { Outlet, useLocation } from "react-router-dom";
+import { DashboardContainer, DynamicPageContainer, NoCardsAlternativeContainer } from "./styles";
+import { FlexColumn } from "../styles/Container.styled";
+import StyledLink from "../styles/Link.styled";
+import { BtnPrimary } from "../styles/Button.styled";
+import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 
 const Layout = () => {
@@ -21,6 +25,33 @@ const Layout = () => {
         </DynamicPageContainer>
       </Section>
     </DashboardContainer>
+  )
+}
+
+export function NoCardsAlternative() {
+  const [word, setWord] = useState("liked");
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname.includes("saved-cards"))
+      setWord("saved")
+    else
+      setWord("liked")
+  }, [pathname])
+
+  return (
+    <NoCardsAlternativeContainer $height="100%" $width="100%">
+      <FlexColumn $height="100%" $width="100%">
+        <p>
+          You currently have no {word} cards.
+        </p>
+        <StyledLink to="/explore">
+          <BtnPrimary>
+            View card designs
+          </BtnPrimary>
+        </StyledLink>
+      </FlexColumn>
+    </NoCardsAlternativeContainer>
   )
 }
 

@@ -12,7 +12,7 @@ import { useContext, useState } from "react";
 import { AppContext }from "../../App";
 import MessageDisplay from "../MessageDisplay";
 import LoaderSpinner from "../Loader";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useFormDataAxios from "../../hooks/useFormDataAxios";
 import PropTypes from "prop-types";
 
 const colorPalette = [
@@ -31,10 +31,10 @@ const colorPalette = [
 ]
 
 export default function ControlPanel({ designState, designDispatch }) {
-  const { user } = useContext(AppContext);
+  const { user, serverURL } = useContext(AppContext);
   const [message, setMessage] = useState(null);
   const [addingToCollection, setAddingToCollection] = useState(false); // show loader in button
-  const axiosPrivate = useAxiosPrivate();
+  const formDataAxios = useFormDataAxios();
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
@@ -167,14 +167,20 @@ export default function ControlPanel({ designState, designDispatch }) {
     }
 
     try {
-      const url = "/card-design/add-to-collection";
-      const response = await axiosPrivate.post(url, formData);
-      if (response instanceof Error) {
-        setMessage(response.message);
+      const url = `${serverURL}/card-design/add-to-collection`;
+      const response = await formDataAxios(url, formData);
+
+      if (response === "Check your internet connection") {
+        setMessage(response);
         return setAddingToCollection(false);
       }
 
-      if (response.data.success === false) {
+      if (response instanceof Error) {
+        setMessage(response.response.data.message);
+        return setAddingToCollection(false);
+      }
+
+      if (response.data?.success === false) {
         setMessage(response.data.message);
         return setAddingToCollection(false);
       }

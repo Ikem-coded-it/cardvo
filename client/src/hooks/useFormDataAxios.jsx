@@ -8,7 +8,7 @@ export default function useFormDataAxios() {
 
   async function formDataAxios(url, body, token) {
     try {
-      const response = await axios.put(url, body, {
+      const response = await axios.post(url, body, {
         withCredentials: true,
         headers: {
           'Authorization': token ? `Bearer ${token}`:`Bearer ${user.accessToken}`,

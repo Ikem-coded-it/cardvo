@@ -346,10 +346,10 @@ const createCardForUsersCollection = asyncHandler(async(req, res) => {
     req.body.background_image = req.file.path
     delete req.body.defaultImage
   }
+
   const {error, value} = validateUserCollectionCardDetails(req.body);
 
   if (error) {
-    console.log(error)
     return res.status(400).json({
       success: false,
       message: error.message,
@@ -387,17 +387,15 @@ const createCardForUsersCollection = asyncHandler(async(req, res) => {
   ]);
 
   if (!createdDesign || createdDesign instanceof Error) {
-    console.log("here4")
     return res.status(400).json({
       success: false,
       message: "Failed to add to collection"
     })
   }
-  
+
   return res.status(201).json({
     success: true,
-    message: "Card design added to your collection",
-    createdDesign: createdDesign.rows
+    message: "Card design has been added to your collection"
   })
 })
 

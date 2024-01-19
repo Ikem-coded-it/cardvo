@@ -16,7 +16,7 @@ router.post("/login", loginUser);
 
 router.get("/refresh-token", refreshUserToken);
 
-router.put("/:id/edit", isAuth, upload.single("profile_picture"), editUser);
+router.post("/:id/edit", isAuth, upload.single("profile_picture"), editUser);
 
 router.patch("/:id/change-password", isAuth, changePassword);
 

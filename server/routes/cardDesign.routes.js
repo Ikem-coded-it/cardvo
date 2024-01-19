@@ -11,7 +11,8 @@ const {
   getCardDesignByCategory,
   createCardForUsersCollection,
   getUserLikedCards,
-  getUserSavedCards
+  getUserSavedCards,
+  getUserCollectionCards
 } = require("../controllers/cardDesign.controller");
 const { upload } = require("../utils/cloudinary");
 const isAuth = require("../middleware/auth");
@@ -44,5 +45,7 @@ router.route('/add-to-collection').post(upload.single('background_image'), creat
 router.route('/liked-cards/:userId').get(getUserLikedCards);
 
 router.route('/saved-cards/:userId').get(getUserSavedCards);
+
+router.route('/my-collection/:userId').get(getUserCollectionCards);
 
 module.exports = router;

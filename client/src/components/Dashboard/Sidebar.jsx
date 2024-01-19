@@ -19,6 +19,9 @@ export default function Sidebar() {
   const savedCardsText = useRef();
   const savedCardsIcon = useRef();
   const savedCardsSideHighlight = useRef();
+  const myCollectionText = useRef();
+  const myCollectionIcon = useRef();
+  const myCollectionSideHighlight = useRef();
 
   useEffect(() => {
     function changeColorsOnActive() {
@@ -50,6 +53,16 @@ export default function Sidebar() {
         savedCardsText.current.style.color = "#50615D";
         savedCardsIcon.current.style.color = "#50615D";
         savedCardsSideHighlight.current.style.backgroundColor = "transparent";
+      }
+
+      if (location.pathname.includes("my-collection")) {
+        myCollectionText.current.style.color = "#4267b2";
+        myCollectionIcon.current.style.color = "#4267b2";
+        myCollectionSideHighlight.current.style.backgroundColor = "#4267b2";
+      } else {
+        myCollectionText.current.style.color = "#50615D";
+        myCollectionIcon.current.style.color = "#50615D";
+        myCollectionSideHighlight.current.style.backgroundColor = "transparent";
       }
     }
 
@@ -96,6 +109,20 @@ export default function Sidebar() {
 
               <span ref={savedCardsText}>
                 Saved Cards
+              </span>
+            </StyledLink>
+          </FlexRow>
+        </SidebarListItem>
+
+        <SidebarListItem>
+          <FlexRow $width="100%" $height="70px" $gap="40px" $justify="flex-start">
+            <Container ref={myCollectionSideHighlight} $width="7px" $height="90%"  $bdradius="0 5px 5px 0"/>
+
+            <StyledLink to="/dashboard/my-collection" $width="95%" $gap="20px">
+              <i className="fa-solid fa-folder" ref={myCollectionIcon}/>
+
+              <span ref={myCollectionText}>
+                My Collection
               </span>
             </StyledLink>
           </FlexRow>

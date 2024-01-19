@@ -20,6 +20,8 @@ const createUserCollectionDesign = 'INSERT INTO user_designed_cards (user_id, ca
 
 const getCardUserCollectionDesignByNumber = 'SELECT * FROM user_designed_cards WHERE card_number_one = $1 AND card_number_two = $2 AND card_number_three = $3 AND card_number_four = $4';
 
+const getUserCollectionCardsByUserId = 'SELECT * FROM user_designed_cards WHERE user_id = $1';
+
 module.exports = {
   getAllCardDesigns,
   getCardDesignByNumber,
@@ -31,5 +33,6 @@ module.exports = {
   getUsersLike,
   getUsersSavedCard,
   createUserCollectionDesign,
-  getCardUserCollectionDesignByNumber
+  getCardUserCollectionDesignByNumber,
+  getUserCollectionCardsByUserId
 }

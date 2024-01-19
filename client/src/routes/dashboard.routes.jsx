@@ -4,6 +4,7 @@ import ChangePassword from "../components/Dashboard/EditProfilePage/ChangePasswo
 import EditProfileForm from "../components/Dashboard/EditProfilePage";
 import LikedCardsPage from "../pages/Dashboard/LikedCardsPage";
 import SavedCardsPage from "../pages/Dashboard/SavedCardsPage";
+import MyCollectionPage from "../pages/Dashboard/MyCollectionPage";
 import ErrorPage from "../pages/ErrorPage";
 
 const dashboardRoutes = {
@@ -33,6 +34,10 @@ const dashboardRoutes = {
       path: "/dashboard/saved-cards",
       element: <SavedCardsPage />,
     },
+    {
+      path: "/dashboard/my-collection",
+      element: <MyCollectionPage />
+    }
   ]
 }
 

@@ -429,6 +429,21 @@ const getUserSavedCards = asyncHandler(async(req, res) => {
   return res.status(200).json({success: true, cards: formatedRows})
 })
 
+const getUserCollectionCards = asyncHandler(async(req, res) => {
+  const { userId } = req.params
+  const { rows: cards } = await dbAsyncQuery(queries.getUserCollectionCardsByUserId, [userId]);
+
+  const formatedRows = []
+  cards.forEach(card => {
+    const { expiration } = card;
+    const formatedDate = formatDate(expiration);
+    card['expiration'] = formatedDate
+    formatedRows.push(card)
+  })
+
+  return res.status(200).json({success: true, cards: formatedRows})
+})
+
 module.exports = {
   getAllCardDesigns,
   createCardDesign,
@@ -442,5 +457,6 @@ module.exports = {
   getCardDesignByCategory,
   createCardForUsersCollection,
   getUserLikedCards,
-  getUserSavedCards
+  getUserSavedCards,
+  getUserCollectionCards
 }

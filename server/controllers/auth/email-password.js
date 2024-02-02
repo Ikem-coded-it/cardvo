@@ -109,6 +109,7 @@ const loginUser = asyncHandler(async(req, res) => {
   // have to store refresh token in db
   await dbAsyncQuery(queries.setRefreshToken, [user.id, refreshToken]);
   // send refresh token to frontend in cookie, accessToken in response
+  // netlify does not allow storing cookies
   res.cookie(
     'jwt',
     refreshToken,
